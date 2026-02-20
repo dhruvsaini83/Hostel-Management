@@ -108,94 +108,94 @@ const AddStudentView = () => {
             <h1>{isEdit ? "Edit Student" : "Add Student"}</h1>
             {loading && <Loading />}
             {error && <Message variant="danger">{error}</Message>}
-            <Form onSubmit={submitHandler}></Form>
-            <Form.Group controlId="name">
-              <Form.Label>Name</Form.Label>
-              <Form.Control
-                type="name"
-                placeholder="Enter name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-            <Form.Group controlId="status">
-              <Form.Label>Status</Form.Label>
-              <Form.Control
-                as="select"
-                value={status}
-                onChange={(e) => setStatus(e.target.value)}
-              >
-                {["Hostel", "Outside", "Home"].map((x) => (
-                  <option key={x + 1} value={x + 1}>
-                    {x}
-                  </option>
-                ))}
-              </Form.Control>
-            </Form.Group>
-            <Form.Group controlId="address">
-              <Form.Label>Address</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter address"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-            <Form.Group controlId="city">
-              <Form.Label>City</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter city"
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-            <Form.Group controlId="contact">
-              <Form.Label>Contact</Form.Label>
-              <Form.Control
-                type="number"
-                placeholder="Enter phone number"
-                value={contact}
-                onChange={(e) => setContact(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-            <Form.Group controlId="fatherContact">
-              <Form.Label>Father Contact</Form.Label>
-              <Form.Control
-                type="number"
-                placeholder="Enter Father Phone Number"
-                value={fatherContact}
-                onChange={(e) => setFatherContact(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-            <Form.Group controlId="roomNo">
-              <Form.Label>Room No</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter Room no"
-                value={roomNo}
-                onChange={(e) => setRoomNo(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-            <Form.Group controlId="b">
-              <Form.Label>Block Number</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter Block Number"
-                value={blockNo}
-                onChange={(e) => setBlockNo(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-            <Form.Group controlId="image">
-              <Form.Label>Image Url</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter Image Url"
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-            <Form.Group controlId="category">
+            <Form onSubmit={submitHandler}>
+              <Form.Group controlId="name">
+                <Form.Label>Name<span style={{ color: "red" }}>*</span></Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter name"
+                  value={name} required
+                  onChange={(e) => setName(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
+              <Form.Group controlId="status">
+                <Form.Label>Status</Form.Label>
+                <Form.Control
+                  as="select"
+                  value={status}
+                  onChange={(e) => setStatus(e.target.value)}
+                >
+                  {["Hostel", "Outside", "Home"].map((x) => (
+                    <option key={x} value={x}>
+                      {x}
+                    </option>
+                  ))}
+                </Form.Control>
+              </Form.Group>
+              <Form.Group controlId="address">
+                <Form.Label>Address<span style={{ color: "red" }}>*</span></Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter address"
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
+              <Form.Group controlId="city">
+                <Form.Label>City<span style={{ color: "red" }}>*</span></Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter city"
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
+              <Form.Group controlId="contact">
+                <Form.Label>Contact<span style={{ color: "red" }}>*</span></Form.Label>
+                <Form.Control
+                  type="number"
+                  placeholder="Enter phone number"
+                  value={contact}
+                  onChange={(e) => setContact(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
+              <Form.Group controlId="fatherContact">
+                <Form.Label>Father Contact<span style={{ color: "red" }}>*</span></Form.Label>
+                <Form.Control
+                  type="number"
+                  placeholder="Enter Father Phone Number"
+                  value={fatherContact}
+                  onChange={(e) => setFatherContact(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
+              <Form.Group controlId="roomNo">
+                <Form.Label>Room No<span style={{ color: "red" }}>*</span></Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter Room no"
+                  value={roomNo}
+                  onChange={(e) => setRoomNo(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
+              <Form.Group controlId="b">
+                <Form.Label>Block Number<span style={{ color: "red" }}>*</span></Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter Block Number"
+                  value={blockNo}
+                  onChange={(e) => setBlockNo(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
+              <Form.Group controlId="image">
+                <Form.Label>Image Url</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter Image Url"
+                  value={image}
+                  onChange={(e) => setImage(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
+              {/* <Form.Group controlId="category">
               <Form.Label>Category</Form.Label>
               <Form.Control
                 type="text"
@@ -203,10 +203,26 @@ const AddStudentView = () => {
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
               ></Form.Control>
-            </Form.Group>
-            <Button type="submit" variant="primary" onClick={submitHandler}>
-              {isEdit ? "Update" : "Add Student"}
-            </Button>
+            </Form.Group> */}
+              <Form.Group controlId="category">
+                <Form.Label>Category<span style={{ color: "red" }}>*</span></Form.Label>
+                <Form.Control
+                  as="select"
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                  required
+                >
+                  <option value="">-- Select Category --</option>
+                  <option value="MCA">MCA</option>
+                  <option value="BCA">BCA</option>
+                  <option value="B.Com">B.Com</option>
+                  <option value="M.Com">M.Com</option>
+                </Form.Control>
+              </Form.Group>
+              <Button type="submit" variant="primary" >
+                {isEdit ? "Update" : "Add Student"}
+              </Button>
+            </Form>
           </FormContainer>
         </>
       )}

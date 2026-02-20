@@ -7,7 +7,7 @@ import AttendanceTable from "../components/attendanceTable";
 const AttendanceView = () => {
   const [roomNo, setRoomNo] = useState("");
   const dispatch = useDispatch();
-  useEffect(() => {}, [dispatch]);
+  useEffect(() => { }, [dispatch]);
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(action(roomNo));
