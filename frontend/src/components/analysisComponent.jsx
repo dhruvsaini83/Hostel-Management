@@ -1,15 +1,42 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { Table } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import Loading from "./loader";
 import Message from "./message";
 import { CSVLink } from "react-csv";
+import { Row, Col } from "react-bootstrap";
+
 
 const AnalysisComponent = () => {
   const attendanceAnalysis = useSelector((state) => state.attendanceAnalysis);
   const { loading, error, attendance } = attendanceAnalysis;
   const [data, setData] = useState([]);
   const [headers, setHeaders] = useState([]);
+
+  const categoryCount = useMemo(() => {
+    if (!attendance || !attendance.data) {
+      return { Home: 0, Outside: 0, Hostel: 0 };
+    }
+
+    const counts = { Home: 0, Outside: 0, Hostel: 0 };
+
+    Object.values(attendance.data).forEach((status) => {
+      if (!status) return;
+
+      const normalizedStatus = status.trim().toLowerCase();
+
+      if (normalizedStatus === "home") {
+        counts.Home += 1;
+      } else if (normalizedStatus === "outside") {
+        counts.Outside += 1;
+      } else if (normalizedStatus === "hostel") {
+        counts.Hostel += 1;
+      }
+    });
+
+    return counts;
+  }, [attendance]);
+
   useEffect(() => {
     if (attendance) {
       setHeaders([
@@ -40,6 +67,30 @@ const AnalysisComponent = () => {
         <>
           {attendance && (
             <>
+
+              <Row className="mb-3 text-center">
+                <Col>
+                  <div className="p-2 border rounded bg-light">
+                    <h6>Home</h6>
+                    <strong>{categoryCount.Home}</strong>
+                  </div>
+                </Col>
+
+                <Col>
+                  <div className="p-2 border rounded bg-light">
+                    <h6>Outside</h6>
+                    <strong>{categoryCount.Outside}</strong>
+                  </div>
+                </Col>
+
+                <Col>
+                  <div className="p-2 border rounded bg-light">
+                    <h6>Hostel</h6>
+                    <strong>{categoryCount.Hostel}</strong>
+                  </div>
+                </Col>
+              </Row>
+
               <Table striped bordered hover responsive className="table-sm">
                 <thead>
                   <tr>

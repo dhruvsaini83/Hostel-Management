@@ -173,6 +173,8 @@ const AnalysisView = () => {
     setDays("");
   };
 
+
+
   return (
     <>
       <Row className="justify-content-between align-items-center">
