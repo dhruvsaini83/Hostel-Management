@@ -1,1 +1,839 @@
-[{"C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\index.js":"1","C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\reportWebVitals.js":"2","C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\App.js":"3","C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\store.jsx":"4","C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\screens\\addStudentView.jsx":"5","C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\screens\\homeView.jsx":"6","C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\screens\\profileView.jsx":"7","C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\screens\\analysisView.jsx":"8","C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\screens\\userListView.jsx":"9","C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\screens\\studentDetailsView.jsx":"10","C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\screens\\attendanceView.jsx":"11","C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\screens\\userEditView.jsx":"12","C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\components\\footer.jsx":"13","C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\screens\\Authentication Screens\\LoginView.jsx":"14","C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\components\\header.jsx":"15","C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\screens\\Authentication Screens\\RegisterView.jsx":"16","C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\actions\\studentActions.jsx":"17","C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\reducers\\studentsReducer.jsx":"18","C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\reducers\\userReducers.jsx":"19","C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\reducers\\attendanceReducer.jsx":"20","C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\components\\message.jsx":"21","C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\components\\loader.jsx":"22","C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\components\\formContainer.jsx":"23","C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\screens\\studentTableView.jsx":"24","C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\components\\student.jsx":"25","C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\actions\\userActions.jsx":"26","C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\actions\\attendanceActions.jsx":"27","C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\components\\analysisComponent.jsx":"28","C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\components\\attendanceTable.jsx":"29","C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\components\\paginate.jsx":"30","C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\components\\searchBox.jsx":"31","C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\constants\\studentConstant.jsx":"32","C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\constants\\userConstants.jsx":"33","C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\constants\\attendanceConstant.jsx":"34","C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\components\\attendanceTableComponent.jsx":"35"},{"size":595,"mtime":1777313253154,"results":"36","hashOfConfig":"37"},{"size":362,"mtime":1777313253160,"results":"38","hashOfConfig":"37"},{"size":2000,"mtime":1777313253149,"results":"39","hashOfConfig":"37"},{"size":1760,"mtime":1777313253166,"results":"40","hashOfConfig":"37"},{"size":8291,"mtime":1777313253330,"results":"41","hashOfConfig":"37"},{"size":2760,"mtime":1777313253347,"results":"42","hashOfConfig":"37"},{"size":3635,"mtime":1777313253352,"results":"43","hashOfConfig":"37"},{"size":7712,"mtime":1777313253335,"results":"44","hashOfConfig":"37"},{"size":2730,"mtime":1777313253374,"results":"45","hashOfConfig":"37"},{"size":5749,"mtime":1777313253358,"results":"46","hashOfConfig":"37"},{"size":1117,"mtime":1777313253340,"results":"47","hashOfConfig":"37"},{"size":3182,"mtime":1777313253369,"results":"48","hashOfConfig":"37"},{"size":276,"mtime":1777313253216,"results":"49","hashOfConfig":"37"},{"size":2146,"mtime":1777313253382,"results":"50","hashOfConfig":"37"},{"size":2544,"mtime":1777313253228,"results":"51","hashOfConfig":"37"},{"size":3149,"mtime":1777313253387,"results":"52","hashOfConfig":"37"},{"size":4652,"mtime":1777313253183,"results":"53","hashOfConfig":"37"},{"size":3180,"mtime":1777313253314,"results":"54","hashOfConfig":"37"},{"size":3520,"mtime":1777313253320,"results":"55","hashOfConfig":"37"},{"size":1789,"mtime":1777313253308,"results":"56","hashOfConfig":"37"},{"size":236,"mtime":1777313253238,"results":"57","hashOfConfig":"37"},{"size":386,"mtime":1777313253233,"results":"58","hashOfConfig":"37"},{"size":331,"mtime":1777313253223,"results":"59","hashOfConfig":"37"},{"size":2402,"mtime":1777313253363,"results":"60","hashOfConfig":"37"},{"size":861,"mtime":1777313253259,"results":"61","hashOfConfig":"37"},{"size":6463,"mtime":1777313253189,"results":"62","hashOfConfig":"37"},{"size":2462,"mtime":1777313253177,"results":"63","hashOfConfig":"37"},{"size":4081,"mtime":1777313253200,"results":"64","hashOfConfig":"37"},{"size":2085,"mtime":1777313253206,"results":"65","hashOfConfig":"37"},{"size":743,"mtime":1777313253243,"results":"66","hashOfConfig":"37"},{"size":783,"mtime":1777313253254,"results":"67","hashOfConfig":"37"},{"size":1297,"mtime":1777313253272,"results":"68","hashOfConfig":"37"},{"size":1502,"mtime":1777313253278,"results":"69","hashOfConfig":"37"},{"size":859,"mtime":1777313253268,"results":"70","hashOfConfig":"37"},{"size":3361,"mtime":1777313253211,"results":"71","hashOfConfig":"37"},{"filePath":"72","messages":"73","errorCount":0,"fatalErrorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},"rsq320",{"filePath":"74","messages":"75","errorCount":0,"fatalErrorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"76","messages":"77","errorCount":0,"fatalErrorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"78","messages":"79","errorCount":0,"fatalErrorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"80","messages":"81","errorCount":0,"fatalErrorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"82","messages":"83","errorCount":0,"fatalErrorCount":0,"warningCount":1,"fixableErrorCount":0,"fixableWarningCount":0,"source":null},{"filePath":"84","messages":"85","errorCount":0,"fatalErrorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"86","messages":"87","errorCount":0,"fatalErrorCount":0,"warningCount":1,"fixableErrorCount":0,"fixableWarningCount":0,"source":null},{"filePath":"88","messages":"89","errorCount":0,"fatalErrorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"90","messages":"91","errorCount":0,"fatalErrorCount":0,"warningCount":1,"fixableErrorCount":0,"fixableWarningCount":0,"source":null},{"filePath":"92","messages":"93","errorCount":0,"fatalErrorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"94","messages":"95","errorCount":0,"fatalErrorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"96","messages":"97","errorCount":0,"fatalErrorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"98","messages":"99","errorCount":0,"fatalErrorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"100","messages":"101","errorCount":0,"fatalErrorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"102","messages":"103","errorCount":0,"fatalErrorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"104","messages":"105","errorCount":0,"fatalErrorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"106","messages":"107","errorCount":0,"fatalErrorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"108","messages":"109","errorCount":0,"fatalErrorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"110","messages":"111","errorCount":0,"fatalErrorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"112","messages":"113","errorCount":0,"fatalErrorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"114","messages":"115","errorCount":0,"fatalErrorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"116","messages":"117","errorCount":0,"fatalErrorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"118","messages":"119","errorCount":0,"fatalErrorCount":0,"warningCount":1,"fixableErrorCount":0,"fixableWarningCount":0,"source":null},{"filePath":"120","messages":"121","errorCount":0,"fatalErrorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"122","messages":"123","errorCount":0,"fatalErrorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"124","messages":"125","errorCount":0,"fatalErrorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"126","messages":"127","errorCount":0,"fatalErrorCount":0,"warningCount":1,"fixableErrorCount":0,"fixableWarningCount":0,"source":null},{"filePath":"128","messages":"129","errorCount":0,"fatalErrorCount":0,"warningCount":3,"fixableErrorCount":0,"fixableWarningCount":0,"source":null},{"filePath":"130","messages":"131","errorCount":0,"fatalErrorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"132","messages":"133","errorCount":0,"fatalErrorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"134","messages":"135","errorCount":0,"fatalErrorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"136","messages":"137","errorCount":0,"fatalErrorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"138","messages":"139","errorCount":0,"fatalErrorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"140","messages":"141","errorCount":0,"fatalErrorCount":0,"warningCount":1,"fixableErrorCount":0,"fixableWarningCount":0,"source":null},"C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\index.js",[],"C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\reportWebVitals.js",[],"C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\App.js",[],"C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\store.jsx",[],"C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\screens\\addStudentView.jsx",[],"C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\screens\\homeView.jsx",["142"],"C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\screens\\profileView.jsx",[],"C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\screens\\analysisView.jsx",["143"],"C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\screens\\userListView.jsx",[],"C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\screens\\studentDetailsView.jsx",["144"],"C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\screens\\attendanceView.jsx",[],"C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\screens\\userEditView.jsx",[],"C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\components\\footer.jsx",[],"C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\screens\\Authentication Screens\\LoginView.jsx",[],"C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\components\\header.jsx",[],"C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\screens\\Authentication Screens\\RegisterView.jsx",[],"C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\actions\\studentActions.jsx",[],"C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\reducers\\studentsReducer.jsx",[],"C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\reducers\\userReducers.jsx",[],"C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\reducers\\attendanceReducer.jsx",[],"C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\components\\message.jsx",[],"C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\components\\loader.jsx",[],"C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\components\\formContainer.jsx",[],"C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\screens\\studentTableView.jsx",["145"],"C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\components\\student.jsx",[],"C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\actions\\userActions.jsx",[],"C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\actions\\attendanceActions.jsx",[],"C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\components\\analysisComponent.jsx",["146"],"C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\components\\attendanceTable.jsx",["147","148","149"],"C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\components\\paginate.jsx",[],"C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\components\\searchBox.jsx",[],"C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\constants\\studentConstant.jsx",[],"C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\constants\\userConstants.jsx",[],"C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\constants\\attendanceConstant.jsx",[],"C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\components\\attendanceTableComponent.jsx",["150"],{"ruleId":"151","severity":1,"message":"152","line":35,"column":6,"nodeType":"153","endLine":35,"endColumn":27,"suggestions":"154"},{"ruleId":"155","severity":1,"message":"156","line":146,"column":11,"nodeType":"157","messageId":"158","endLine":146,"endColumn":21},{"ruleId":"151","severity":1,"message":"159","line":52,"column":6,"nodeType":"153","endLine":52,"endColumn":53,"suggestions":"160"},{"ruleId":"151","severity":1,"message":"161","line":19,"column":6,"nodeType":"153","endLine":19,"endColumn":37,"suggestions":"162"},{"ruleId":"163","severity":1,"message":"164","line":49,"column":56,"nodeType":"165","messageId":"166","endLine":49,"endColumn":58},{"ruleId":"151","severity":1,"message":"167","line":22,"column":6,"nodeType":"153","endLine":22,"endColumn":53,"suggestions":"168"},{"ruleId":"163","severity":1,"message":"164","line":27,"column":30,"nodeType":"165","messageId":"166","endLine":27,"endColumn":32},{"ruleId":"163","severity":1,"message":"164","line":36,"column":30,"nodeType":"165","messageId":"166","endLine":36,"endColumn":32},{"ruleId":"163","severity":1,"message":"164","line":24,"column":28,"nodeType":"165","messageId":"166","endLine":24,"endColumn":30},"react-hooks/exhaustive-deps","React Hook useEffect has missing dependencies: 'dispatch', 'history', 'userInfo', and 'userLoading'. Either include them or remove the dependency array.","ArrayExpression",["169"],"no-unused-vars","'attendance' is assigned a value but never used.","Identifier","unusedVar","React Hook useEffect has missing dependencies: 'history', 'status', and 'student'. Either include them or remove the dependency array.",["170"],"React Hook useEffect has a missing dependency: 'students'. Either include it or remove the dependency array.",["171"],"array-callback-return","Array.prototype.map() expects a return value from arrow function.","ArrowFunctionExpression","expectedInside","React Hook useEffect has a missing dependency: 'arrangeTable'. Either include it or remove the dependency array.",["172"],{"desc":"173","fix":"174"},{"desc":"175","fix":"176"},{"desc":"177","fix":"178"},{"desc":"179","fix":"180"},"Update the dependencies array to be: [dispatch, history, keyword, pageNumber, userInfo, userLoading]",{"range":"181","text":"182"},"Update the dependencies array to be: [dispatch, match, successUpdate, successDelete, student, status, history]",{"range":"183","text":"184"},"Update the dependencies array to be: [dispatch, keyword, pageNumber, students]",{"range":"185","text":"186"},"Update the dependencies array to be: [dispatch, attendance, attendanceMap, students, arrangeTable]",{"range":"187","text":"188"},[1116,1137],"[dispatch, history, keyword, pageNumber, userInfo, userLoading]",[1494,1541],"[dispatch, match, successUpdate, successDelete, student, status, history]",[702,733],"[dispatch, keyword, pageNumber, students]",[780,827],"[dispatch, attendance, attendanceMap, students, arrangeTable]"]
+[
+  {
+    "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\index.js": "1",
+    "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\reportWebVitals.js": "2",
+    "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\App.js": "3",
+    "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\store.jsx": "4",
+    "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\screens\\addStudentView.jsx": "5",
+    "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\screens\\homeView.jsx": "6",
+    "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\screens\\profileView.jsx": "7",
+    "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\screens\\analysisView.jsx": "8",
+    "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\screens\\userListView.jsx": "9",
+    "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\screens\\studentDetailsView.jsx": "10",
+    "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\screens\\attendanceView.jsx": "11",
+    "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\screens\\userEditView.jsx": "12",
+    "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\components\\footer.jsx": "13",
+    "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\screens\\Authentication Screens\\LoginView.jsx": "14",
+    "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\components\\header.jsx": "15",
+    "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\screens\\Authentication Screens\\RegisterView.jsx": "16",
+    "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\actions\\studentActions.jsx": "17",
+    "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\reducers\\studentsReducer.jsx": "18",
+    "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\reducers\\userReducers.jsx": "19",
+    "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\reducers\\attendanceReducer.jsx": "20",
+    "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\components\\message.jsx": "21",
+    "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\components\\loader.jsx": "22",
+    "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\components\\formContainer.jsx": "23",
+    "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\screens\\studentTableView.jsx": "24",
+    "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\components\\student.jsx": "25",
+    "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\actions\\userActions.jsx": "26",
+    "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\actions\\attendanceActions.jsx": "27",
+    "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\components\\analysisComponent.jsx": "28",
+    "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\components\\attendanceTable.jsx": "29",
+    "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\components\\paginate.jsx": "30",
+    "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\components\\searchBox.jsx": "31",
+    "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\constants\\studentConstant.jsx": "32",
+    "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\constants\\userConstants.jsx": "33",
+    "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\constants\\attendanceConstant.jsx": "34",
+    "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\components\\attendanceTableComponent.jsx": "35"
+  },
+  {
+    "size": 595,
+    "mtime": 1777313253154,
+    "results": "36",
+    "hashOfConfig": "37"
+  },
+  {
+    "size": 362,
+    "mtime": 1777313253160,
+    "results": "38",
+    "hashOfConfig": "37"
+  },
+  {
+    "size": 2000,
+    "mtime": 1777313253149,
+    "results": "39",
+    "hashOfConfig": "37"
+  },
+  {
+    "size": 1760,
+    "mtime": 1777313253166,
+    "results": "40",
+    "hashOfConfig": "37"
+  },
+  {
+    "size": 8291,
+    "mtime": 1777313253330,
+    "results": "41",
+    "hashOfConfig": "37"
+  },
+  {
+    "size": 2760,
+    "mtime": 1777313253347,
+    "results": "42",
+    "hashOfConfig": "37"
+  },
+  {
+    "size": 3635,
+    "mtime": 1777313253352,
+    "results": "43",
+    "hashOfConfig": "37"
+  },
+  {
+    "size": 7712,
+    "mtime": 1777313253335,
+    "results": "44",
+    "hashOfConfig": "37"
+  },
+  {
+    "size": 2730,
+    "mtime": 1777313253374,
+    "results": "45",
+    "hashOfConfig": "37"
+  },
+  {
+    "size": 5749,
+    "mtime": 1777313253358,
+    "results": "46",
+    "hashOfConfig": "37"
+  },
+  {
+    "size": 1117,
+    "mtime": 1777313253340,
+    "results": "47",
+    "hashOfConfig": "37"
+  },
+  {
+    "size": 3182,
+    "mtime": 1777313253369,
+    "results": "48",
+    "hashOfConfig": "37"
+  },
+  {
+    "size": 276,
+    "mtime": 1777313253216,
+    "results": "49",
+    "hashOfConfig": "37"
+  },
+  {
+    "size": 2146,
+    "mtime": 1777313253382,
+    "results": "50",
+    "hashOfConfig": "37"
+  },
+  {
+    "size": 2544,
+    "mtime": 1777313253228,
+    "results": "51",
+    "hashOfConfig": "37"
+  },
+  {
+    "size": 3149,
+    "mtime": 1777313253387,
+    "results": "52",
+    "hashOfConfig": "37"
+  },
+  {
+    "size": 4652,
+    "mtime": 1777313253183,
+    "results": "53",
+    "hashOfConfig": "37"
+  },
+  {
+    "size": 3180,
+    "mtime": 1777313253314,
+    "results": "54",
+    "hashOfConfig": "37"
+  },
+  {
+    "size": 3520,
+    "mtime": 1777313253320,
+    "results": "55",
+    "hashOfConfig": "37"
+  },
+  {
+    "size": 1789,
+    "mtime": 1777313253308,
+    "results": "56",
+    "hashOfConfig": "37"
+  },
+  {
+    "size": 236,
+    "mtime": 1777313253238,
+    "results": "57",
+    "hashOfConfig": "37"
+  },
+  {
+    "size": 386,
+    "mtime": 1777313253233,
+    "results": "58",
+    "hashOfConfig": "37"
+  },
+  {
+    "size": 331,
+    "mtime": 1777313253223,
+    "results": "59",
+    "hashOfConfig": "37"
+  },
+  {
+    "size": 2402,
+    "mtime": 1777313253363,
+    "results": "60",
+    "hashOfConfig": "37"
+  },
+  {
+    "size": 861,
+    "mtime": 1777313253259,
+    "results": "61",
+    "hashOfConfig": "37"
+  },
+  {
+    "size": 6463,
+    "mtime": 1777313253189,
+    "results": "62",
+    "hashOfConfig": "37"
+  },
+  {
+    "size": 2462,
+    "mtime": 1777313253177,
+    "results": "63",
+    "hashOfConfig": "37"
+  },
+  {
+    "size": 4081,
+    "mtime": 1777313253200,
+    "results": "64",
+    "hashOfConfig": "37"
+  },
+  {
+    "size": 2085,
+    "mtime": 1777313253206,
+    "results": "65",
+    "hashOfConfig": "37"
+  },
+  {
+    "size": 743,
+    "mtime": 1777313253243,
+    "results": "66",
+    "hashOfConfig": "37"
+  },
+  {
+    "size": 783,
+    "mtime": 1777313253254,
+    "results": "67",
+    "hashOfConfig": "37"
+  },
+  {
+    "size": 1297,
+    "mtime": 1777313253272,
+    "results": "68",
+    "hashOfConfig": "37"
+  },
+  {
+    "size": 1502,
+    "mtime": 1777313253278,
+    "results": "69",
+    "hashOfConfig": "37"
+  },
+  {
+    "size": 859,
+    "mtime": 1777313253268,
+    "results": "70",
+    "hashOfConfig": "37"
+  },
+  {
+    "size": 3361,
+    "mtime": 1777313253211,
+    "results": "71",
+    "hashOfConfig": "37"
+  },
+  {
+    "filePath": "72",
+    "messages": "73",
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0
+  },
+  "rsq320",
+  {
+    "filePath": "74",
+    "messages": "75",
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0
+  },
+  {
+    "filePath": "76",
+    "messages": "77",
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0
+  },
+  {
+    "filePath": "78",
+    "messages": "79",
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0
+  },
+  {
+    "filePath": "80",
+    "messages": "81",
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0
+  },
+  {
+    "filePath": "82",
+    "messages": "83",
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 1,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "source": null
+  },
+  {
+    "filePath": "84",
+    "messages": "85",
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0
+  },
+  {
+    "filePath": "86",
+    "messages": "87",
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 1,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "source": null
+  },
+  {
+    "filePath": "88",
+    "messages": "89",
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0
+  },
+  {
+    "filePath": "90",
+    "messages": "91",
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 1,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "source": null
+  },
+  {
+    "filePath": "92",
+    "messages": "93",
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0
+  },
+  {
+    "filePath": "94",
+    "messages": "95",
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0
+  },
+  {
+    "filePath": "96",
+    "messages": "97",
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0
+  },
+  {
+    "filePath": "98",
+    "messages": "99",
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0
+  },
+  {
+    "filePath": "100",
+    "messages": "101",
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0
+  },
+  {
+    "filePath": "102",
+    "messages": "103",
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0
+  },
+  {
+    "filePath": "104",
+    "messages": "105",
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0
+  },
+  {
+    "filePath": "106",
+    "messages": "107",
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0
+  },
+  {
+    "filePath": "108",
+    "messages": "109",
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0
+  },
+  {
+    "filePath": "110",
+    "messages": "111",
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0
+  },
+  {
+    "filePath": "112",
+    "messages": "113",
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0
+  },
+  {
+    "filePath": "114",
+    "messages": "115",
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0
+  },
+  {
+    "filePath": "116",
+    "messages": "117",
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0
+  },
+  {
+    "filePath": "118",
+    "messages": "119",
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 1,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "source": null
+  },
+  {
+    "filePath": "120",
+    "messages": "121",
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0
+  },
+  {
+    "filePath": "122",
+    "messages": "123",
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0
+  },
+  {
+    "filePath": "124",
+    "messages": "125",
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0
+  },
+  {
+    "filePath": "126",
+    "messages": "127",
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 1,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "source": null
+  },
+  {
+    "filePath": "128",
+    "messages": "129",
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 3,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "source": null
+  },
+  {
+    "filePath": "130",
+    "messages": "131",
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0
+  },
+  {
+    "filePath": "132",
+    "messages": "133",
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0
+  },
+  {
+    "filePath": "134",
+    "messages": "135",
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0
+  },
+  {
+    "filePath": "136",
+    "messages": "137",
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0
+  },
+  {
+    "filePath": "138",
+    "messages": "139",
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0
+  },
+  {
+    "filePath": "140",
+    "messages": "141",
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 1,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "source": null
+  },
+  "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\index.js",
+  [],
+  "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\reportWebVitals.js",
+  [],
+  "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\App.js",
+  [],
+  "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\store.jsx",
+  [],
+  "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\screens\\addStudentView.jsx",
+  [],
+  "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\screens\\homeView.jsx",
+  [
+    "142"
+  ],
+  "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\screens\\profileView.jsx",
+  [],
+  "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\screens\\analysisView.jsx",
+  [
+    "143"
+  ],
+  "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\screens\\userListView.jsx",
+  [],
+  "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\screens\\studentDetailsView.jsx",
+  [
+    "144"
+  ],
+  "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\screens\\attendanceView.jsx",
+  [],
+  "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\screens\\userEditView.jsx",
+  [],
+  "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\components\\footer.jsx",
+  [],
+  "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\screens\\Authentication Screens\\LoginView.jsx",
+  [],
+  "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\components\\header.jsx",
+  [],
+  "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\screens\\Authentication Screens\\RegisterView.jsx",
+  [],
+  "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\actions\\studentActions.jsx",
+  [],
+  "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\reducers\\studentsReducer.jsx",
+  [],
+  "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\reducers\\userReducers.jsx",
+  [],
+  "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\reducers\\attendanceReducer.jsx",
+  [],
+  "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\components\\message.jsx",
+  [],
+  "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\components\\loader.jsx",
+  [],
+  "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\components\\formContainer.jsx",
+  [],
+  "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\screens\\studentTableView.jsx",
+  [
+    "145"
+  ],
+  "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\components\\student.jsx",
+  [],
+  "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\actions\\userActions.jsx",
+  [],
+  "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\actions\\attendanceActions.jsx",
+  [],
+  "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\components\\analysisComponent.jsx",
+  [
+    "146"
+  ],
+  "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\components\\attendanceTable.jsx",
+  [
+    "147",
+    "148",
+    "149"
+  ],
+  "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\components\\paginate.jsx",
+  [],
+  "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\components\\searchBox.jsx",
+  [],
+  "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\constants\\studentConstant.jsx",
+  [],
+  "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\constants\\userConstants.jsx",
+  [],
+  "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\constants\\attendanceConstant.jsx",
+  [],
+  "C:\\Users\\dhruv\\Downloads\\Hostel-Management-main\\Hostel-Management-main\\frontend\\src\\components\\attendanceTableComponent.jsx",
+  [
+    "150"
+  ],
+  {
+    "ruleId": "151",
+    "severity": 1,
+    "message": "152",
+    "line": 35,
+    "column": 6,
+    "nodeType": "153",
+    "endLine": 35,
+    "endColumn": 27,
+    "suggestions": "154"
+  },
+  {
+    "ruleId": "155",
+    "severity": 1,
+    "message": "156",
+    "line": 146,
+    "column": 11,
+    "nodeType": "157",
+    "messageId": "158",
+    "endLine": 146,
+    "endColumn": 21
+  },
+  {
+    "ruleId": "151",
+    "severity": 1,
+    "message": "159",
+    "line": 52,
+    "column": 6,
+    "nodeType": "153",
+    "endLine": 52,
+    "endColumn": 53,
+    "suggestions": "160"
+  },
+  {
+    "ruleId": "151",
+    "severity": 1,
+    "message": "161",
+    "line": 19,
+    "column": 6,
+    "nodeType": "153",
+    "endLine": 19,
+    "endColumn": 37,
+    "suggestions": "162"
+  },
+  {
+    "ruleId": "163",
+    "severity": 1,
+    "message": "164",
+    "line": 49,
+    "column": 56,
+    "nodeType": "165",
+    "messageId": "166",
+    "endLine": 49,
+    "endColumn": 58
+  },
+  {
+    "ruleId": "151",
+    "severity": 1,
+    "message": "167",
+    "line": 22,
+    "column": 6,
+    "nodeType": "153",
+    "endLine": 22,
+    "endColumn": 53,
+    "suggestions": "168"
+  },
+  {
+    "ruleId": "163",
+    "severity": 1,
+    "message": "164",
+    "line": 27,
+    "column": 30,
+    "nodeType": "165",
+    "messageId": "166",
+    "endLine": 27,
+    "endColumn": 32
+  },
+  {
+    "ruleId": "163",
+    "severity": 1,
+    "message": "164",
+    "line": 36,
+    "column": 30,
+    "nodeType": "165",
+    "messageId": "166",
+    "endLine": 36,
+    "endColumn": 32
+  },
+  {
+    "ruleId": "163",
+    "severity": 1,
+    "message": "164",
+    "line": 24,
+    "column": 28,
+    "nodeType": "165",
+    "messageId": "166",
+    "endLine": 24,
+    "endColumn": 30
+  },
+  "react-hooks/exhaustive-deps",
+  "React Hook useEffect has missing dependencies: 'dispatch', 'history', 'userInfo', and 'userLoading'. Either include them or remove the dependency array.",
+  "ArrayExpression",
+  [
+    "169"
+  ],
+  "no-unused-vars",
+  "'attendance' is assigned a value but never used.",
+  "Identifier",
+  "unusedVar",
+  "React Hook useEffect has missing dependencies: 'history', 'status', and 'student'. Either include them or remove the dependency array.",
+  [
+    "170"
+  ],
+  "React Hook useEffect has a missing dependency: 'students'. Either include it or remove the dependency array.",
+  [
+    "171"
+  ],
+  "array-callback-return",
+  "Array.prototype.map() expects a return value from arrow function.",
+  "ArrowFunctionExpression",
+  "expectedInside",
+  "React Hook useEffect has a missing dependency: 'arrangeTable'. Either include it or remove the dependency array.",
+  [
+    "172"
+  ],
+  {
+    "desc": "173",
+    "fix": "174"
+  },
+  {
+    "desc": "175",
+    "fix": "176"
+  },
+  {
+    "desc": "177",
+    "fix": "178"
+  },
+  {
+    "desc": "179",
+    "fix": "180"
+  },
+  "Update the dependencies array to be: [dispatch, history, keyword, pageNumber, userInfo, userLoading]",
+  {
+    "range": "181",
+    "text": "182"
+  },
+  "Update the dependencies array to be: [dispatch, match, successUpdate, successDelete, student, status, history]",
+  {
+    "range": "183",
+    "text": "184"
+  },
+  "Update the dependencies array to be: [dispatch, keyword, pageNumber, students]",
+  {
+    "range": "185",
+    "text": "186"
+  },
+  "Update the dependencies array to be: [dispatch, attendance, attendanceMap, students, arrangeTable]",
+  {
+    "range": "187",
+    "text": "188"
+  },
+  [
+    1116,
+    1137
+  ],
+  "[dispatch, history, keyword, pageNumber, userInfo, userLoading]",
+  [
+    1494,
+    1541
+  ],
+  "[dispatch, match, successUpdate, successDelete, student, status, history]",
+  [
+    702,
+    733
+  ],
+  "[dispatch, keyword, pageNumber, students]",
+  [
+    780,
+    827
+  ],
+  "[dispatch, attendance, attendanceMap, students, arrangeTable]"
+]
