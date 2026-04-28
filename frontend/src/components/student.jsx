@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Col, Row, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
-const Student = ({ stuentDetails: student }) => {
+const Student = ({ studentDetails: student }) => {
   return (
     <Card className="my-3 p-3 rounded">
       <Link to={`/student/${student._id}`}>

@@ -39,18 +39,27 @@ const StudentDetailsView = ({ match, history }) => {
   useEffect(() => {
     if (successDelete) {
       history.push("/");
+      return;
     }
+
     if (successUpdate) {
       dispatch({ type: STUDENT_UPDATE_RESET });
     }
+
     if (!student || !student._id || student._id !== match.params.id) {
       dispatch(getStudentDetails(match.params.id));
-    }
-    if (student && student._id && !status) {
+    } else if (student && student.status !== status) {
       setStatus(student.status);
     }
-  }, [dispatch, match, successUpdate, successDelete]);
-
+  }, [
+    dispatch,
+    match.params.id,
+    history,
+    successUpdate,
+    successDelete,
+    student,
+    status,
+  ]);
   const navigateToEdit = () => {
     history.push({
       pathname: `/student/edit/${student._id}`,
@@ -58,11 +67,10 @@ const StudentDetailsView = ({ match, history }) => {
     });
   };
   const updateStatus = () => {
-    student.status = status;
-    dispatch(updateStudent(student));
+    dispatch(updateStudent({ ...student, status }));
   };
 
-  const deleteStuden = () => {
+  const deleteStudentHandler = () => {
     if (window.confirm("Are you sure")) {
       dispatch(deleteStudent(student._id));
     }
@@ -159,7 +167,7 @@ const StudentDetailsView = ({ match, history }) => {
                       </Button>
                     </ListGroup.Item>
                     <ListGroup.Item>
-                      <Button variant="danger" onClick={deleteStuden}>
+                      <Button variant="danger" onClick={deleteStudentHandler}>
                         <i className="fas fa-trash"></i>
                       </Button>
                     </ListGroup.Item>

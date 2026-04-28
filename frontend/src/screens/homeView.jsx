@@ -30,9 +30,13 @@ const HomeView = ({ match, history }) => {
   useEffect(() => {
     if (!userLoading && !userInfo) {
       history.push("/login");
+      return;
     }
-    dispatch(listStudents(keyword, pageNumber));
-  }, [keyword, pageNumber]);
+
+    if (userInfo) {
+      dispatch(listStudents(keyword, pageNumber));
+    }
+  }, [dispatch, history, userInfo, userLoading, keyword, pageNumber]);
 
   return (
     <>
@@ -74,7 +78,7 @@ const HomeView = ({ match, history }) => {
           <Row>
             {students.map((student) => (
               <Col key={student._id} sm={12} md={6} lg={4} xl={3}>
-                <Student stuentDetails={student} />
+                <Student studentDetails={student} />
               </Col>
             ))}
           </Row>

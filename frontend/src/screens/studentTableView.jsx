@@ -1,22 +1,18 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Table } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Message from "../components/message";
 import Loader from "../components/loader";
 import Paginate from "../components/paginate";
-import { listStudents } from "../actions/studentActions";
+// import { listStudents } from "../actions/studentActions";
 import { Link } from "react-router-dom";
 
 const StudentsTableView = ({ keyword, pageNumber }) => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const studentsList = useSelector((state) => state.studentsList);
   const { loading, error, students, page, pages } = studentsList;
-  useEffect(() => {
-    if (!students) {
-      dispatch(listStudents(keyword, pageNumber));
-    }
-  }, [dispatch, keyword, pageNumber]);
+
   return (
     <>
       {loading ? (
@@ -37,7 +33,7 @@ const StudentsTableView = ({ keyword, pageNumber }) => {
               </tr>
             </thead>
             <tbody>
-              {students.map((student) => (
+              {students?.map((student) => (
                 <tr key={student._id}>
                   <td>{student.category}</td>
                   <td>
@@ -50,8 +46,8 @@ const StudentsTableView = ({ keyword, pageNumber }) => {
                           student.status === "Outside"
                             ? "red"
                             : student.status === "Home"
-                            ? "blue"
-                            : "black",
+                              ? "blue"
+                              : "black",
                       }}
                     >
                       {student.status}
@@ -66,7 +62,12 @@ const StudentsTableView = ({ keyword, pageNumber }) => {
               ))}
             </tbody>
           </Table>
-          <Paginate pages={pages} page={page} isAdmin={true} />
+          <Paginate
+            pages={pages}
+            page={page}
+            keyword={keyword ? keyword : ""}
+            isAdmin={true}
+          />
         </>
       )}
     </>
