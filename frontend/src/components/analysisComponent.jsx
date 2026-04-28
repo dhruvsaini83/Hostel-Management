@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState, useMemo } from "react";
 import { Table } from "react-bootstrap";
 import { useSelector } from "react-redux";
@@ -45,15 +46,14 @@ const AnalysisComponent = () => {
         { label: "Room No", key: "roomNo" },
         { label: "Status", key: "attendance" },
       ]);
-      var csvMapList = [];
-      Object.entries(attendance.details).map((student) => {
-        var csvMap = {};
-        csvMap["name"] = student[1].name;
-        csvMap["contact"] = student[1].contact;
-        csvMap["roomNo"] = student[1].roomNo;
-        csvMap["attendance"] = attendance.data[student[0]];
-        csvMapList.push(csvMap);
-      });
+      const csvMapList = Object.entries(attendance.details).map(
+        ([id, student]) => ({
+          name: student.name,
+          contact: student.contact,
+          roomNo: student.roomNo,
+          attendance: attendance.data[id],
+        })
+      );
 
       setData(csvMapList);
     }

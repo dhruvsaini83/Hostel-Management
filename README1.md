@@ -65,7 +65,7 @@ JWT_SECRET=your_secret_key
 Start backend:
 
 ```bash
-npm start
+npm start server
 ```
 
 ---

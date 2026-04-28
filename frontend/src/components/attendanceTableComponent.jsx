@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Table, Form, Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { postAttendance } from "../actions/attendanceActions";
@@ -11,17 +11,20 @@ const AttendanceTableComponent = ({
   roomNo,
 }) => {
   const dispatch = useDispatch();
-  useEffect(() => {}, [dispatch, attendanceMap]);
+
   const updateAttendance = () => {
-    if (attendance) {
-      if (!attendance.roomNo.includes(roomNo)) {
-        attendance.roomNo.push(roomNo);
-      }
-    }
-    const roomData = attendance ? attendance.roomNo : roomNo;
-    const dataData = attendanceMap;
-    const detailsData = attendance ? attendance.details : {};
-    students.map((student) => {
+    const roomData = attendance
+      ? Array.isArray(attendance.roomNo) &&
+        attendance.roomNo.includes(roomNo)
+        ? attendance.roomNo
+        : [...(attendance.roomNo || []), roomNo]
+      : roomNo;
+
+    const dataData = { ...attendanceMap };
+
+    const detailsData = attendance ? { ...attendance.details } : {};
+
+    students.forEach((student) => {
       detailsData[student._id] = {
         name: student.name,
         contact: student.contact,
@@ -51,56 +54,69 @@ const AttendanceTableComponent = ({
         </thead>
         <tbody>
           {students &&
-            students.map((student) => (
-              <>
+            students.map((student) => {
+              const status =
+                attendanceMap[student._id] ?? student.status ?? "Hostel";
+
+              return (
                 <tr key={student._id}>
                   <td>
                     <Link to={`/student/${student._id}`}>{student.name}</Link>
                   </td>
+
                   <td>
                     <Form>
-                      <Form.Group controlId="status">
+                      <Form.Group controlId={`status-${student._id}`}>
                         <Form.Control
                           as="select"
                           size="sm"
-                          defaultValue={attendanceMap[student._id]}
+                          value={status}
                           onChange={(e) => {
-                            var tempMap = attendanceMap;
-                            tempMap[student._id] = e.target.value;
-                            setAttendanceMap(tempMap);
+                            const value = e.target.value;
+                            setAttendanceMap((prev) => ({
+                              ...prev,
+                              [student._id]: value,
+                            }));
                           }}
                         >
-                          <option>Hostel</option>
-                          <option>Home</option>
-                          <option>outside</option>
+                          <option value="Hostel">Hostel</option>
+                          <option value="Home">Home</option>
+                          <option value="Outside">Outside</option>
                         </Form.Control>
                       </Form.Group>
                     </Form>
                   </td>
+
                   <td>
                     <span
                       style={{
                         color:
-                          student.status === "Outside"
+                          status === "Outside"
                             ? "red"
-                            : student.status === "Home"
-                            ? "blue"
-                            : "black",
+                            : status === "Home"
+                              ? "blue"
+                              : "black",
                       }}
                     >
-                      {student.status}
+                      {status}
                     </span>
                   </td>
+
                   <td>
                     <a href={`tel:${student.contact}`}>{student.contact}</a>
                   </td>
+
                   <td>{student.city}</td>
                 </tr>
-              </>
-            ))}
+              );
+            })}
         </tbody>
       </Table>
-      <Button variant="success" onClick={updateAttendance}>
+      <Button
+        variant="success"
+        onClick={updateAttendance}
+        disabled={!students || students.length === 0}
+      >
         Update Attendance
       </Button>
     </>

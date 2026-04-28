@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import Loading from "./loader";
 import Message from "./message";
 import AttendanceTableComponent from "./attendanceTableComponent";
 
 const AttendanceTable = ({ roomNo }) => {
-  const dispatch = useDispatch();
+
   const [attendanceMap, setAttendanceMap] = useState({});
 
   const getStudentsByRoomNo = useSelector((state) => state.getStudentsByRoomNo);
@@ -19,28 +19,32 @@ const AttendanceTable = ({ roomNo }) => {
     if (students) {
       arrangeTable();
     }
-  }, [dispatch, attendance, attendanceMap, students]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [attendance, students]);
 
   const arrangeTable = () => {
     if (attendance) {
-      var tempMap = attendanceMap;
-      students.map((student) => {
+      let tempMap = {};
+
+      students.forEach((student) => {
         if (attendance.data[student._id]) {
           tempMap[student._id] = attendance.data[student._id];
         } else {
           tempMap[student._id] = "Hostel";
         }
       });
-      setAttendanceMap(attendanceMap);
+
+      setAttendanceMap(tempMap);
     } else {
-      students.map((student) => {
-        var temp = attendanceMap;
-        temp[student._id] = "Hostel";
-        setAttendanceMap(temp);
+      let tempMap = {};
+
+      students.forEach((student) => {
+        tempMap[student._id] = "Hostel";
       });
+
+      setAttendanceMap(tempMap);
     }
-    var temp = attendanceMap;
-    setAttendanceMap(temp);
+
   };
 
   return (
