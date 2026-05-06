@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 import students from "./data/students.js";
 import Student from "./models/student.js";
 
-import connectDB from "./config/db.js";
+import connectDB from "./config/mongoDBConfig.js";
 
 dotenv.config();
 
@@ -11,6 +11,9 @@ connectDB();
 const importData = async () => {
   try {
     await Student.deleteMany();
+    if (students && students.length > 0) {
+      await Student.insertMany(students);
+    }
     console.log("Data Imported!");
     process.exit();
   } catch (error) {
