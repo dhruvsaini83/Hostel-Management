@@ -35,7 +35,7 @@ const StudentsTableView = ({ keyword, pageNumber }) => {
               </thead>
               <tbody>
                 {students?.map((student) => (
-                  <tr 
+                  <tr
                     key={student._id}
                     onClick={() => history.push(`/student/${student._id}`)}
                   >
@@ -61,21 +61,20 @@ const StudentsTableView = ({ keyword, pageNumber }) => {
                               : student.status === "Home"
                                 ? "#3182ce"
                                 : "#38a169",
-                          border: `1px solid ${
-                            student.status === "Outside"
+                          border: `1px solid ${student.status === "Outside"
                               ? "#feb2b2"
                               : student.status === "Home"
                                 ? "#bee3f8"
                                 : "#c6f6d5"
-                          }`
+                            }`
                         }}
                       >
                         {student.status}
                       </span>
                     </td>
                     <td>
-                      <a 
-                        href={`tel:${student.contact}`} 
+                      <a
+                        href={`tel:${student.contact}`}
                         className='table-link'
                         onClick={(e) => e.stopPropagation()}
                       >
