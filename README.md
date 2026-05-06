@@ -1,41 +1,111 @@
-# Hostel Management Application
+# 🏨 Hostel Management System
 
-Created using MERN Stack with Redux
+A simple Hostel Management System built using the MERN stack (MongoDB, Express.js, React.js, Node.js).
 
-## Installation
+This project helps manage hostel activities like student records and attendance in a digital way.
+
+---
+
+## 📌 Features
+
+- User Login & Authentication (JWT)
+- Add / Update / Delete Students
+- Attendance Management
+- Admin Dashboard
+- Pagination for student list
+- Protected Routes
+
+---
+
+## 🛠 Tech Stack
+
+- Frontend: React.js, Redux, Bootstrap
+- Backend: Node.js, Express.js
+- Database: MongoDB
+- Authentication: JWT
+
+---
+
+## 📁 Project Structure
 
 ```
+Hostel-Management/
+├── frontend/   → React application
+├── server/     → Backend API (Node + Express)
+```
+
+---
+
+## ⚙️ How to Run the Project
+
+### 1️⃣ Clone the Repository
+
+```bash
+git clone https://github.com/dhruvsaini83/Hostel-Management
+cd Hostel-Management
+```
+
+---
+
+### 2️⃣ Install Dependencies
+
+Install the backend dependencies (from the root folder):
+
+```bash
 npm install
-npm run server
-cd frontend && npm install && npm start
 ```
 
-### Configure .env file
+Install the frontend dependencies:
 
-```
-NODE_ENV = development/production
-PORT = 5000
-MONGO_URI= Mongo Uri
-JWT_SECRET= JWT Key
+```bash
+npm install --prefix frontend
 ```
 
-## Features
+---
 
-- [x] Register/Login Screens
-- [x] Student Details
-- [x] Add Student
-- [x] Edit/Delete Student Details
-- [x] Update Student Where abouts
-- [x] Can take Attendance Daily
-- [x] Dispaly Attendance Details
-- [x] Download Csv file of attendance
-- [x] Delete Attendance of previous n days
-- [x] Control User List
-- [x] Edit User Admin Status
-- [x] Data Controlled by only Admins
+### 3️⃣ Environment Variables
 
-## Contributing
+Create a `.env` file in the **root** folder and add the following:
 
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+```
+NODE_ENV=development
+PORT=5000
+MONGO_URI=mongodb://127.0.0.1:27017/hostelmanagement
+JWT_SECRET=your_secret_key
+```
 
-Please make sure to update tests as appropriate.
+---
+
+### 4️⃣ Start the Application
+
+You can start both the backend and frontend concurrently with a single command from the root folder:
+
+```bash
+npm run dev
+```
+
+- Frontend runs at: `http://localhost:3000`
+- Backend runs at: `http://localhost:5000`
+
+---
+
+## 🌱 Optional: Seed Database
+
+If you want to populate the database with dummy data, run the following command from the root folder:
+
+```bash
+node server/seeder.js
+```
+
+---
+
+## 👤 Author
+
+Dhruv Saini  
+MCA Student
+
+---
+
+## 📜 License
+
+This project is open-source and available under the MIT License.
