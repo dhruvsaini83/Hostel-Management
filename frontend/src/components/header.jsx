@@ -27,42 +27,30 @@ const Header = ({ history }) => {
           </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" className="border-0 shadow-none" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Route render={({ history }) => <SearchBox history={history} />} />
-            <Nav className="ml-auto align-items-center">
-              {/* Mobile Menu Dropdown */}
-              <NavDropdown 
-                title={<><i className="fas fa-th-large mr-1"></i> Dashboard</>} 
-                id="more-dropdown" 
-                className="d-lg-none"
-              >
-                <LinkContainer to="/attendance">
-                  <NavDropdown.Item><i className="fas fa-clipboard-list mr-2"></i> Attendance</NavDropdown.Item>
-                </LinkContainer>
-                <LinkContainer to="/addStudent">
-                  <NavDropdown.Item><i className="fas fa-user-plus mr-2"></i> Add Student</NavDropdown.Item>
-                </LinkContainer>
-                <LinkContainer to="/analysis">
-                  <NavDropdown.Item><i className="fas fa-chart-line mr-2"></i> View Analysis</NavDropdown.Item>
-                </LinkContainer>
-              </NavDropdown>
-
-              {/* Desktop Desktop Links */}
+            <Nav className="mr-auto align-items-center">
+              <Route render={({ history }) => <SearchBox history={history} />} />
+            </Nav>
+            
+            <Nav className="mx-auto align-items-center text-center">
+              {/* Links visible on BOTH mobile (centered) and desktop (centered) */}
               <LinkContainer to="/attendance">
-                <Nav.Link className="d-none d-lg-flex align-items-center text-nowrap px-3 mx-1">
+                <Nav.Link className="align-items-center text-nowrap px-3 py-2 py-lg-0 mx-1">
                   <i className="fas fa-clipboard-list mr-2 text-info"></i> Attendance
                 </Nav.Link>
               </LinkContainer>
               <LinkContainer to="/addStudent">
-                <Nav.Link className="d-none d-lg-flex align-items-center text-nowrap px-3 mx-1">
+                <Nav.Link className="align-items-center text-nowrap px-3 py-2 py-lg-0 mx-1">
                   <i className="fas fa-user-plus mr-2 text-info"></i> Add Student
                 </Nav.Link>
               </LinkContainer>
               <LinkContainer to="/analysis">
-                <Nav.Link className="d-none d-lg-flex align-items-center text-nowrap px-3 mx-1">
+                <Nav.Link className="align-items-center text-nowrap px-3 py-2 py-lg-0 mx-1">
                   <i className="fas fa-chart-line mr-2 text-info"></i> Analysis
                 </Nav.Link>
               </LinkContainer>
-              
+            </Nav>
+
+            <Nav className="ml-auto align-items-center">
               {userInfo ? (
                 <NavDropdown 
                   title={
@@ -74,7 +62,7 @@ const Header = ({ history }) => {
                     </span>
                   } 
                   id="username" 
-                  className="ml-lg-3 premium-dropdown"
+                  className="premium-dropdown"
                 >
                   <LinkContainer to="/profile">
                     <NavDropdown.Item><i className="fas fa-user-circle mr-2"></i> Profile</NavDropdown.Item>
@@ -91,7 +79,7 @@ const Header = ({ history }) => {
                 </NavDropdown>
               ) : (
                 <LinkContainer to="/login">
-                  <Nav.Link className="btn btn-outline-info rounded-pill px-4 ml-lg-3">
+                  <Nav.Link className="btn btn-outline-info rounded-pill px-4 ml-lg-3 my-2 my-lg-0">
                     <i className="fas fa-user mr-2"></i> Sign In
                   </Nav.Link>
                 </LinkContainer>

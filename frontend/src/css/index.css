@@ -1,16 +1,33 @@
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 main {
+  flex: 1;
   min-height: 80vh;
 }
+
 .rating span {
   margin: 0.1rem;
 }
+
 h3 {
   padding: 1rem 0;
 }
+
 h1 {
   font-size: 1.8rem;
   padding: 1rem 0;
 }
+
 h2 {
   font-size: 1.4rem;
   padding: 0.5rem 0;
@@ -18,11 +35,44 @@ h2 {
 
 .student-card {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(0, 0, 0, 0.05) !important;
+  margin-top: 1rem !important;
+  margin-bottom: 1.5rem !important;
 }
 
 .student-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+}
+
+.student-card .card-img-top {
+  height: 220px;
+  object-fit: cover;
+  transition: height 0.3s ease;
+}
+
+@media (max-width: 576px) {
+  .student-card .card-img-top {
+    height: 160px;
+  }
+
+  .student-card .card-body {
+    padding: 1rem !important;
+  }
+
+  .student-card .card-title {
+    font-size: 1.1rem !important;
+  }
+
+  .student-card .card-subtitle {
+    font-size: 0.85rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .student-card .btn {
+    padding: 8px 0 !important;
+    font-size: 0.9rem !important;
+  }
 }
 
 /* Premium Navigation Bar */
@@ -52,27 +102,19 @@ h2 {
   position: relative;
   transition: all 0.3s ease;
   margin: 0 5px;
+  display: flex !important;
+  align-items: center;
+  height: 100%;
 }
 
-.premium-navbar .nav-link::after {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 3px;
-  bottom: 0;
-  left: 50%;
-  background: linear-gradient(to right, #00f2fe, #4facfe);
-  transition: all 0.3s ease;
-  transform: translateX(-50%);
-  border-radius: 2px;
+.premium-navbar .navbar-nav {
+  align-items: center !important;
 }
 
-.premium-navbar .nav-link:hover::after {
-  width: 80%;
-}
-
-.premium-navbar .nav-link:hover {
-  color: #00f2fe !important;
+.premium-navbar .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 /* Avatar for Navbar */
@@ -86,7 +128,7 @@ h2 {
   font-weight: bold;
   color: white;
   font-size: 0.9rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   line-height: 1;
   text-transform: uppercase;
 }
@@ -99,7 +141,7 @@ h2 {
 .premium-dropdown .dropdown-menu {
   border: none;
   border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   padding: 10px;
   margin-top: 10px;
 }
@@ -156,7 +198,8 @@ h2 {
   color: #00f2fe;
 }
 
-.footer p, .footer li {
+.footer p,
+.footer li {
   color: rgba(255, 255, 255, 0.8);
   font-size: 0.95rem;
 }
@@ -342,6 +385,7 @@ h2 {
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -446,7 +490,8 @@ h2 {
   }
 
   .premium-table thead {
-    display: none; /* Hide headers on very small screens if needed, or keep responsive table scroll */
+    display: none;
+    /* Hide headers on very small screens if needed, or keep responsive table scroll */
   }
 
   .status-badge {
@@ -464,7 +509,8 @@ h2 {
     border-radius: 0;
   }
 
-  .premium-table td, .premium-table th {
+  .premium-table td,
+  .premium-table th {
     white-space: nowrap;
     padding: 1rem 0.75rem !important;
   }

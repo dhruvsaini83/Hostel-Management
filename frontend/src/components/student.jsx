@@ -11,7 +11,7 @@ const Student = ({ studentDetails: student }) => {
 
   return (
     <Card
-      className="my-3 border-0 shadow-sm h-100 student-card overflow-hidden"
+      className="border-0 shadow-sm h-100 student-card overflow-hidden"
       onClick={handleCardClick}
       style={{ cursor: "pointer", borderRadius: "15px" }}
     >
@@ -19,38 +19,63 @@ const Student = ({ studentDetails: student }) => {
         <Card.Img
           variant="top"
           src={student.image}
-          style={{ height: '220px', width: '100%', objectFit: 'cover' }}
+          className="card-img-top"
+          style={{ borderTopLeftRadius: '15px', borderTopRightRadius: '15px' }}
         />
-        <Badge
-          variant={student.status === 'Outside' ? 'danger' : student.status === 'Home' ? 'info' : 'success'}
-          style={{ position: 'absolute', top: '15px', right: '15px', fontSize: '0.85rem', padding: '0.5em 0.8em', borderRadius: '10px' }}
+        <div 
+          style={{ 
+            position: 'absolute', 
+            top: '12px', 
+            right: '12px',
+            zIndex: 1
+          }}
         >
-          {student.status || "Hostel"}
-        </Badge>
+          <Badge
+            className={`shadow-sm badge-${student.status === 'Outside' ? 'danger' : student.status === 'Home' ? 'info' : 'success'}`}
+            style={{ 
+              fontSize: '0.75rem', 
+              padding: '6px 12px', 
+              borderRadius: '30px',
+              textTransform: 'uppercase',
+              letterSpacing: '0.5px'
+            }}
+          >
+            {student.status || "Hostel"}
+          </Badge>
+        </div>
       </div>
 
-      <Card.Body className="d-flex flex-column p-4">
-        <Card.Title className="mb-1 font-weight-bold" style={{ fontSize: '1.4rem', color: '#2c3e50', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-          {student.name}
-        </Card.Title>
-        <Card.Subtitle className="mb-4 text-muted" style={{ fontSize: '0.95rem' }}>
-          <i className="fas fa-graduation-cap mr-2"></i> {student.category}
-        </Card.Subtitle>
+      <Card.Body className="d-flex flex-column p-3 p-md-4">
+        <div className="mb-2">
+          <h5 className="mb-0 font-weight-bold text-dark text-truncate" style={{ fontSize: '1.25rem' }}>
+            {student.name}
+          </h5>
+          <div className="text-muted small d-flex align-items-center mt-1">
+            <i className="fas fa-graduation-cap mr-2 text-info"></i>
+            {student.category}
+          </div>
+        </div>
 
-        <div className="mb-4 mt-auto">
-          <div className="d-flex align-items-center mb-2" style={{ color: '#5a6268' }}>
-            <div className="bg-light rounded p-2 mr-3 text-center" style={{ width: '35px' }}>
-              <i className="fas fa-door-closed text-primary"></i>
-            </div>
-            <span style={{ fontWeight: '500', fontSize: '1.05rem' }}>Room {student.roomNo}</span>
+        <div className="my-3 py-2 border-top border-bottom d-flex align-items-center justify-content-between">
+          <div className="d-flex align-items-center">
+            <i className="fas fa-door-open mr-2 text-primary"></i>
+            <span className="font-weight-bold text-secondary">Room {student.roomNo}</span>
+          </div>
+          <div className="d-flex align-items-center">
+            <i className="fas fa-th-large mr-2 text-info"></i>
+            <span className="small text-muted">{student.blockNo || 'B1'}</span>
           </div>
         </div>
 
         <a
           href={`tel:${student.contact}`}
           onClick={(e) => e.stopPropagation()}
-          className="btn btn-primary btn-block rounded-pill font-weight-bold shadow-sm"
-          style={{ padding: '10px 0', fontSize: '1.05rem', letterSpacing: '0.5px' }}
+          className="btn btn-primary btn-block rounded-pill font-weight-bold shadow-sm py-2 mt-auto premium-btn"
+          style={{ 
+            background: 'linear-gradient(to right, #1e3c72, #2a5298)',
+            border: 'none',
+            fontSize: '0.95rem'
+          }}
         >
           <i className="fas fa-phone-alt mr-2"></i> {student.contact}
         </a>

@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
 
-const SearchBox = ({history}) => {
+const SearchBox = ({ history }) => {
   const [keyword, setKeyword] = useState('')
   const submitHandler = (e) => {
-      e.preventDefault ()
-      if(keyword.trim()){
-        history.push(`/search/${keyword}`)
-      }else{
-          history.push(`/`)
-      }
+    e.preventDefault()
+    if (keyword.trim()) {
+      history.push(`/search/${keyword}`)
+    } else {
+      history.push(`/`)
+    }
   }
   return (
     <Form onSubmit={submitHandler} className="d-flex flex-nowrap align-items-center ml-lg-4 my-2 my-lg-0">
@@ -23,15 +23,15 @@ const SearchBox = ({history}) => {
           onChange={(e) => setKeyword(e.target.value)}
           style={{ minWidth: '220px', height: '40px', paddingLeft: '15px' }}
         ></Form.Control>
-        <Button 
-          className='p-2 font-weight-bold flex-shrink-0 text-uppercase ml-2 d-flex align-items-center' 
-          type='submit' 
+        <Button
+          className='p-2 font-weight-bold flex-shrink-0 text-uppercase ml-2 d-flex align-items-center'
+          type='submit'
           variant='outline-info'
-          style={{ 
-            borderRadius: '10px', 
-            color: '#00f2fe', 
-            borderColor: '#00f2fe', 
-            fontSize: '0.75rem', 
+          style={{
+            borderRadius: '10px',
+            color: '#00f2fe',
+            borderColor: '#00f2fe',
+            fontSize: '0.75rem',
             letterSpacing: '1px',
             height: '40px'
           }}

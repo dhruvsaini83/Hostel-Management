@@ -92,7 +92,7 @@ const HomeView = ({ match, history }) => {
         <>
           <Row>
             {students.map((student) => (
-              <Col key={student._id} xs={12} sm={6} md={4} lg={3} xl={3}>
+              <Col key={student._id} xs={12} sm={6} md={4} lg={3} xl={3} className="mb-3">
                 <Student studentDetails={student} />
               </Col>
             ))}
