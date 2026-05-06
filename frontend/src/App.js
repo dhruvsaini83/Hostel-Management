@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import HomeView from "../src/screens/homeView";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Container } from "react-bootstrap";
@@ -14,19 +14,28 @@ import ProfileView from "./screens/profileView";
 import UserListView from "./screens/userListView";
 import UserEditView from "./screens/userEditView";
 
+import ProtectedRoute from "./components/protectedRoute";
+
+import ScrollToTop from "./components/scrollToTop";
+
 const App = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <Router>
       <Header />
+      <ScrollToTop />
       <main className="py-3">
         <Container>
-          <Route path="/user/:userId/edit" component={UserEditView} />
-          <Route path="/userList" component={UserListView} />
-          <Route path="/profile" component={ProfileView} />
-          <Route path="/attendance" component={AttendanceView} />
-          <Route path="/analysis" component={AnalysisView} />
-          <Route path="/addStudent" component={AddStudentView} />
-          <Route path="/student/edit/:id" component={AddStudentView} exact />
+          <ProtectedRoute path="/user/:userId/edit" component={UserEditView} isAdmin />
+          <ProtectedRoute path="/userList" component={UserListView} isAdmin />
+          <ProtectedRoute path="/profile" component={ProfileView} />
+          <ProtectedRoute path="/attendance" component={AttendanceView} />
+          <ProtectedRoute path="/analysis" component={AnalysisView} isAdmin />
+          <ProtectedRoute path="/addStudent" component={AddStudentView} isAdmin />
+          <ProtectedRoute path="/student/edit/:id" component={AddStudentView} exact isAdmin />
           <Route path="/student/:id" component={StudentDetailsView} exact />
           <Route path="/login" component={LoginView} exact />
           <Route path="/register" component={RegisterView} exact />

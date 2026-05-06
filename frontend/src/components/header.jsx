@@ -1,12 +1,14 @@
 import React from "react";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
-import { Route } from "react-router-dom";
+import { useHistory, Route } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import SearchBox from "./searchBox";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../actions/userActions";
 
-const Header = ({ history }) => {
+const Header = () => {
+  const [expanded, setExpanded] = React.useState(false);
+  const history = useHistory();
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -17,9 +19,16 @@ const Header = ({ history }) => {
   };
   return (
     <header>
-      <Navbar variant="dark" expand="lg" collapseOnSelect className="premium-navbar">
+      <Navbar 
+        variant="dark" 
+        expand="lg" 
+        collapseOnSelect 
+        className="premium-navbar"
+        expanded={expanded}
+        onToggle={(expand) => setExpanded(expand)}
+      >
         <Container>
-          <LinkContainer to="/">
+          <LinkContainer to="/" onClick={() => setExpanded(false)}>
             <Navbar.Brand className="font-weight-bold d-flex align-items-center">
               <i className="fas fa-university mr-2 text-info"></i>
               <span style={{ letterSpacing: '1px' }}>RegiTrack</span>
@@ -33,17 +42,17 @@ const Header = ({ history }) => {
             
             <Nav className="mx-auto align-items-center text-center">
               {/* Links visible on BOTH mobile (centered) and desktop (centered) */}
-              <LinkContainer to="/attendance">
+              <LinkContainer to="/attendance" onClick={() => setExpanded(false)}>
                 <Nav.Link className="align-items-center text-nowrap px-3 py-2 py-lg-0 mx-1">
                   <i className="fas fa-clipboard-list mr-2 text-info"></i> Attendance
                 </Nav.Link>
               </LinkContainer>
-              <LinkContainer to="/addStudent">
+              <LinkContainer to="/addStudent" onClick={() => setExpanded(false)}>
                 <Nav.Link className="align-items-center text-nowrap px-3 py-2 py-lg-0 mx-1">
                   <i className="fas fa-user-plus mr-2 text-info"></i> Add Student
                 </Nav.Link>
               </LinkContainer>
-              <LinkContainer to="/analysis">
+              <LinkContainer to="/analysis" onClick={() => setExpanded(false)}>
                 <Nav.Link className="align-items-center text-nowrap px-3 py-2 py-lg-0 mx-1">
                   <i className="fas fa-chart-line mr-2 text-info"></i> Analysis
                 </Nav.Link>
@@ -64,16 +73,16 @@ const Header = ({ history }) => {
                   id="username" 
                   className="premium-dropdown"
                 >
-                  <LinkContainer to="/profile">
+                  <LinkContainer to="/profile" onClick={() => setExpanded(false)}>
                     <NavDropdown.Item><i className="fas fa-user-circle mr-2"></i> Profile</NavDropdown.Item>
                   </LinkContainer>
                   {userInfo.isAdmin && (
-                    <LinkContainer to="/userList">
+                    <LinkContainer to="/userList" onClick={() => setExpanded(false)}>
                       <NavDropdown.Item><i className="fas fa-users mr-2"></i> Manage Users</NavDropdown.Item>
                     </LinkContainer>
                   )}
                   <NavDropdown.Divider />
-                  <NavDropdown.Item onClick={logoutHandler} className="text-danger">
+                  <NavDropdown.Item onClick={() => { logoutHandler(); setExpanded(false); }} className="text-danger">
                     <i className="fas fa-sign-out-alt mr-2"></i> Logout
                   </NavDropdown.Item>
                 </NavDropdown>

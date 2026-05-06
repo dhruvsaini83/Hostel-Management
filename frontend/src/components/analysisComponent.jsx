@@ -181,18 +181,18 @@ const AnalysisComponent = () => {
                 </Table>
               </div>
 
-              <div className="d-flex justify-content-end mb-5">
-                <CSVLink
-                  data={data}
-                  headers={headers}
-                  filename={`attendance_${Date()
-                    .toString()
-                    .substring(0, 15)}.csv`}
-                  className="btn btn-primary rounded-pill px-4 shadow-sm"
-                >
-                  <i className="fas fa-download mr-2"></i> Download CSV
-                </CSVLink>
-              </div>
+              {data && data.length > 0 && (
+                <div className="d-flex justify-content-end mb-5">
+                  <CSVLink
+                    data={data}
+                    headers={headers}
+                    filename={`attendance_${new Date().toISOString().split('T')[0]}.csv`}
+                    className="btn btn-primary rounded-pill px-4 shadow-sm"
+                  >
+                    <i className="fas fa-download mr-2"></i> Download CSV
+                  </CSVLink>
+                </div>
+              )}
             </>
           )}
         </>

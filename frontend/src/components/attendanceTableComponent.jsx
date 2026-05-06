@@ -16,7 +16,7 @@ const AttendanceTableComponent = ({
   const dispatch = useDispatch();
 
   const attendanceDataEnter = useSelector((state) => state.attendanceDataEnter);
-  const { success, error } = attendanceDataEnter;
+  const { success, error, loading } = attendanceDataEnter;
 
   useEffect(() => {
     if (success) {
@@ -165,9 +165,13 @@ const AttendanceTableComponent = ({
           variant="primary"
           className="rounded-pill px-5 py-2 shadow font-weight-bold"
           onClick={updateAttendance}
-          disabled={!students || students.length === 0}
+          disabled={!students || students.length === 0 || loading}
         >
-          <i className="fas fa-check-circle mr-2"></i> Update Attendance
+          {loading ? (
+            <><i className="fas fa-spinner fa-spin mr-2"></i> Updating...</>
+          ) : (
+            <><i className="fas fa-check-circle mr-2"></i> Update Attendance</>
+          )}
         </Button>
       </div>
     </div>

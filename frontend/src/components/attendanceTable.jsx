@@ -20,6 +20,10 @@ const AttendanceTable = ({ roomNo }) => {
   } = attendanceDataEnter;
 
   useEffect(() => {
+    setAttendanceMap({});
+  }, [roomNo]);
+
+  useEffect(() => {
     if (success) {
       dispatch(action(roomNo));
     }

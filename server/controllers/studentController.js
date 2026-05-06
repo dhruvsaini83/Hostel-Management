@@ -75,7 +75,7 @@ const updateStudentProfile = asyncHandler(async (req, res) => {
 
     // Sync with today's attendance if status changed
     if (req.body.status && req.body.status !== oldStatus) {
-      const today = Date().toString().substring(0, 15);
+      const today = new Date().toISOString().split('T')[0];
       const attendance = await Attendance.findOne({ date: today });
       if (attendance) {
         // Update or add the student's status for today
@@ -156,10 +156,12 @@ const getStudentById = asyncHandler(async (req, res) => {
 
 const getStudentByRoomNo = asyncHandler(async (req, res) => {
   const attendance = await Attendance.findOne({
-    date: Date().toString().substring(0, 15),
+    date: new Date().toISOString().split('T')[0],
     roomNo: { $in: [req.params.roomId] },
   });
-  const students = await Student.find({ roomNo: req.params.roomId });
+  const students = await Student.find({ 
+    roomNo: { $regex: `^${req.params.roomId}$`, $options: "i" } 
+  });
   if (students) {
     attendance
       ? res.json({ students: students, attendance: attendance })

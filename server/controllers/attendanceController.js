@@ -3,7 +3,7 @@ import Attendance from "../models/attendance.js";
 import Student from "../models/student.js";
 
 const getAttendanceByRoomNo = asyncHandler(async (req, res) => {
-  const date = req.body.date || Date().toString().substring(0, 15);
+  const date = req.body.date || new Date().toISOString().split('T')[0];
   const attendance = await Attendance.findOne({
     roomNo: { $in: [req.body.roomNo] },
     date: date,
@@ -19,7 +19,7 @@ const getAttendanceByRoomNo = asyncHandler(async (req, res) => {
 });
 
 const getAttendance = asyncHandler(async (req, res) => {
-  const date = req.body.date || Date().toString().substring(0, 15);
+  const date = req.body.date || new Date().toISOString().split('T')[0];
   const attendance = await Attendance.findOne({
     date: date,
   });
@@ -32,7 +32,7 @@ const getAttendance = asyncHandler(async (req, res) => {
 });
 
 const enterAttendanceByRoomNo = asyncHandler(async (req, res) => {
-  const date = req.body.date || Date().toString().substring(0, 15);
+  const date = req.body.date || new Date().toISOString().split('T')[0];
   const attendance = await Attendance.findOne({
     date: date,
   });

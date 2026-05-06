@@ -21,6 +21,10 @@ const Student = ({ studentDetails: student }) => {
           src={student.image}
           className="card-img-top"
           style={{ borderTopLeftRadius: '15px', borderTopRightRadius: '15px' }}
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+          }}
         />
         <div 
           style={{ 

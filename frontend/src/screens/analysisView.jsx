@@ -32,7 +32,7 @@ const AnalysisView = () => {
 
   // 👇 IMPORTANT: keep backend-compatible format
   const formattedDate = useMemo(() => {
-    return startDate ? startDate.toDateString() : "";
+    return startDate ? startDate.toISOString().split('T')[0] : "";
   }, [startDate]);
 
   useEffect(() => {
