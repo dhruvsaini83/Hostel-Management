@@ -98,22 +98,50 @@ const AnalysisView = () => {
         <Col md={12}>
           <div className="bg-white p-4 rounded shadow-sm mb-4">
             <Row className="align-items-center">
-              <Col md={6}>
-                <h5 className="mb-0 text-muted">Analysis for</h5>
-                <h3 className="font-weight-bold text-primary">{formattedDate}</h3>
+              <Col md={12} lg={6} className="mb-3 mb-lg-0">
+                <div className="d-flex align-items-center">
+                  <Button 
+                    variant="light" 
+                    className="rounded-circle shadow-sm p-2 mr-3"
+                    onClick={() => {
+                      const prev = new Date(startDate);
+                      prev.setDate(prev.getDate() - 1);
+                      setStartDate(prev);
+                    }}
+                  >
+                    <i className="fas fa-chevron-left"></i>
+                  </Button>
+                  
+                  <div>
+                    <h5 className="mb-0 text-muted small text-uppercase letter-spacing-1">Analysis for</h5>
+                    <h3 className="font-weight-bold text-primary mb-0">{formattedDate}</h3>
+                  </div>
+
+                  <Button 
+                    variant="light" 
+                    className="rounded-circle shadow-sm p-2 ml-3"
+                    onClick={() => {
+                      const next = new Date(startDate);
+                      next.setDate(next.getDate() + 1);
+                      setStartDate(next);
+                    }}
+                  >
+                    <i className="fas fa-chevron-right"></i>
+                  </Button>
+                </div>
               </Col>
 
-              <Col md={6} className="d-flex justify-content-md-end align-items-center mt-3 mt-md-0">
-                <div className="mr-3">
+              <Col md={12} lg={6} className="d-flex justify-content-lg-end align-items-center">
+                <div className="mr-2 mr-md-3">
                   <DatePicker
                     selected={startDate}
                     onChange={handleDateChange}
-                    className="form-control premium-input"
+                    className="form-control premium-input shadow-sm"
                   />
                 </div>
                 <Button 
                   variant="primary" 
-                  className="rounded-pill px-4 shadow-sm"
+                  className="rounded-pill px-4 shadow-sm premium-btn"
                   onClick={() => dispatch(getAnalysisByDate(formattedDate))}
                 >
                   <i className="fas fa-sync-alt mr-2"></i> Refresh
