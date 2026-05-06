@@ -18,7 +18,7 @@ const Student = ({ studentDetails: student }) => {
       <div style={{ position: "relative" }}>
         <Card.Img
           variant="top"
-          src={student.image}
+          src={student.image || "https://cdn-icons-png.flaticon.com/512/149/149071.png"} 
           className="card-img-top"
           style={{ borderTopLeftRadius: '15px', borderTopRightRadius: '15px' }}
           onError={(e) => {

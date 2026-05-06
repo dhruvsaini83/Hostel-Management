@@ -103,10 +103,14 @@ const StudentDetailsView = ({ match, history }) => {
               <Col lg={4} md={5} className="mb-4">
                 <Card className="border-0 shadow-sm rounded-lg overflow-hidden">
                   <Image 
-                    src={student.image} 
+                    src={student.image || "https://cdn-icons-png.flaticon.com/512/149/149071.png"} 
                     alt={student.name} 
                     fluid 
                     style={{ height: '350px', objectFit: 'cover', width: '100%' }}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+                    }}
                   />
                   <Card.Body className="text-center pb-0">
                     <div className="mb-2">
