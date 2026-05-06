@@ -89,50 +89,66 @@ const StudentDetailsView = ({ match, history }) => {
           {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
           {errorDelete && <Message variant="danger">{errorDelete}</Message>}
           {student && (
-            <Row>
-              <Col md={3}>
-                <Image src={student.image} alt={student.name} fluid />
-              </Col>
-              <Col md={3}>
-                <ListGroup variant="flush">
-                  <ListGroup.Item>
-                    <h3>{student.name}</h3>
-                  </ListGroup.Item>
-                  <ListGroup.Item>
-                    <span>Phone No:{student.contact}</span>
-                  </ListGroup.Item>
-                  <ListGroup.Item>
-                    <span>Father Contact:{student.fatherContact}</span>
-                  </ListGroup.Item>
-                  <ListGroup.Item>
-                    <span>City:{student.city}</span>
-                  </ListGroup.Item>
-                  <ListGroup.Item>
-                    <span>Address:{student.address}</span>
-                  </ListGroup.Item>
-                </ListGroup>
-              </Col>
-              <Col md={4}>
-                <Card>
+            <Row className="mt-4">
+              <Col md={4} className="mb-4">
+                <Card className="border-0 shadow-sm rounded-lg overflow-hidden">
+                  <Image 
+                    src={student.image} 
+                    alt={student.name} 
+                    fluid 
+                    style={{ height: '350px', objectFit: 'cover', width: '100%' }}
+                  />
+                  <Card.Body className="text-center pb-0">
+                    <Card.Title as="h2" className="mb-0">{student.name}</Card.Title>
+                    <p className="text-muted mt-2 mb-3">
+                      <i className="fas fa-map-marker-alt mr-2"></i> {student.city}
+                    </p>
+                  </Card.Body>
                   <ListGroup variant="flush">
-                    <ListGroup.Item>
-                      <Row>
-                        <Col>Room No:</Col>
-                        <Col> {student.roomNo}</Col>
-                      </Row>
+                    <ListGroup.Item className="d-flex justify-content-between align-items-center">
+                      <span className="font-weight-bold">Phone No:</span>
+                      <a href={`tel:${student.contact}`} className="font-weight-bold text-dark" style={{ fontSize: '1.1rem', textDecoration: 'none' }}>
+                        {student.contact}
+                      </a>
+                    </ListGroup.Item>
+                    <ListGroup.Item className="d-flex justify-content-between align-items-center">
+                      <span className="font-weight-bold">Father Contact:</span>
+                      <a href={`tel:${student.fatherContact}`} className="font-weight-bold text-dark" style={{ fontSize: '1.1rem', textDecoration: 'none' }}>
+                        {student.fatherContact}
+                      </a>
                     </ListGroup.Item>
                     <ListGroup.Item>
-                      <Row>
-                        <Col>Block No:</Col>
-                        <Col> {student.blockNo}</Col>
+                      <span className="font-weight-bold d-block mb-1">Address:</span>
+                      <span className="text-muted">{student.address}</span>
+                    </ListGroup.Item>
+                  </ListGroup>
+                </Card>
+              </Col>
+              
+              <Col md={8}>
+                <Card className="border-0 shadow-sm rounded-lg mb-4">
+                  <Card.Header className="bg-white font-weight-bold h5 py-3">
+                    Hostel Details
+                  </Card.Header>
+                  <ListGroup variant="flush">
+                    <ListGroup.Item className="py-3">
+                      <Row className="align-items-center">
+                        <Col sm={4} className="font-weight-bold text-muted">Room No:</Col>
+                        <Col sm={8} className="font-weight-bold h5 mb-0">{student.roomNo}</Col>
                       </Row>
                     </ListGroup.Item>
-                    <ListGroup.Item>
-                      <Row>
-                        <Col>Status:</Col>
-                        <Col>
+                    <ListGroup.Item className="py-3">
+                      <Row className="align-items-center">
+                        <Col sm={4} className="font-weight-bold text-muted">Block No:</Col>
+                        <Col sm={8} className="font-weight-bold h5 mb-0">{student.blockNo}</Col>
+                      </Row>
+                    </ListGroup.Item>
+                    <ListGroup.Item className="py-3">
+                      <Row className="align-items-center">
+                        <Col sm={4} className="font-weight-bold text-muted">Current Status:</Col>
+                        <Col sm={5}>
                           <Form.Control
-                            size="sm"
+                            className="shadow-none"
                             as="select"
                             value={status}
                             onChange={(e) => setStatus(e.target.value)}
@@ -144,35 +160,33 @@ const StudentDetailsView = ({ match, history }) => {
                             ))}
                           </Form.Control>
                         </Col>
+                        <Col sm={3} className="text-right mt-3 mt-sm-0">
+                          <Button
+                            variant={status === student.status ? "secondary" : "primary"}
+                            className="w-100"
+                            type="button"
+                            onClick={updateStatus}
+                            disabled={status === student.status}
+                          >
+                            Update
+                          </Button>
+                        </Col>
                       </Row>
-                    </ListGroup.Item>
-                    <ListGroup.Item>
-                      <Button
-                        className="btn-block"
-                        type="button"
-                        onClick={updateStatus}
-                      >
-                        Update
-                      </Button>
                     </ListGroup.Item>
                   </ListGroup>
                 </Card>
-              </Col>
-              <Col>
-                <ListGroup variant="flush">
-                  <Row>
-                    <ListGroup.Item variant="secondary">
-                      <Button onClick={navigateToEdit}>
-                        <i className="fas fa-edit"></i>
-                      </Button>
-                    </ListGroup.Item>
-                    <ListGroup.Item>
-                      <Button variant="danger" onClick={deleteStudentHandler}>
-                        <i className="fas fa-trash"></i>
-                      </Button>
-                    </ListGroup.Item>
-                  </Row>
-                </ListGroup>
+
+                <Card className="border-0 shadow-sm rounded-lg">
+                  <Card.Body className="d-flex justify-content-end align-items-center">
+                    <span className="text-muted mr-auto">Administrative Actions:</span>
+                    <Button variant="outline-primary" className="mr-3 px-4" onClick={navigateToEdit}>
+                      <i className="fas fa-edit mr-2"></i> Edit Profile
+                    </Button>
+                    <Button variant="outline-danger" className="px-4" onClick={deleteStudentHandler}>
+                      <i className="fas fa-trash mr-2"></i> Delete Student
+                    </Button>
+                  </Card.Body>
+                </Card>
               </Col>
             </Row>
           )}

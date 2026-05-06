@@ -17,7 +17,7 @@ const Header = ({ history }) => {
   };
   return (
     <header>
-      <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
+      <Navbar variant="dark" expand="lg" collapseOnSelect className="premium-navbar">
         <Container>
           <LinkContainer to="/">
             <Navbar.Brand>RegiTrack</Navbar.Brand>
@@ -25,8 +25,9 @@ const Header = ({ history }) => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Route render={({ history }) => <SearchBox history={history} />} />
-            <Nav className="ml-auto">
-              <NavDropdown title="More">
+            <Nav className="ml-auto align-items-center">
+              {/* Dropdown for Small Screens Only */}
+              <NavDropdown title="More" id="more-dropdown" className="d-lg-none">
                 <LinkContainer to="/attendance">
                   <NavDropdown.Item>Attendance</NavDropdown.Item>
                 </LinkContainer>
@@ -37,8 +38,19 @@ const Header = ({ history }) => {
                   <NavDropdown.Item>View Analysis</NavDropdown.Item>
                 </LinkContainer>
               </NavDropdown>
+
+              {/* Direct Links for Large Screens Only */}
+              <LinkContainer to="/attendance">
+                <Nav.Link className="d-none d-lg-flex align-items-center text-nowrap">Attendance</Nav.Link>
+              </LinkContainer>
+              <LinkContainer to="/addStudent">
+                <Nav.Link className="d-none d-lg-flex align-items-center text-nowrap">Add Student</Nav.Link>
+              </LinkContainer>
+              <LinkContainer to="/analysis">
+                <Nav.Link className="d-none d-lg-flex align-items-center text-nowrap">View Analysis</Nav.Link>
+              </LinkContainer>
               {userInfo ? (
-                <NavDropdown title={userInfo.name} id="username">
+                <NavDropdown title={userInfo.name} id="username" className="ml-lg-3">
                   <LinkContainer to="/profile">
                     <NavDropdown.Item>Profile</NavDropdown.Item>
                   </LinkContainer>

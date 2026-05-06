@@ -43,9 +43,8 @@ const HomeView = ({ match, history }) => {
     <>
       <>
         <Container>
-          <Row className="justify-content-md-center">
-            <Col xs lg="2"></Col>
-            <Col md="auto">
+          <Row className="justify-content-center my-3">
+            <Col xs="auto">
               <ButtonGroup toggle>
                 {["Grid", "Table"].map((type) => (
                   <ToggleButton
@@ -64,7 +63,6 @@ const HomeView = ({ match, history }) => {
                 ))}
               </ButtonGroup>
             </Col>
-            <Col xs lg="2"></Col>
           </Row>
         </Container>
       </>
@@ -89,7 +87,7 @@ const HomeView = ({ match, history }) => {
         <>
           <Row>
             {students.map((student) => (
-              <Col key={student._id} sm={12} md={6} lg={4} xl={3}>
+              <Col key={student._id} xs={12} sm={6} md={4} lg={3} xl={3}>
                 <Student studentDetails={student} />
               </Col>
             ))}
