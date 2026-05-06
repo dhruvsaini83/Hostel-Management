@@ -13,23 +13,32 @@ const SearchBox = ({history}) => {
   }
   return (
     <Form onSubmit={submitHandler} className="d-flex flex-nowrap align-items-center ml-lg-4 my-2 my-lg-0">
-      <Form.Control
-        type='text'
-        value={keyword}
-        name='q'
-        placeholder='Search students...'
-        className='mr-2'
-        onChange={(e) => setKeyword(e.target.value)}
-        style={{ minWidth: '220px' }}
-      ></Form.Control>
-      <Button 
-        className='p-2 font-weight-bold flex-shrink-0 text-uppercase' 
-        type='submit' 
-        variant='outline-info'
-        style={{ borderRadius: '8px', color: '#00f2fe', borderColor: '#00f2fe', fontSize: '0.85rem', letterSpacing: '1px' }}
-      >
-        Search
-      </Button>
+      <div className="position-relative d-flex align-items-center">
+        <Form.Control
+          type='text'
+          value={keyword}
+          name='q'
+          placeholder='Search students...'
+          className='premium-input'
+          onChange={(e) => setKeyword(e.target.value)}
+          style={{ minWidth: '220px', height: '40px', paddingLeft: '15px' }}
+        ></Form.Control>
+        <Button 
+          className='p-2 font-weight-bold flex-shrink-0 text-uppercase ml-2 d-flex align-items-center' 
+          type='submit' 
+          variant='outline-info'
+          style={{ 
+            borderRadius: '10px', 
+            color: '#00f2fe', 
+            borderColor: '#00f2fe', 
+            fontSize: '0.75rem', 
+            letterSpacing: '1px',
+            height: '40px'
+          }}
+        >
+          <i className="fas fa-search mr-2"></i> Search
+        </Button>
+      </div>
     </Form>
   )
 }

@@ -75,6 +75,46 @@ h2 {
   color: #00f2fe !important;
 }
 
+/* Avatar for Navbar */
+.avatar-circle-sm {
+  width: 35px !important;
+  height: 35px !important;
+  border-radius: 50% !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: white;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.premium-navbar .dropdown-toggle {
+  display: flex !important;
+  align-items: center;
+}
+
+.premium-dropdown .dropdown-menu {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.premium-dropdown .dropdown-item {
+  border-radius: 8px;
+  padding: 8px 15px;
+  transition: all 0.2s;
+}
+
+.premium-dropdown .dropdown-item:hover {
+  background-color: #f8f9fa;
+  transform: translateX(5px);
+}
+
 /* Customizing the Dropdown for a premium feel */
 .premium-navbar .dropdown-menu {
   border: none;
