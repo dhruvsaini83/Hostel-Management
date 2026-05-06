@@ -11,6 +11,7 @@ import {
   ButtonGroup,
   ToggleButton,
   Container,
+  Button,
 } from "react-bootstrap";
 import StudentsTableView from "./studentTableView";
 
@@ -72,7 +73,18 @@ const HomeView = ({ match, history }) => {
       {loading ? (
         <Loading />
       ) : error ? (
-        <Message variant="danger">{error}</Message>
+        <Message variant="danger">{error} </Message>
+      ) : students && students.length === 0 ? (
+        <div className="text-center my-5">
+          <h3>No students found</h3>
+          <Button
+            variant="primary"
+            className="mt-3"
+            onClick={() => history.push("/addStudent")}
+          >
+            Add Student
+          </Button>
+        </div>
       ) : isGrid ? (
         <>
           <Row>

@@ -106,12 +106,8 @@ const getAllStudents = asyncHandler(async (req, res) => {
   const students = await Student.find({ ...keyword })
     .limit(pageSize)
     .skip(pageSize * (page - 1));
-  if (students && students.length != 0) {
-    res.json({ students, page, pages: Math.ceil(count / pageSize) });
-  } else {
-    res.status(404);
-    throw new Error("No Students Found");
-  }
+  
+  res.json({ students, page, pages: Math.ceil(count / pageSize) });
 });
 
 const deleteStudent = asyncHandler(async (req, res) => {
