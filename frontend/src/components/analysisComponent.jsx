@@ -6,6 +6,7 @@ import Loading from "./loader";
 import Message from "./message";
 import { CSVLink } from "react-csv";
 import { Row, Col } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 
 const AnalysisComponent = () => {
@@ -38,6 +39,10 @@ const AnalysisComponent = () => {
     return counts;
   }, [attendance]);
 
+  const total = useMemo(() => {
+    return categoryCount.Home + categoryCount.Outside + categoryCount.Hostel;
+  }, [categoryCount]);
+
   useEffect(() => {
     if (attendance) {
       setHeaders([
@@ -58,8 +63,9 @@ const AnalysisComponent = () => {
       setData(csvMapList);
     }
   }, [attendance]);
+
   return (
-    <>
+    <div className="fade-in">
       {error && <Message variant="danger">{error}</Message>}
       {loading ? (
         <Loading />
@@ -67,69 +73,132 @@ const AnalysisComponent = () => {
         <>
           {attendance && (
             <>
-
-              <Row className="mb-3 text-center">
-                <Col>
-                  <div className="p-2 border rounded bg-light">
-                    <h6>Home</h6>
-                    <strong>{categoryCount.Home}</strong>
-                  </div>
-                </Col>
-
-                <Col>
-                  <div className="p-2 border rounded bg-light">
-                    <h6>Outside</h6>
-                    <strong>{categoryCount.Outside}</strong>
-                  </div>
-                </Col>
-
-                <Col>
-                  <div className="p-2 border rounded bg-light">
+              <Row className="mb-4 mt-3">
+                <Col md={4} className="mb-3">
+                  <div className="metric-card shadow-sm bg-white border-left-success">
+                    <div className="icon-box bg-success text-white">
+                      <i className="fas fa-hotel"></i>
+                    </div>
                     <h6>Hostel</h6>
-                    <strong>{categoryCount.Hostel}</strong>
+                    <div className="value">{categoryCount.Hostel}</div>
+                    <div className="analysis-progress">
+                      <div 
+                        className="analysis-progress-bar bg-success" 
+                        style={{ width: `${(categoryCount.Hostel / (total || 1)) * 100}%` }}
+                      ></div>
+                    </div>
+                  </div>
+                </Col>
+
+                <Col md={4} className="mb-3">
+                  <div className="metric-card shadow-sm bg-white border-left-info">
+                    <div className="icon-box bg-info text-white">
+                      <i className="fas fa-home"></i>
+                    </div>
+                    <h6>Home</h6>
+                    <div className="value">{categoryCount.Home}</div>
+                    <div className="analysis-progress">
+                      <div 
+                        className="analysis-progress-bar bg-info" 
+                        style={{ width: `${(categoryCount.Home / (total || 1)) * 100}%` }}
+                      ></div>
+                    </div>
+                  </div>
+                </Col>
+
+                <Col md={4} className="mb-3">
+                  <div className="metric-card shadow-sm bg-white border-left-danger">
+                    <div className="icon-box bg-danger text-white">
+                      <i className="fas fa-walking"></i>
+                    </div>
+                    <h6>Outside</h6>
+                    <div className="value">{categoryCount.Outside}</div>
+                    <div className="analysis-progress">
+                      <div 
+                        className="analysis-progress-bar bg-danger" 
+                        style={{ width: `${(categoryCount.Outside / (total || 1)) * 100}%` }}
+                      ></div>
+                    </div>
                   </div>
                 </Col>
               </Row>
 
-              <Table striped bordered hover responsive className="table-sm">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Contact No</th>
-                    <th>Room No</th>
-                    <th>Attendance</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {attendance &&
-                    Object.entries(attendance.details).map((student) => {
-                      return (
-                        <tr key={student[0]}>
-                          <th>{student[1].name}</th>
-                          <td>{student[1].contact}</td>
-                          <td>{student[1].roomNo}</td>
-                          <td>{attendance.data[student[0]]}</td>
-                        </tr>
-                      );
-                    })}
-                </tbody>
-              </Table>
-              <CSVLink
-                data={data}
-                headers={headers}
-                filename={`attendance_${Date()
-                  .toString()
-                  .substring(0, 15)}.csv`}
-                className="btn btn-primary"
-              >
-                Download
-              </CSVLink>
+              <div className="premium-table-wrapper">
+                <Table hover responsive className="premium-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Contact No</th>
+                      <th>Room No</th>
+                      <th>Attendance</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {attendance &&
+                      Object.entries(attendance.details).map((student) => {
+                        const status = attendance.data[student[0]];
+                        return (
+                          <tr key={student[0]}>
+                            <td>
+                              <Link to={`/student/${student[0]}`} className="table-link font-weight-bold">
+                                {student[1].name}
+                              </Link>
+                            </td>
+                            <td>{student[1].contact}</td>
+                            <td>{student[1].roomNo}</td>
+                            <td>
+                              <span
+                                className='status-badge shadow-sm'
+                                style={{
+                                  backgroundColor:
+                                    status === "Outside"
+                                      ? "#fff5f5"
+                                      : status === "Home"
+                                        ? "#ebf8ff"
+                                        : "#f0fff4",
+                                  color:
+                                    status === "Outside"
+                                      ? "#e53e3e"
+                                      : status === "Home"
+                                        ? "#3182ce"
+                                        : "#38a169",
+                                  border: `1px solid ${
+                                    status === "Outside"
+                                      ? "#feb2b2"
+                                      : status === "Home"
+                                        ? "#bee3f8"
+                                        : "#c6f6d5"
+                                  }`
+                                }}
+                              >
+                                {status}
+                              </span>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                  </tbody>
+                </Table>
+              </div>
+
+              <div className="d-flex justify-content-end mb-5">
+                <CSVLink
+                  data={data}
+                  headers={headers}
+                  filename={`attendance_${Date()
+                    .toString()
+                    .substring(0, 15)}.csv`}
+                  className="btn btn-primary rounded-pill px-4 shadow-sm"
+                >
+                  <i className="fas fa-download mr-2"></i> Download CSV
+                </CSVLink>
+              </div>
             </>
           )}
         </>
       )}
-    </>
-  );
+    </div>
+    );
 };
 
 export default AnalysisComponent;

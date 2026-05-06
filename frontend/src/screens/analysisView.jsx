@@ -68,19 +68,24 @@ const AnalysisView = () => {
 
 
   return (
-    <>
-      <Row className="justify-content-between align-items-center">
-        <Link to="/" className="btn btn-light my-3">
-          Go Back
-        </Link>
+    <div className="fade-in">
+      <Row className="justify-content-between align-items-center mb-4">
+        <Col>
+          <Link to="/" className="btn btn-light shadow-sm rounded-pill px-3">
+            <i className="fas fa-arrow-left mr-2"></i> Go Back
+          </Link>
+        </Col>
 
-        <Button
-          variant="outline-danger"
-          size="sm"
-          onClick={() => setModal(true)}
-        >
-          Delete Attendance
-        </Button>
+        <Col className="text-right">
+          <Button
+            variant="outline-danger"
+            className="rounded-pill px-3"
+            size="sm"
+            onClick={() => setModal(true)}
+          >
+            <i className="fas fa-trash-alt mr-2"></i> Delete Attendance
+          </Button>
+        </Col>
       </Row>
 
       {loadingDelete && <Loading />}
@@ -89,59 +94,71 @@ const AnalysisView = () => {
         <Message variant="success">Attendance Deleted</Message>
       )}
 
-      <Col>
-        <Row className="align-items-center mb-3">
-          <Col>
-            <h5 className="mb-0">Analysis for</h5>
-            <strong>{formattedDate}</strong>
-          </Col>
+      <Row>
+        <Col md={12}>
+          <div className="bg-white p-4 rounded shadow-sm mb-4">
+            <Row className="align-items-center">
+              <Col md={6}>
+                <h5 className="mb-0 text-muted">Analysis for</h5>
+                <h3 className="font-weight-bold text-primary">{formattedDate}</h3>
+              </Col>
 
-          <Col className="text-end">
-            <DatePicker
-              selected={startDate}
-              onChange={handleDateChange}
-              className="form-control"
-            />
-          </Col>
-        </Row>
+              <Col md={6} className="d-flex justify-content-md-end align-items-center mt-3 mt-md-0">
+                <div className="mr-3">
+                  <DatePicker
+                    selected={startDate}
+                    onChange={handleDateChange}
+                    className="form-control premium-input"
+                  />
+                </div>
+                <Button 
+                  variant="primary" 
+                  className="rounded-pill px-4 shadow-sm"
+                  onClick={() => dispatch(getAnalysisByDate(formattedDate))}
+                >
+                  <i className="fas fa-sync-alt mr-2"></i> Refresh
+                </Button>
+              </Col>
+            </Row>
+          </div>
 
-        <Modal show={modal} onHide={() => setModal(false)} centered>
-          <Modal.Header closeButton>
-            <Modal.Title>
-              Delete Attendance Older Than N Days
-            </Modal.Title>
-          </Modal.Header>
+          <Modal show={modal} onHide={() => setModal(false)} centered>
+            <Modal.Header closeButton>
+              <Modal.Title>
+                Delete Attendance Older Than N Days
+              </Modal.Title>
+            </Modal.Header>
 
-          <Modal.Body>
-            <Form.Group controlId="days">
-              <Form.Label>Enter days</Form.Label>
-              <Form.Control
-                type="number"
-                min="1"
-                value={days}
-                onChange={(e) => setDays(e.target.value)}
-              />
-            </Form.Group>
-          </Modal.Body>
+            <Modal.Body>
+              <Form.Group controlId="days">
+                <Form.Label>Enter days</Form.Label>
+                <Form.Control
+                  type="number"
+                  min="1"
+                  value={days}
+                  onChange={(e) => setDays(e.target.value)}
+                />
+              </Form.Group>
+            </Modal.Body>
 
-          <Modal.Footer>
-            <Button variant="secondary" onClick={() => setModal(false)}>
-              Cancel
-            </Button>
-            <Button
-              variant="outline-danger"
-              onClick={handleDelete}
-              disabled={loadingDelete}
-            >
-              Delete
-            </Button>
-          </Modal.Footer>
-        </Modal>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={() => setModal(false)}>
+                Cancel
+              </Button>
+              <Button
+                variant="outline-danger"
+                onClick={handleDelete}
+                disabled={loadingDelete}
+              >
+                Delete
+              </Button>
+            </Modal.Footer>
+          </Modal>
 
-        {/* Keep original usage */}
-        <AnalysisComponent />
-      </Col>
-    </>
+          <AnalysisComponent />
+        </Col>
+      </Row>
+    </div>
   );
 };
 

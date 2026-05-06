@@ -88,6 +88,14 @@ const StudentsTableView = ({ keyword, pageNumber }) => {
                 ))}
               </tbody>
             </Table>
+            <div className='d-flex justify-content-between align-items-center px-3 py-2 bg-light border-top rounded-bottom small'>
+              <span className='text-muted'>
+                Showing <strong>{students ? students.length : 0}</strong> students on this page
+              </span>
+              <span className='text-info font-weight-bold'>
+                <i className='fas fa-info-circle mr-1'></i> Click on any row to view details
+              </span>
+            </div>
           </div>
           <Paginate
             pages={pages}

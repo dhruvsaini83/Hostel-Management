@@ -19,6 +19,7 @@ export const attendanceDataEnterReducer = (state = {}, action) => {
     case ATTENDANCE_DATA_ENTER_SUCCESS:
       return {
         loading: false,
+        success: true,
         attendance: action.payload,
       };
     case ATTENDANCE_DATA_ENTER_FAIL:

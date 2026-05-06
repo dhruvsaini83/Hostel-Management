@@ -1,5 +1,6 @@
 import asyncHandler from "express-async-handler";
 import Attendance from "../models/attendance.js";
+import Student from "../models/student.js";
 
 const getAttendanceByRoomNo = asyncHandler(async (req, res) => {
   const date = req.body.date || Date().toString().substring(0, 15);
@@ -35,6 +36,13 @@ const enterAttendanceByRoomNo = asyncHandler(async (req, res) => {
   const attendance = await Attendance.findOne({
     date: date,
   });
+
+  // Update Student model status as well
+  const dataEntries = Object.entries(req.body.data);
+  for (const [studentId, status] of dataEntries) {
+    await Student.findByIdAndUpdate(studentId, { status: status });
+  }
+
   if (attendance) {
     const dataTemp = attendance.data;
     const detailsTemp = attendance.details;
@@ -47,11 +55,19 @@ const enterAttendanceByRoomNo = asyncHandler(async (req, res) => {
     attendance.details = detailsTemp;
     attendance.data = dataTemp;
 
+    // Add room numbers to the list if not already present
+    const incomingRooms = Array.isArray(req.body.roomNo) ? req.body.roomNo : [req.body.roomNo];
+    incomingRooms.forEach(room => {
+      if (!attendance.roomNo.includes(room)) {
+        attendance.roomNo.push(room);
+      }
+    });
+
     const updatedAttendance = await attendance.save();
     res.json(updatedAttendance);
   } else {
     const newAttendance = await Attendance.create({
-      roomNo: [req.body.roomNo],
+      roomNo: Array.isArray(req.body.roomNo) ? req.body.roomNo : [req.body.roomNo],
       date: date,
       data: req.body.data,
       details: req.body.details,

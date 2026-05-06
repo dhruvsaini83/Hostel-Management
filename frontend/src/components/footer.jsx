@@ -14,10 +14,10 @@ const Footer = () => {
               attendance tracking, and room allocation with ease and precision.
             </p>
             <div className='social-icons mt-4'>
-              <a href='#'><i className='fab fa-facebook-f'></i></a>
-              <a href='#'><i className='fab fa-twitter'></i></a>
-              <a href='#'><i className='fab fa-instagram'></i></a>
-              <a href='#'><i className='fab fa-linkedin-in'></i></a>
+              <a href='#!'><i className='fab fa-facebook-f'></i></a>
+              <a href='#!'><i className='fab fa-twitter'></i></a>
+              <a href='#!'><i className='fab fa-instagram'></i></a>
+              <a href='#!'><i className='fab fa-linkedin-in'></i></a>
             </div>
           </Col>
           

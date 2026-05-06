@@ -37,66 +37,76 @@ const RegisterView = ({ location, history }) => {
   };
 
   return (
-    <FormContainer>
-      <h1>Sign Up</h1>
-      {message && <Message variant="danger">{message}</Message>}
-      {error && <Message variant="danger">{error}</Message>}
-      {loading && <Loader />}
-      <Form onSubmit={submitHandler}>
-        <Form.Group controlId="name">
-          <Form.Label>Name</Form.Label>
-          <Form.Control
-            type="name"
-            placeholder="Enter name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          ></Form.Control>
-        </Form.Group>
+    <div className='fade-in mt-5'>
+      <FormContainer>
+        <h1>Sign Up</h1>
+        {message && <Message variant="danger">{message}</Message>}
+        {error && <Message variant="danger">{error}</Message>}
+        {loading && <Loader />}
+        <Form onSubmit={submitHandler}>
+          <Form.Group controlId="name" className='mb-3'>
+            <Form.Label className='premium-label'>Name</Form.Label>
+            <Form.Control
+              type="name"
+              placeholder="Enter name"
+              value={name}
+              className='premium-input'
+              onChange={(e) => setName(e.target.value)}
+            ></Form.Control>
+          </Form.Group>
 
-        <Form.Group controlId="email">
-          <Form.Label>Email Address</Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="Enter email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          ></Form.Control>
-        </Form.Group>
+          <Form.Group controlId="email" className='mb-3'>
+            <Form.Label className='premium-label'>Email Address</Form.Label>
+            <Form.Control
+              type="email"
+              placeholder="Enter email"
+              value={email}
+              className='premium-input'
+              onChange={(e) => setEmail(e.target.value)}
+            ></Form.Control>
+          </Form.Group>
 
-        <Form.Group controlId="password">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Enter password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          ></Form.Control>
-        </Form.Group>
+          <Form.Group controlId="password" title="Password must be at least 6 characters" className='mb-3'>
+            <Form.Label className='premium-label'>Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Enter password"
+              value={password}
+              className='premium-input'
+              onChange={(e) => setPassword(e.target.value)}
+            ></Form.Control>
+          </Form.Group>
 
-        <Form.Group controlId="confirmPassword">
-          <Form.Label>Confirm Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Confirm password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          ></Form.Control>
-        </Form.Group>
+          <Form.Group controlId="confirmPassword" style={{ marginBottom: '2rem' }}>
+            <Form.Label className='premium-label'>Confirm Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Confirm password"
+              value={confirmPassword}
+              className='premium-input'
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            ></Form.Control>
+          </Form.Group>
 
-        <Button type="submit" variant="primary">
-          Register
-        </Button>
-      </Form>
+          <Button type="submit" variant="primary" className='premium-btn w-100 mb-3'>
+            Create Account
+          </Button>
+        </Form>
 
-      <Row className="py-3">
-        <Col>
-          Have an Account?{" "}
-          <Link to={redirect ? `/login?redirect=${redirect}` : "/login"}>
-            Login
-          </Link>
-        </Col>
-      </Row>
-    </FormContainer>
+        <Row className="py-3">
+          <Col className='text-center'>
+            <span className='text-muted'>Have an Account?</span>{" "}
+            <Link 
+              to={redirect ? `/login?redirect=${redirect}` : "/login"}
+              className='font-weight-bold text-info'
+              style={{ textDecoration: 'none' }}
+            >
+              Login Instead
+            </Link>
+          </Col>
+        </Row>
+      </FormContainer>
+    </div>
   );
 };
 

@@ -235,3 +235,197 @@ h2 {
 .premium-table .table-link:hover {
   color: #00f2fe;
 }
+
+/* Dashboard Metric Cards */
+.metric-card {
+  border: none;
+  border-radius: 16px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.metric-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1) !important;
+}
+
+.metric-card h6 {
+  font-weight: 600;
+  color: #718096;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  margin-bottom: 0.5rem;
+}
+
+.metric-card .value {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #1e3c72;
+}
+
+.metric-card .icon-box {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Mini Chart/Progress Bar Styles */
+.analysis-progress {
+  height: 10px;
+  border-radius: 5px;
+  background-color: #edf2f7;
+  overflow: hidden;
+  margin-top: 1rem;
+}
+
+.analysis-progress-bar {
+  height: 100%;
+  border-radius: 5px;
+  transition: width 1s ease-in-out;
+}
+
+/* Fade In Animation */
+.fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Premium Forms & Containers */
+.premium-form-container {
+  background: #ffffff;
+  padding: 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  margin-top: 2rem;
+  margin-bottom: 3rem;
+  border: 1px solid #f1f4f8;
+}
+
+.premium-form-container h1 {
+  font-weight: 800;
+  color: #1e3c72;
+  margin-bottom: 2rem;
+  font-size: 1.8rem;
+  text-align: center;
+}
+
+.premium-input {
+  border-radius: 10px !important;
+  padding: 0.75rem 1rem !important;
+  border: 1.5px solid #e2e8f0 !important;
+  transition: all 0.3s ease !important;
+  font-size: 0.95rem !important;
+}
+
+.premium-input:focus {
+  border-color: #1e3c72 !important;
+  box-shadow: 0 0 0 3px rgba(30, 60, 114, 0.1) !important;
+  transform: translateY(-1px);
+}
+
+.premium-label {
+  font-weight: 600;
+  color: #4a5568;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.premium-btn {
+  border-radius: 10px !important;
+  padding: 0.8rem 2rem !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+}
+
+.premium-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 14px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Admin Badges */
+.admin-badge {
+  padding: 0.3rem 0.7rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.badge-admin {
+  background: #fffaf0;
+  color: #b7791f;
+  border: 1px solid #fbd38d;
+}
+
+.badge-user {
+  background: #f7fafc;
+  color: #4a5568;
+  border: 1px solid #e2e8f0;
+}
+
+/* Mobile Responsiveness Fixes */
+@media (max-width: 768px) {
+  .premium-form-container {
+    padding: 1.5rem;
+    margin-top: 1rem;
+    border-radius: 15px;
+  }
+
+  .premium-form-container h1 {
+    font-size: 1.5rem;
+  }
+
+  .metric-card {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .metric-card .value {
+    font-size: 1.5rem;
+  }
+
+  .premium-table thead {
+    display: none; /* Hide headers on very small screens if needed, or keep responsive table scroll */
+  }
+
+  .status-badge {
+    padding: 0.2rem 0.5rem;
+    font-size: 0.7rem;
+  }
+
+  .premium-table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-left: -1rem;
+    margin-right: -1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border-radius: 0;
+  }
+
+  .premium-table td, .premium-table th {
+    white-space: nowrap;
+    padding: 1rem 0.75rem !important;
+  }
+}

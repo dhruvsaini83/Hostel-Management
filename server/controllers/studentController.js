@@ -59,6 +59,7 @@ const updateStudentProfile = asyncHandler(async (req, res) => {
   const student = await Student.findById(req.body._id);
 
   if (student) {
+    const oldStatus = student.status;
     student.name = req.body.name || student.name;
     student.address = req.body.address || student.address;
     student.category = req.body.category || student.category;
@@ -69,7 +70,29 @@ const updateStudentProfile = asyncHandler(async (req, res) => {
     student.roomNo = req.body.roomNo || student.roomNo;
     student.blockNo = req.body.blockNo || student.blockNo;
     student.status = req.body.status || student.status;
+
     const updatedStudent = await student.save();
+
+    // Sync with today's attendance if status changed
+    if (req.body.status && req.body.status !== oldStatus) {
+      const today = Date().toString().substring(0, 15);
+      const attendance = await Attendance.findOne({ date: today });
+      if (attendance) {
+        // Update or add the student's status for today
+        attendance.data.set(student._id.toString(), req.body.status);
+        
+        // Also ensure the student's details are in the details map
+        if (!attendance.details.has(student._id.toString())) {
+          attendance.details.set(student._id.toString(), {
+            name: updatedStudent.name,
+            contact: updatedStudent.contact,
+            roomNo: updatedStudent.roomNo,
+          });
+        }
+        
+        await attendance.save();
+      }
+    }
 
     res.json({
       _id: updatedStudent._id,

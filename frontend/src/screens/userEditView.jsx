@@ -49,9 +49,9 @@ const UserEditView = ({ match, history }) => {
   };
 
   return (
-    <>
-      <Link to="/admin/userList" className="btn btn-light my-3">
-        Go Back
+    <div className='fade-in'>
+      <Link to="/userList" className="btn btn-light shadow-sm rounded-pill px-3 mb-4">
+        <i className="fas fa-arrow-left mr-2"></i> Go Back
       </Link>
       <FormContainer>
         <h1>Edit User</h1>
@@ -63,42 +63,45 @@ const UserEditView = ({ match, history }) => {
           <Message variant="danger">{error}</Message>
         ) : (
           <Form onSubmit={submitHandler}>
-            <Form.Group controlId="name">
-              <Form.Label>Name</Form.Label>
+            <Form.Group controlId="name" className='mb-3'>
+              <Form.Label className='premium-label'>Name</Form.Label>
               <Form.Control
                 type="name"
                 placeholder="Enter name"
                 value={name}
+                className='premium-input'
                 onChange={(e) => setName(e.target.value)}
               ></Form.Control>
             </Form.Group>
 
-            <Form.Group controlId="email">
-              <Form.Label>Email Address</Form.Label>
+            <Form.Group controlId="email" className='mb-3'>
+              <Form.Label className='premium-label'>Email Address</Form.Label>
               <Form.Control
                 type="email"
                 placeholder="Enter email"
                 value={email}
+                className='premium-input'
                 onChange={(e) => setEmail(e.target.value)}
               ></Form.Control>
             </Form.Group>
 
-            <Form.Group controlId="isadmin">
+            <Form.Group controlId="isadmin" className='mb-4'>
               <Form.Check
                 type="checkbox"
                 label="Is Admin"
                 checked={isAdmin}
+                className='font-weight-bold text-info'
                 onChange={(e) => setIsAdmin(e.target.checked)}
               ></Form.Check>
             </Form.Group>
 
-            <Button type="submit" variant="primary">
-              Update
+            <Button type="submit" variant="primary" className='premium-btn w-100'>
+              Update User
             </Button>
           </Form>
         )}
       </FormContainer>
-    </>
+    </div>
   );
 };
 

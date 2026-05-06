@@ -47,66 +47,86 @@ const ProfileView = ({ history }) => {
   };
 
   return (
-    <Row>
-      <Col md={3}>
-        <h2>Profile</h2>
-        {message && <Message variant="danger">{message}</Message>}
+    <div className='fade-in'>
+      <Row className='justify-content-center'>
+        <Col md={8} lg={6}>
+          <div className='premium-form-container'>
+            <div className='text-center mb-4'>
+              <div 
+                className='rounded-circle bg-info text-white d-inline-flex align-items-center justify-content-center mb-3 shadow'
+                style={{ width: '80px', height: '80px', fontSize: '2rem' }}
+              >
+                <i className="fas fa-user"></i>
+              </div>
+              <h2 className='font-weight-bold'>User Profile</h2>
+              <p className='text-muted'>Manage your account settings</p>
+            </div>
 
-        {success && <Message variant="success">Profile Updated</Message>}
-        {loading ? (
-          <Loader />
-        ) : error ? (
-          <Message variant="danger">{error}</Message>
-        ) : (
-          <Form onSubmit={submitHandler}>
-            <Form.Group controlId="name">
-              <Form.Label>Name</Form.Label>
-              <Form.Control
-                type="name"
-                placeholder="Enter name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+            {message && <Message variant="danger">{message}</Message>}
+            {success && <Message variant="success">Profile Updated Successfully!</Message>}
+            
+            {loading ? (
+              <Loader />
+            ) : error ? (
+              <Message variant="danger">{error}</Message>
+            ) : (
+              <Form onSubmit={submitHandler}>
+                <Form.Group controlId="name" className='mb-3'>
+                  <Form.Label className='premium-label'>Full Name</Form.Label>
+                  <Form.Control
+                    type="name"
+                    placeholder="Enter name"
+                    value={name}
+                    className='premium-input'
+                    onChange={(e) => setName(e.target.value)}
+                  ></Form.Control>
+                </Form.Group>
 
-            <Form.Group controlId="email">
-              <Form.Label>Email Address</Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="Enter email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+                <Form.Group controlId="email" className='mb-3'>
+                  <Form.Label className='premium-label'>Email Address</Form.Label>
+                  <Form.Control
+                    type="email"
+                    placeholder="Enter email"
+                    value={email}
+                    className='premium-input'
+                    onChange={(e) => setEmail(e.target.value)}
+                  ></Form.Control>
+                </Form.Group>
 
-            <Form.Group controlId="password">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Enter password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+                <hr className='my-4' />
+                <p className='text-muted small mb-3'>Change Password (Optional)</p>
 
-            <Form.Group controlId="confirmPassword">
-              <Form.Label>Confirm Password</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Confirm password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+                <Form.Group controlId="password" title="Leave blank to keep same password"  className='mb-3'>
+                  <Form.Label className='premium-label'>New Password</Form.Label>
+                  <Form.Control
+                    type="password"
+                    placeholder="Enter new password"
+                    value={password}
+                    className='premium-input'
+                    onChange={(e) => setPassword(e.target.value)}
+                  ></Form.Control>
+                </Form.Group>
 
-            <Button type="submit" variant="primary">
-              Update
-            </Button>
-          </Form>
-        )}
-      </Col>
-      
-    </Row>
+                <Form.Group controlId="confirmPassword" style={{ marginBottom: '2rem' }}>
+                  <Form.Label className='premium-label'>Confirm New Password</Form.Label>
+                  <Form.Control
+                    type="password"
+                    placeholder="Confirm new password"
+                    value={confirmPassword}
+                    className='premium-input'
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                  ></Form.Control>
+                </Form.Group>
+
+                <Button type="submit" variant="primary" className='premium-btn w-100'>
+                  Save Changes
+                </Button>
+              </Form>
+            )}
+          </div>
+        </Col>
+      </Row>
+    </div>
   );
 };
 

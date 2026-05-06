@@ -20,6 +20,7 @@ import {
 import { STUDENT_UPDATE_RESET } from "../constants/studentConstant";
 const StudentDetailsView = ({ match, history }) => {
   const [status, setStatus] = useState("");
+  const [showToast, setShowToast] = useState(false);
   const dispatch = useDispatch();
   const studentDetails = useSelector((state) => state.studentDetails);
   const { loading, error, student } = studentDetails;
@@ -43,7 +44,14 @@ const StudentDetailsView = ({ match, history }) => {
     }
 
     if (successUpdate) {
+      setShowToast(true);
+      dispatch(getStudentDetails(match.params.id));
       dispatch({ type: STUDENT_UPDATE_RESET });
+      const timer = setTimeout(() => {
+        setShowToast(false);
+        window.location.reload();
+      }, 1500);
+      return () => clearTimeout(timer);
     }
 
     if (!student || !student._id || student._id !== match.params.id) {
@@ -66,8 +74,9 @@ const StudentDetailsView = ({ match, history }) => {
       state: { studentProps: student },
     });
   };
-  const updateStatus = () => {
-    dispatch(updateStudent({ ...student, status }));
+  const handleStatusChange = (newStatus) => {
+    setStatus(newStatus);
+    dispatch(updateStudent({ ...student, status: newStatus }));
   };
 
   const deleteStudentHandler = () => {
@@ -76,21 +85,22 @@ const StudentDetailsView = ({ match, history }) => {
     }
   };
   return (
-    <>
-      <Link className="btn btn-light my-3" to="/">
-        Go Back
+    <div className="fade-in">
+      <Link className="btn btn-light shadow-sm rounded-pill px-3 mb-4" to="/">
+        <i className="fas fa-arrow-left mr-2"></i> Go Back
       </Link>
       {loading || loadingUpdate || loadingDelete ? (
         <Loading />
       ) : error ? (
         <Message variant="danger">{error}</Message>
       ) : (
-        <>
+        <div className="fade-in">
+          {showToast && <Message variant="success">Attendance status updated successfully!</Message>}
           {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
           {errorDelete && <Message variant="danger">{errorDelete}</Message>}
           {student && (
-            <Row className="mt-4">
-              <Col md={4} className="mb-4">
+            <Row className="mt-2">
+              <Col lg={4} md={5} className="mb-4">
                 <Card className="border-0 shadow-sm rounded-lg overflow-hidden">
                   <Image 
                     src={student.image} 
@@ -99,59 +109,67 @@ const StudentDetailsView = ({ match, history }) => {
                     style={{ height: '350px', objectFit: 'cover', width: '100%' }}
                   />
                   <Card.Body className="text-center pb-0">
-                    <Card.Title as="h2" className="mb-0">{student.name}</Card.Title>
-                    <p className="text-muted mt-2 mb-3">
-                      <i className="fas fa-map-marker-alt mr-2"></i> {student.city}
+                    <div className="mb-2">
+                      <span className="badge badge-info px-3 py-1 rounded-pill shadow-sm">
+                        {student.category || 'Student'}
+                      </span>
+                    </div>
+                    <Card.Title as="h2" className="mb-0 font-weight-bold text-primary">{student.name}</Card.Title>
+                    <p className="text-muted mt-2 mb-3 h6">
+                      <i className="fas fa-map-marker-alt mr-2 text-info"></i> {student.city}
                     </p>
                   </Card.Body>
                   <ListGroup variant="flush">
-                    <ListGroup.Item className="d-flex justify-content-between align-items-center">
-                      <span className="font-weight-bold">Phone No:</span>
-                      <a href={`tel:${student.contact}`} className="font-weight-bold text-dark" style={{ fontSize: '1.1rem', textDecoration: 'none' }}>
+                    <ListGroup.Item className="d-flex justify-content-between align-items-center py-3">
+                      <span><i className="fas fa-phone mr-2 text-muted"></i> Phone No:</span>
+                      <a href={`tel:${student.contact}`} className="font-weight-bold text-dark table-link" style={{ textDecoration: 'none' }}>
                         {student.contact}
                       </a>
                     </ListGroup.Item>
-                    <ListGroup.Item className="d-flex justify-content-between align-items-center">
-                      <span className="font-weight-bold">Father Contact:</span>
-                      <a href={`tel:${student.fatherContact}`} className="font-weight-bold text-dark" style={{ fontSize: '1.1rem', textDecoration: 'none' }}>
+                    <ListGroup.Item className="d-flex justify-content-between align-items-center py-3">
+                      <span><i className="fas fa-user-friends mr-2 text-muted"></i> Father Contact:</span>
+                      <a href={`tel:${student.fatherContact}`} className="font-weight-bold text-dark table-link" style={{ textDecoration: 'none' }}>
                         {student.fatherContact}
                       </a>
                     </ListGroup.Item>
-                    <ListGroup.Item>
-                      <span className="font-weight-bold d-block mb-1">Address:</span>
-                      <span className="text-muted">{student.address}</span>
+                    <ListGroup.Item className="py-3">
+                      <span className="text-muted d-block mb-1 small uppercase font-weight-bold">Address</span>
+                      <div className="d-flex align-items-start">
+                        <i className="fas fa-home mt-1 mr-2 text-muted"></i>
+                        <span className="font-weight-normal">{student.address}</span>
+                      </div>
                     </ListGroup.Item>
                   </ListGroup>
                 </Card>
               </Col>
               
-              <Col md={8}>
+              <Col lg={8} md={7}>
                 <Card className="border-0 shadow-sm rounded-lg mb-4">
-                  <Card.Header className="bg-white font-weight-bold h5 py-3">
-                    Hostel Details
+                  <Card.Header className="bg-white font-weight-bold h5 py-3 border-bottom-0">
+                    <i className="fas fa-info-circle mr-2 text-primary"></i> Hostel Details
                   </Card.Header>
                   <ListGroup variant="flush">
-                    <ListGroup.Item className="py-3">
+                    <ListGroup.Item className="py-4">
                       <Row className="align-items-center">
-                        <Col sm={4} className="font-weight-bold text-muted">Room No:</Col>
-                        <Col sm={8} className="font-weight-bold h5 mb-0">{student.roomNo}</Col>
+                        <Col xs={4} className="font-weight-bold text-muted uppercase small letter-spacing-1">Room No</Col>
+                        <Col xs={8} className="font-weight-bold h5 mb-0 text-dark">{student.roomNo}</Col>
                       </Row>
                     </ListGroup.Item>
-                    <ListGroup.Item className="py-3">
+                    <ListGroup.Item className="py-4">
                       <Row className="align-items-center">
-                        <Col sm={4} className="font-weight-bold text-muted">Block No:</Col>
-                        <Col sm={8} className="font-weight-bold h5 mb-0">{student.blockNo}</Col>
+                        <Col xs={4} className="font-weight-bold text-muted uppercase small letter-spacing-1">Block No</Col>
+                        <Col xs={8} className="font-weight-bold h5 mb-0 text-dark">{student.blockNo}</Col>
                       </Row>
                     </ListGroup.Item>
-                    <ListGroup.Item className="py-3">
+                    <ListGroup.Item className="py-4">
                       <Row className="align-items-center">
-                        <Col sm={4} className="font-weight-bold text-muted">Current Status:</Col>
-                        <Col sm={5}>
+                        <Col sm={4} className="font-weight-bold text-muted uppercase small letter-spacing-1 mb-2 mb-sm-0">Attendance Status</Col>
+                        <Col sm={8}>
                           <Form.Control
-                            className="shadow-none"
+                            className="premium-input shadow-none"
                             as="select"
                             value={status}
-                            onChange={(e) => setStatus(e.target.value)}
+                            onChange={(e) => handleStatusChange(e.target.value)}
                           >
                             {["Hostel", "Outside", "Home"].map((x) => (
                               <option key={x} value={x}>
@@ -160,39 +178,38 @@ const StudentDetailsView = ({ match, history }) => {
                             ))}
                           </Form.Control>
                         </Col>
-                        <Col sm={3} className="text-right mt-3 mt-sm-0">
-                          <Button
-                            variant={status === student.status ? "secondary" : "primary"}
-                            className="w-100"
-                            type="button"
-                            onClick={updateStatus}
-                            disabled={status === student.status}
-                          >
-                            Update
-                          </Button>
-                        </Col>
                       </Row>
                     </ListGroup.Item>
                   </ListGroup>
                 </Card>
 
                 <Card className="border-0 shadow-sm rounded-lg">
-                  <Card.Body className="d-flex justify-content-end align-items-center">
-                    <span className="text-muted mr-auto">Administrative Actions:</span>
-                    <Button variant="outline-primary" className="mr-3 px-4" onClick={navigateToEdit}>
-                      <i className="fas fa-edit mr-2"></i> Edit Profile
-                    </Button>
-                    <Button variant="outline-danger" className="px-4" onClick={deleteStudentHandler}>
-                      <i className="fas fa-trash mr-2"></i> Delete Student
-                    </Button>
+                  <Card.Body className="d-flex flex-column flex-sm-row justify-content-end align-items-center py-3">
+                    <span className="text-muted mr-auto mb-3 mb-sm-0 small">Administrative Actions:</span>
+                    <div className="d-flex w-100 w-sm-auto justify-content-center">
+                      <Button 
+                        variant="outline-info" 
+                        className="mr-2 px-4 rounded-pill font-weight-bold shadow-sm" 
+                        onClick={navigateToEdit}
+                      >
+                        <i className="fas fa-edit mr-2"></i> Edit
+                      </Button>
+                      <Button 
+                        variant="outline-danger" 
+                        className="px-4 rounded-pill font-weight-bold shadow-sm" 
+                        onClick={deleteStudentHandler}
+                      >
+                        <i className="fas fa-trash mr-2"></i> Delete
+                      </Button>
+                    </div>
                   </Card.Body>
                 </Card>
               </Col>
             </Row>
           )}
-        </>
+        </div>
       )}
-    </>
+    </div>
   );
 };
 

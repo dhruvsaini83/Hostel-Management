@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Loading from "./loader";
 import Message from "./message";
 import AttendanceTableComponent from "./attendanceTableComponent";
+import { getStudentsByRoomNo as action } from "../actions/studentActions";
 
 const AttendanceTable = ({ roomNo }) => {
 
   const [attendanceMap, setAttendanceMap] = useState({});
+  const dispatch = useDispatch();
 
   const getStudentsByRoomNo = useSelector((state) => state.getStudentsByRoomNo);
   const { loading, error, students, attendance } = getStudentsByRoomNo;
@@ -14,7 +16,15 @@ const AttendanceTable = ({ roomNo }) => {
   const {
     loading: loadingAttendance,
     error: errorAttendance,
+    success,
   } = attendanceDataEnter;
+
+  useEffect(() => {
+    if (success) {
+      dispatch(action(roomNo));
+    }
+  }, [success, dispatch, roomNo]);
+
   useEffect(() => {
     if (students) {
       arrangeTable();
@@ -23,28 +33,21 @@ const AttendanceTable = ({ roomNo }) => {
   }, [attendance, students]);
 
   const arrangeTable = () => {
-    if (attendance) {
-      let tempMap = {};
-
+    let tempMap = {};
+    if (attendance && attendance.data) {
       students.forEach((student) => {
         if (attendance.data[student._id]) {
           tempMap[student._id] = attendance.data[student._id];
         } else {
-          tempMap[student._id] = "Hostel";
+          tempMap[student._id] = student.status || "Hostel";
         }
       });
-
-      setAttendanceMap(tempMap);
     } else {
-      let tempMap = {};
-
       students.forEach((student) => {
-        tempMap[student._id] = "Hostel";
+        tempMap[student._id] = student.status || "Hostel";
       });
-
-      setAttendanceMap(tempMap);
     }
-
+    setAttendanceMap(tempMap);
   };
 
   return (

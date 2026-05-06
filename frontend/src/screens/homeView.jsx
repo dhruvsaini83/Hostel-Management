@@ -40,7 +40,7 @@ const HomeView = ({ match, history }) => {
   }, [dispatch, history, userInfo, userLoading, keyword, pageNumber]);
 
   return (
-    <>
+    <div className="fade-in">
       <>
         <Container>
           <Row className="justify-content-center my-3">
@@ -67,7 +67,12 @@ const HomeView = ({ match, history }) => {
         </Container>
       </>
 
-      <h1>Students</h1>
+      <div className="d-flex align-items-center mb-4">
+        <h1 className="mb-0 mr-3">Students</h1>
+        <span className="badge badge-pill badge-primary shadow-sm px-3 py-2" style={{ fontSize: '1rem' }}>
+          {students ? students.length : 0} Total
+        </span>
+      </div>
       {loading ? (
         <Loading />
       ) : error ? (
@@ -103,7 +108,7 @@ const HomeView = ({ match, history }) => {
           <StudentsTableView keyword={keyword} pageNumber={pageNumber} />
         </>
       )}
-    </>
+    </div>
   );
 };
 
