@@ -1,4 +1,4 @@
-# 🏨 RegiTrack - Premium Hostel Management System
+# 🏨 RegiTrack - Hostel Management System
 
 RegiTrack is a modern, enterprise-grade Hostel Management System built with the MERN stack. It features a premium UI/UX, advanced security, and seamless cross-device synchronization designed for efficient hostel administration.
 
