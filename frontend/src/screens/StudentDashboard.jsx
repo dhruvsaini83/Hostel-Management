@@ -120,20 +120,21 @@ const StudentDashboard = () => {
             <Col md={8} className="mb-4">
               <Card className="shadow-sm border-0">
                 <Card.Body>
-                  <Card.Title className="mb-4">Attendance History (Last 30 Days)</Card.Title>
+                  <Card.Title className="mb-4">Attendance Trends (Last 15 Records)</Card.Title>
                   <div style={{ width: "100%", height: 300 }}>
                     <ResponsiveContainer>
-                      <LineChart data={stats.history}>
+                      <LineChart data={[...stats.history.slice(0, 15)].reverse()}>
                         <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="date" />
+                        <XAxis dataKey="date" tick={{fontSize: 10}} />
                         <YAxis hide />
                         <Tooltip />
                         <Line 
                            type="monotone" 
                            dataKey="status" 
                            stroke="#007bff" 
-                           strokeWidth={2}
-                           dot={{ r: 4 }}
+                           strokeWidth={3}
+                           dot={{ r: 5, fill: '#007bff' }}
+                           activeDot={{ r: 8 }}
                         />
                       </LineChart>
                     </ResponsiveContainer>
@@ -154,12 +155,12 @@ const StudentDashboard = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {stats.history.slice(-10).reverse().map((record, index) => (
+                        {stats.history.slice(0, 15).map((record, index) => (
                           <tr key={index}>
                             <td>{record.date}</td>
                             <td>
                               <span className={`badge badge-${record.status === 'Present' ? 'success' : record.status === 'Absent' ? 'danger' : 'warning'}`}>
-                                {record.status}
+                                {record.status === 'Present' ? 'In Hostel' : record.status === 'Leave' ? 'At Home' : 'Outside'}
                               </span>
                             </td>
                           </tr>

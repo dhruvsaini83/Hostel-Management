@@ -11,7 +11,13 @@ import {
   Form,
   Table,
   Badge,
+  Modal,
 } from "react-bootstrap";
+import { CSVLink } from "react-csv";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import axios from "axios";
+
 import Loading from "../components/loader";
 import Message from "../components/message";
 import CustomToast from "../components/customToast";
@@ -28,6 +34,13 @@ const StudentDetailsView = ({ match, history }) => {
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   
+  // Download Report State
+  const [showDownloadModal, setShowDownloadModal] = useState(false);
+  const [fromDate, setFromDate] = useState(new Date(new Date().setDate(new Date().getDate() - 30)));
+  const [toDate, setToDate] = useState(new Date());
+  const [csvData, setCsvData] = useState([]);
+  const [isPreparingCsv, setIsPreparingCsv] = useState(false);
+
   const dispatch = useDispatch();
 
   const studentDetails = useSelector((state) => state.studentDetails);
@@ -49,6 +62,9 @@ const StudentDetailsView = ({ match, history }) => {
 
   const attendanceStudentStats = useSelector((state) => state.attendanceStudentStats);
   const { loading: loadingStats, error: errorStats, stats } = attendanceStudentStats;
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
 
   useEffect(() => {
     if (successDelete) {
@@ -80,6 +96,58 @@ const StudentDetailsView = ({ match, history }) => {
     status,
   ]);
 
+  const formatDate = (dateStr) => {
+    if (!dateStr) return "N/A";
+    const [year, month, day] = dateStr.split("-");
+    return `${day}/${month}/${year}`;
+  };
+
+  const handlePrepareDownload = async () => {
+    setIsPreparingCsv(true);
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      const { data } = await axios.get(`/attendance/student/${student._id}`, config);
+      
+      const start = fromDate.toISOString().split('T')[0];
+      const end = toDate.toISOString().split('T')[0];
+      
+      // Filter data by date range
+      const filteredRecords = data.filter(record => {
+        return record.date >= start && record.date <= end;
+      });
+
+      // Prepare CSV format
+      const reportRows = [
+        ["STUDENT ATTENDANCE REPORT", ""],
+        ["Name", student.name],
+        ["Student ID", student.studentId || "N/A"],
+        ["Room/Block", `${student.roomNo} / ${student.blockNo}`],
+        ["Contact", student.contact],
+        ["Email", student.email || "N/A"],
+        ["Report Range", `${formatDate(start)} to ${formatDate(end)}`],
+        ["", ""], // Spacer
+        ["DATE", "STATUS", "REMARKS"]
+      ];
+
+      filteredRecords.forEach(record => {
+        reportRows.push([
+          formatDate(record.date),
+          record.status === "Present" ? "In Hostel" : record.status === "Leave" ? "At Home" : "Outside",
+          record.remarks || ""
+        ]);
+      });
+
+      setCsvData(reportRows);
+    } catch (err) {
+      alert("Error preparing report: " + err.message);
+    }
+    setIsPreparingCsv(false);
+  };
+
   const navigateToEdit = () => {
     history.push({
       pathname: `/student/edit/${student._id}`,
@@ -106,9 +174,19 @@ const StudentDetailsView = ({ match, history }) => {
         message={toastMessage} 
       />
       
-      <Link className="btn btn-light shadow-sm rounded-pill px-3 mb-4" to="/">
-        <i className="fas fa-arrow-left mr-2"></i> Go Back
-      </Link>
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <Link className="btn btn-light shadow-sm rounded-pill px-3" to="/">
+          <i className="fas fa-arrow-left mr-2"></i> Go Back
+        </Link>
+        <Button 
+          variant="primary" 
+          className="rounded-pill px-4 shadow-sm premium-btn"
+          onClick={() => setShowDownloadModal(true)}
+        >
+          <i className="fas fa-file-download mr-2"></i> Download Report
+        </Button>
+      </div>
+
       {loading || loadingUpdate || loadingDelete ? (
         <Loading />
       ) : error ? (
@@ -347,6 +425,77 @@ const StudentDetailsView = ({ match, history }) => {
           )}
         </div>
       )}
+
+      {/* Download Attendance Modal */}
+      <Modal 
+        show={showDownloadModal} 
+        onHide={() => {
+          setShowDownloadModal(false);
+          setCsvData([]);
+        }} 
+        centered
+      >
+        <Modal.Header closeButton className="bg-primary text-white">
+          <Modal.Title><i className="fas fa-file-download mr-2"></i> Attendance Report</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="p-4">
+          <p className="text-muted mb-4">Select the date range for <strong>{student?.name}'s</strong> attendance report.</p>
+          <Form>
+            <Row>
+              <Col md={6} className="mb-3">
+                <Form.Label className="font-weight-bold small uppercase text-muted">From Date</Form.Label>
+                <DatePicker
+                  selected={fromDate}
+                  onChange={(date) => {
+                    setFromDate(date);
+                    setCsvData([]);
+                  }}
+                  className="form-control premium-input"
+                  dateFormat="dd/MM/yyyy"
+                />
+              </Col>
+              <Col md={6} className="mb-3">
+                <Form.Label className="font-weight-bold small uppercase text-muted">To Date</Form.Label>
+                <DatePicker
+                  selected={toDate}
+                  onChange={(date) => {
+                    setToDate(date);
+                    setCsvData([]);
+                  }}
+                  className="form-control premium-input"
+                  dateFormat="dd/MM/yyyy"
+                />
+              </Col>
+            </Row>
+            
+            <div className="mt-4 text-center">
+              {csvData.length === 0 ? (
+                <Button 
+                  variant="info" 
+                  className="rounded-pill px-5 shadow-sm"
+                  onClick={handlePrepareDownload}
+                  disabled={isPreparingCsv}
+                >
+                  {isPreparingCsv ? (
+                    <><i className="fas fa-spinner fa-spin mr-2"></i> Preparing...</>
+                  ) : (
+                    <><i className="fas fa-cog mr-2"></i> Generate Report Data</>
+                  )}
+                </Button>
+              ) : (
+                <CSVLink
+                  data={csvData}
+                  filename={`attendance_${student?.name}_${fromDate.toISOString().split('T')[0]}_to_${toDate.toISOString().split('T')[0]}.csv`}
+                  className="btn btn-success rounded-pill px-5 shadow-sm"
+                  onClick={() => setShowDownloadModal(false)}
+                >
+                  <i className="fas fa-download mr-2"></i> Download CSV File
+                </CSVLink>
+              )}
+            </div>
+          </Form>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };
