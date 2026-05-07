@@ -11,7 +11,7 @@ RegiTrack is a comprehensive, enterprise-grade **Hostel Management System** desi
 ## ✨ Visual Preview
 
 <div align="center">
-  <img src="./phoneView.png" width="800">
+  <img src="./dashboard.png" alt="RegiTrack Dashboard Mockup" width="1200">
   <br>
   <em>Premium Dashboard with real-time analytics and Glassmorphism design.</em>
 </div>
@@ -19,7 +19,7 @@ RegiTrack is a comprehensive, enterprise-grade **Hostel Management System** desi
 <br>
 
 <div align="center">
-  <img src="./dashboard.png" alt="RegiTrack Mobile Mockup" width="300">
+  <img src="./phoneView.png" alt="RegiTrack Dashboard Mobile" width="300">
   <br>
   <em>Mobile-optimized interface for on-the-go management.</em>
 </div>
