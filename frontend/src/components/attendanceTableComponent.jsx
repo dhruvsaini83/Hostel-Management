@@ -62,6 +62,7 @@ const AttendanceTableComponent = ({
         <Table hover responsive className="premium-table">
           <thead>
             <tr>
+              <th>PHOTO</th>
               <th>NAME</th>
               <th>TOTAL ATTENDANCE</th>
               <th style={{ minWidth: '180px' }}>ATTENDANCE</th>
@@ -77,6 +78,21 @@ const AttendanceTableComponent = ({
 
                 return (
                   <tr key={student._id}>
+                    <td>
+                      <div 
+                        className="rounded-circle shadow-sm"
+                        style={{
+                          width: '45px',
+                          height: '45px',
+                          overflow: 'hidden',
+                          border: '2px solid #e9ecef',
+                          backgroundImage: `url(${student.image || 'https://via.placeholder.com/150'})`,
+                          backgroundSize: 'cover',
+                          backgroundPosition: 'center'
+                        }}
+                      >
+                      </div>
+                    </td>
                     <td>
                       <Link to={`/student/${student._id}`} className="table-link font-weight-bold">
                         {student.name}

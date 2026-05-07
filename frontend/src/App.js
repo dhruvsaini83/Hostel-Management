@@ -16,6 +16,7 @@ import UserEditView from "./screens/userEditView";
 import AdminDashboard from "./screens/AdminDashboard";
 import StaffDashboard from "./screens/StaffDashboard";
 import StudentDashboard from "./screens/StudentDashboard";
+import MyAttendanceView from "./screens/MyAttendanceView";
 import StaffManagementScreen from "./screens/StaffManagementScreen";
 import ApprovalScreen from "./screens/ApprovalScreen";
 import ProtectedRoute from "./components/protectedRoute";
@@ -57,6 +58,8 @@ const App = () => {
             <ProtectedRoute path="/analysis" component={AnalysisView} permissions={["Reports Access"]} />
             <ProtectedRoute path="/addStudent" component={AddStudentView} permissions={["Add Students"]} />
             <ProtectedRoute path="/student/edit/:id" component={AddStudentView} exact permissions={["Edit Students"]} />
+            
+            <ProtectedRoute path="/my-attendance" component={MyAttendanceView} roles={["student"]} />
             
             <Route path="/student/:id" component={StudentDetailsView} exact />
             <Route path="/login" component={LoginView} exact />

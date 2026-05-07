@@ -52,7 +52,13 @@ const Header = () => {
             <Nav className="mx-auto align-items-center text-center">
               {userInfo && (
                 <>
-                  {(hasPermission("Manage Attendance") || userInfo.role === 'student') && (
+                  {userInfo.role === 'student' ? (
+                    <LinkContainer to="/my-attendance" onClick={() => setExpanded(false)}>
+                      <Nav.Link className="align-items-center text-nowrap px-3 py-2 py-lg-0 mx-1">
+                        <i className="fas fa-clipboard-list mr-2 text-info"></i> Attendance
+                      </Nav.Link>
+                    </LinkContainer>
+                  ) : hasPermission("Manage Attendance") && (
                     <LinkContainer to="/attendance" onClick={() => setExpanded(false)}>
                       <Nav.Link className="align-items-center text-nowrap px-3 py-2 py-lg-0 mx-1">
                         <i className="fas fa-clipboard-list mr-2 text-info"></i> Attendance

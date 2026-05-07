@@ -49,6 +49,10 @@ const userSchema = mongoose.Schema(
       roomNo: String,
       blockNo: String,
     },
+    image: {
+      type: String,
+      default: "https://via.placeholder.com/150",
+    },
   },
   {
     timestamps: true,

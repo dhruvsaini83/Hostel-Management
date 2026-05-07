@@ -24,6 +24,7 @@ const authUser = asyncHandler(async (req, res) => {
       role: user.role,
       permissions: user.permissions,
       status: user.status,
+      image: user.image,
       isAdmin: user.role === "admin",
       token: generateToken(user._id),
     });
@@ -189,6 +190,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
       role: user.role,
       permissions: user.permissions,
       status: user.status,
+      image: user.image,
     });
   } else {
     res.status(404);
@@ -205,17 +207,27 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   if (user) {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
+    user.image = req.body.image || user.image;
     if (req.body.password) {
       user.password = req.body.password;
     }
 
     const updatedUser = await user.save();
 
+    // If student, sync image with Student model
+    if (user.role === 'student' && req.body.image) {
+      await Student.findOneAndUpdate(
+        { user: user._id },
+        { image: req.body.image }
+      );
+    }
+
     res.json({
       _id: updatedUser._id,
       name: updatedUser.name,
       email: updatedUser.email,
       role: updatedUser.role,
+      image: updatedUser.image,
       token: generateToken(updatedUser._id),
     });
   } else {
