@@ -38,7 +38,7 @@ const Header = () => {
           <LinkContainer to="/" onClick={() => setExpanded(false)}>
             <Navbar.Brand className="font-weight-bold d-flex align-items-center">
               <i className="fas fa-university mr-2 text-info"></i>
-              <span style={{ letterSpacing: '1px' }}>RegiTrack</span>
+              <span style={{ letterSpacing: '1px' }}>ResiTrack</span>
             </Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" className="border-0 shadow-none" />

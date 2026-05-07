@@ -73,7 +73,7 @@ const RegisterView = ({ location, history }) => {
     <div className='fade-in mt-3'>
       <FormContainer>
         <h1 className="mb-1">Sign Up</h1>
-        <p className="text-muted mb-4 small">Join RegiTrack. Fill all details accurately for approval.</p>
+        <p className="text-muted mb-4 small">Join ResiTrack. Fill all details accurately for approval.</p>
         
         {message && <Message variant="danger">{message}</Message>}
         {error && <Message variant="danger">{error}</Message>}

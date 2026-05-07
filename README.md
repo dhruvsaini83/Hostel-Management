@@ -1,17 +1,17 @@
-# 🏨 RegiTrack - Hostel Management System
+# 🏨 ResiTrack - Hostel Management System
 
 [![MERN Stack](https://img.shields.io/badge/Stack-MERN-blue.svg)](https://www.mongodb.com/mern-stack)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 
-RegiTrack is a comprehensive, enterprise-grade **Hostel Management System** designed to streamline administrative tasks, enhance security, and provide real-time data insights. Built with the **MERN Stack**, it offers a premium, mobile-responsive experience for Administrators, Staff, and Students.
+ResiTrack is a comprehensive, enterprise-grade **Hostel Management System** designed to streamline administrative tasks, enhance security, and provide real-time data insights. Built with the **MERN Stack**, it offers a premium, mobile-responsive experience for Administrators, Staff, and Students.
 
 ---
 
 ## ✨ Visual Preview
 
 <div align="center">
-  <img src="./dashboard.png" alt="RegiTrack Dashboard Mockup" width="1200">
+  <img src="./dashboard.png" alt="ResiTrack Dashboard Mockup" width="1200">
   <br>
   <em>Premium Dashboard with real-time analytics and Glassmorphism design.</em>
 </div>
@@ -19,7 +19,7 @@ RegiTrack is a comprehensive, enterprise-grade **Hostel Management System** desi
 <br>
 
 <div align="center">
-  <img src="./phoneView.png" alt="RegiTrack Dashboard Mobile" width="300">
+  <img src="./phoneView.png" alt="ResiTrack Dashboard Mobile" width="300">
   <br>
   <em>Mobile-optimized interface for on-the-go management.</em>
 </div>
@@ -29,7 +29,7 @@ RegiTrack is a comprehensive, enterprise-grade **Hostel Management System** desi
 ## 🚀 Key Features
 
 ### 👑 Role-Based Control (RBAC)
-- **Admin Dashboard:** Full control over users, staff, and student records. Approve registrations and manage system settings.
+- **Admin Dashboard:** Full control over users, staff, and student records. Approve Registrations and manage system settings.
 - **Staff Dashboard:** Specialized tools for daily attendance, room management, and student check-ins.
 - **Student Portal:** Students can view their profile, attendance history, and status in real-time.
 

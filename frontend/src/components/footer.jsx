@@ -8,7 +8,7 @@ const Footer = () => {
       <Container>
         <Row>
           <Col md={4} className='mb-4'>
-            <h5>RegiTrack</h5>
+            <h5>ResiTrack</h5>
             <p>
               An advanced Hostel Management System designed to streamline student registration, 
               attendance tracking, and room allocation with ease and precision.
@@ -44,7 +44,7 @@ const Footer = () => {
               </li>
               <li className='mt-3'>
                 <i className='fas fa-envelope mr-3 text-info'></i>
-                support@regitrack.com
+                support@resitrack.com
               </li>
             </ul>
           </Col>
@@ -54,7 +54,7 @@ const Footer = () => {
         
         <Row className='footer-bottom'>
           <Col className='text-center pb-3'>
-            Copyright &copy; {new Date().getFullYear()} RegiTrack. All Rights Reserved.
+            Copyright &copy; {new Date().getFullYear()} ResiTrack. All Rights Reserved.
           </Col>
         </Row>
       </Container>
