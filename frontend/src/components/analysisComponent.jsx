@@ -49,6 +49,7 @@ const AnalysisComponent = () => {
         { label: "Name", key: "name" },
         { label: "Contact", key: "contact" },
         { label: "Room No", key: "roomNo" },
+        { label: "Block", key: "blockNo" },
         { label: "Status", key: "attendance" },
       ]);
       const csvMapList = Object.entries(attendance.details).map(
@@ -56,6 +57,7 @@ const AnalysisComponent = () => {
           name: student.name,
           contact: student.contact,
           roomNo: student.roomNo,
+          blockNo: student.blockNo,
           attendance: attendance.data[id],
         })
       );
@@ -129,7 +131,8 @@ const AnalysisComponent = () => {
                     <tr>
                       <th>Name</th>
                       <th>Contact No</th>
-                      <th>Room No</th>
+                      <th>Room</th>
+                      <th>Block</th>
                       <th>Attendance</th>
                     </tr>
                   </thead>
@@ -146,6 +149,7 @@ const AnalysisComponent = () => {
                             </td>
                             <td>{student[1].contact}</td>
                             <td>{student[1].roomNo}</td>
+                            <td>{student[1].blockNo}</td>
                             <td>
                               <span
                                 className='status-badge shadow-sm'

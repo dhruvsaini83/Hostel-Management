@@ -33,11 +33,25 @@ const AttendanceTableComponent = ({
 
   const updateAttendance = () => {
     const today = new Date().toISOString().split('T')[0];
-    const attendanceData = Object.entries(attendanceMap).map(([studentId, status]) => ({
-      studentId,
-      status: status === "Hostel" ? "Present" : status === "Outside" ? "Absent" : "Leave",
-      remarks: "",
-    }));
+    const attendanceData = Object.entries(attendanceMap)
+      .filter(([_, status]) => status !== "Unmarked") // Only send marked records
+      .map(([studentId, status]) => {
+        let finalStatus = "Present";
+        if (status === "Home" || status === "Leave") finalStatus = "Leave";
+        if (status === "Outside" || status === "Absent") finalStatus = "Absent";
+        if (status === "Hostel" || status === "Present") finalStatus = "Present";
+        
+        return {
+          studentId,
+          status: finalStatus,
+          remarks: "",
+        };
+      });
+
+    if (attendanceData.length === 0) {
+      alert("No attendance marked to update. Please select a status for students.");
+      return;
+    }
 
     dispatch(
       postAttendance({
@@ -64,7 +78,7 @@ const AttendanceTableComponent = ({
             <tr>
               <th>PHOTO</th>
               <th>NAME</th>
-              <th>TOTAL ATTENDANCE</th>
+              <th>DAYS IN HOSTEL</th>
               <th style={{ minWidth: '180px' }}>ATTENDANCE</th>
               <th>CONTACT (PHONE/EMAIL)</th>
               <th>ROOM / BLOCK</th>
@@ -74,7 +88,7 @@ const AttendanceTableComponent = ({
             {students &&
               students.map((student) => {
                 const status =
-                  attendanceMap[student._id] ?? student.todayStatus ?? "Hostel";
+                  attendanceMap[student._id] ?? student.todayStatus ?? "Unmarked";
 
                 return (
                   <tr key={student._id}>
@@ -111,8 +125,8 @@ const AttendanceTableComponent = ({
                         <Form.Control
                           as="select"
                           size="sm"
-                          value={status}
-                          className="rounded-pill shadow-sm border-info"
+                          value={status === "Present" ? "Hostel" : status === "Absent" ? "Outside" : status === "Leave" ? "Home" : status}
+                          className={`rounded-pill shadow-sm ${status === "Unmarked" ? "border-warning" : "border-info"}`}
                           style={{ fontWeight: '600', height: '40px' }}
                           onChange={(e) => {
                             const value = e.target.value;
@@ -122,9 +136,10 @@ const AttendanceTableComponent = ({
                             }));
                           }}
                         >
-                          <option value="Hostel">Present (Hostel)</option>
-                          <option value="Home">Leave (Home)</option>
-                          <option value="Outside">Absent (Outside)</option>
+                          <option value="Unmarked">-- Unmarked --</option>
+                          <option value="Hostel">In Hostel (Present)</option>
+                          <option value="Home">At Home (Leave)</option>
+                          <option value="Outside">Outside (Absent)</option>
                         </Form.Control>
                       </Form.Group>
                     </td>

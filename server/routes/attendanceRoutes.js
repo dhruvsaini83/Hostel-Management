@@ -1,10 +1,12 @@
 import express from "express";
 import {
+  getStudentStats,
+  bulkMarkAttendance,
+  getAttendanceAnalysis,
+  getAnalysisByDate,
   markAttendance,
   getStudentAttendance,
   getAttendanceByDate,
-  getStudentStats,
-  bulkMarkAttendance,
 } from "../controllers/attendanceController.js";
 import { protect, checkPermission } from "../middleware/authMiddleware.js";
 
@@ -24,5 +26,11 @@ router.route("/stats/:studentId")
 
 router.route("/date/:date")
   .get(protect, checkPermission("View Students"), getAttendanceByDate);
+
+router.route("/analysis")
+  .get(protect, getAttendanceAnalysis);
+
+router.route("/getAnalysis")
+  .post(protect, getAnalysisByDate);
 
 export default router;

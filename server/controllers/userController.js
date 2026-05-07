@@ -148,6 +148,15 @@ const updateUserStatus = asyncHandler(async (req, res) => {
       // Check if student record already exists to avoid duplicates
       const studentExists = await Student.findOne({ user: user._id });
       if (!studentExists) {
+        // Check room capacity (max 2) in specific block before approval creation
+        const roomNo = user.registrationDetails.roomNo;
+        const blockNo = user.registrationDetails.blockNo;
+        const roomCount = await Student.countDocuments({ roomNo, blockNo });
+        if (roomCount >= 2) {
+          res.status(400);
+          throw new Error(`Room ${roomNo} in Block ${blockNo} is already at maximum capacity (2). Please change the room/block details before approving.`);
+        }
+
         // Generate unique student ID (e.g., ST-12345)
         const studentId = `ST-${Math.floor(10000 + Math.random() * 90000)}`;
         
@@ -227,7 +236,10 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       name: updatedUser.name,
       email: updatedUser.email,
       role: updatedUser.role,
+      permissions: updatedUser.permissions,
+      status: updatedUser.status,
       image: updatedUser.image,
+      isAdmin: updatedUser.role === "admin",
       token: generateToken(updatedUser._id),
     });
   } else {

@@ -39,7 +39,7 @@ const getAttendanceList = asyncHandler(async (req, res) => {
       return {
         ...student._doc,
         totalAttendance: presentCount,
-        todayStatus: attendanceMap[student._id] || "Absent",
+        todayStatus: attendanceMap[student._id] || "Unmarked",
       };
     })
   );
@@ -72,8 +72,14 @@ const addStudent = asyncHandler(async (req, res) => {
     throw new Error("Student with this email already exists");
   }
 
-  // Generate unique student ID (e.g., ST-12345)
   const studentId = `ST-${Math.floor(10000 + Math.random() * 90000)}`;
+
+  // Check room capacity (max 2) in specific block
+  const roomCount = await Student.countDocuments({ roomNo, blockNo });
+  if (roomCount >= 2) {
+    res.status(400);
+    throw new Error(`Maximum capacity of room ${roomNo} in Block ${blockNo} is 2. Room already full, please assign another room.`);
+  }
 
   const student = await Student.create({
     user: req.user._id,
@@ -127,7 +133,23 @@ const updateStudentProfile = asyncHandler(async (req, res) => {
     student.roomNo = req.body.roomNo || student.roomNo;
     student.blockNo = req.body.blockNo || student.blockNo;
     const oldStatus = student.status;
+    const oldRoomNo = student.roomNo;
+    const oldBlockNo = student.blockNo;
     student.status = req.body.status || student.status;
+    student.roomNo = req.body.roomNo || student.roomNo;
+    student.blockNo = req.body.blockNo || student.blockNo;
+
+    // Check room capacity if room number or block number is changing
+    if ((req.body.roomNo && req.body.roomNo !== oldRoomNo) || (req.body.blockNo && req.body.blockNo !== oldBlockNo)) {
+      const roomNoToCheck = req.body.roomNo || oldRoomNo;
+      const blockNoToCheck = req.body.blockNo || oldBlockNo;
+      
+      const roomCount = await Student.countDocuments({ roomNo: roomNoToCheck, blockNo: blockNoToCheck });
+      if (roomCount >= 2) {
+        res.status(400);
+        throw new Error(`Maximum capacity of room ${roomNoToCheck} in Block ${blockNoToCheck} is 2. Room already full, please assign another room.`);
+      }
+    }
 
     const updatedStudent = await student.save();
 
@@ -166,10 +188,12 @@ const getStudents = asyncHandler(async (req, res) => {
 
   const keyword = req.query.keyword
     ? {
-        name: {
-          $regex: req.query.keyword,
-          $options: "i",
-        },
+        $or: [
+          { name: { $regex: req.query.keyword, $options: "i" } },
+          { roomNo: { $regex: req.query.keyword, $options: "i" } },
+          { contact: { $regex: req.query.keyword, $options: "i" } },
+          { course: { $regex: req.query.keyword, $options: "i" } },
+        ],
       }
     : {};
 

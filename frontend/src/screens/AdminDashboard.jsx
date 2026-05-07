@@ -1,6 +1,9 @@
-import React, { useEffect } from "react";
-import { Row, Col, Card, Container } from "react-bootstrap";
+// Import at top was already handled or needs to be fixed.
+// I will just rewrite the whole top section to be clean.
+import React, { useEffect, useState } from "react";
+import { Row, Col, Card, Container, Badge } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 import {
   BarChart,
   Bar,
@@ -21,6 +24,8 @@ import { listStudents } from "../actions/studentActions";
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
+  const [attendanceData, setAttendanceData] = useState([]);
+  const [loadingAnalysis, setLoadingAnalysis] = useState(true);
 
   const userList = useSelector((state) => state.userList);
   const { loading: loadingUsers, error: errorUsers, users } = userList;
@@ -28,41 +33,36 @@ const AdminDashboard = () => {
   const studentList = useSelector((state) => state.studentsList);
   const { loading: loadingStudents, error: errorStudents, students } = studentList || {};
 
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
   useEffect(() => {
     dispatch(listUsers());
     dispatch(listStudents());
-  }, [dispatch]);
+
+    const fetchAnalysis = async () => {
+      try {
+        setLoadingAnalysis(true);
+        const config = {
+          headers: {
+            Authorization: `Bearer ${userInfo.token}`,
+          },
+        };
+        const { data } = await axios.get("/attendance/analysis", config);
+        setAttendanceData(data);
+        setLoadingAnalysis(false);
+      } catch (err) {
+        console.error("Error fetching analysis", err);
+        setLoadingAnalysis(false);
+      }
+    };
+
+    fetchAnalysis();
+  }, [dispatch, userInfo]);
 
   const totalStudentsCount = students ? students.length : 0;
   const totalStaffCount = users ? users.filter((u) => u.role === "staff").length : 0;
   const pendingApprovalsCount = users ? users.filter((u) => u.role === "student" && u.status === "pending").length : 0;
-
-  const getWeeklyData = () => {
-    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-    const data = [];
-    const baseCount = totalStudentsCount || 9;
-
-    for (let i = 6; i >= 0; i--) {
-      const d = new Date();
-      d.setDate(d.getDate() - i);
-      const dayName = days[d.getDay()];
-      const dateStr = `${d.getDate()}/${d.getMonth() + 1}`;
-      
-      const present = Math.floor(baseCount * (Math.random() * 0.4 + 0.5));
-      const leave = Math.floor((baseCount - present) * Math.random());
-      const absent = baseCount - present - leave;
-      
-      data.push({
-        name: `${dayName} (${dateStr})`,
-        present,
-        leave,
-        absent,
-      });
-    }
-    return data;
-  };
-
-  const attendanceData = getWeeklyData();
 
   const roleData = [
     { name: "Students", value: totalStudentsCount },
@@ -72,16 +72,23 @@ const AdminDashboard = () => {
 
   const COLORS = ["#38a169", "#3182ce", "#e53e3e"];
 
-  // Calculate today's mock attendance % based on real student count
-  const todayStats = attendanceData[attendanceData.length - 1];
-  const todayAttendanceRate = totalStudentsCount > 0 
+  // Calculate today's attendance %
+  const todayStats = attendanceData.length > 0 ? attendanceData[attendanceData.length - 1] : null;
+  const todayAttendanceRate = (totalStudentsCount > 0 && todayStats) 
     ? Math.round((todayStats.present / totalStudentsCount) * 100) 
     : 0;
 
   return (
-    <Container className="py-4">
-      <h1 className="mb-4">Admin Dashboard</h1>
-      {loadingUsers || loadingStudents ? (
+    <Container className="py-4 fade-in">
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <h1 className="font-weight-bold text-dark">Admin Dashboard</h1>
+        <Badge variant="light" className="text-muted p-2 shadow-sm border">
+          <i className="far fa-calendar-alt mr-2"></i>
+          {new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' })}
+        </Badge>
+      </div>
+
+      {loadingUsers || loadingStudents || loadingAnalysis ? (
         <Loader />
       ) : errorUsers || errorStudents ? (
         <Message variant="danger">{errorUsers || errorStudents}</Message>
@@ -89,38 +96,38 @@ const AdminDashboard = () => {
         <>
           <Row>
             <Col md={3} sm={6} className="mb-4">
-              <Card className="text-center shadow-sm border-0 bg-primary text-white h-100">
-                <Card.Body>
-                  <Card.Title>Total Students</Card.Title>
-                  <Card.Text className="display-4 font-weight-bold">{totalStudentsCount}</Card.Text>
-                  <i className="fas fa-user-graduate fa-2x opacity-50"></i>
+              <Card className="text-center shadow-sm border-0 bg-primary text-white h-100 premium-card">
+                <Card.Body className="d-flex flex-column justify-content-center">
+                  <div className="small opacity-75 mb-1 uppercase font-weight-bold">Total Students</div>
+                  <div className="display-4 font-weight-bold mb-2">{totalStudentsCount}</div>
+                  <div className="mt-auto"><i className="fas fa-user-graduate opacity-50"></i></div>
                 </Card.Body>
               </Card>
             </Col>
             <Col md={3} sm={6} className="mb-4">
-              <Card className="text-center shadow-sm border-0 bg-success text-white h-100">
-                <Card.Body>
-                  <Card.Title>Total Staff</Card.Title>
-                  <Card.Text className="display-4 font-weight-bold">{totalStaffCount}</Card.Text>
-                  <i className="fas fa-user-shield fa-2x opacity-50"></i>
+              <Card className="text-center shadow-sm border-0 bg-success text-white h-100 premium-card">
+                <Card.Body className="d-flex flex-column justify-content-center">
+                  <div className="small opacity-75 mb-1 uppercase font-weight-bold">Total Staff</div>
+                  <div className="display-4 font-weight-bold mb-2">{totalStaffCount}</div>
+                  <div className="mt-auto"><i className="fas fa-user-shield opacity-50"></i></div>
                 </Card.Body>
               </Card>
             </Col>
             <Col md={3} sm={6} className="mb-4">
-              <Card className="text-center shadow-sm border-0 bg-warning text-white h-100">
-                <Card.Body>
-                  <Card.Title>Pending Approvals</Card.Title>
-                  <Card.Text className="display-4 font-weight-bold">{pendingApprovalsCount}</Card.Text>
-                  <i className="fas fa-clock fa-2x opacity-50"></i>
+              <Card className="text-center shadow-sm border-0 bg-warning text-white h-100 premium-card">
+                <Card.Body className="d-flex flex-column justify-content-center">
+                  <div className="small opacity-75 mb-1 uppercase font-weight-bold">Pending Approvals</div>
+                  <div className="display-4 font-weight-bold mb-2">{pendingApprovalsCount}</div>
+                  <div className="mt-auto"><i className="fas fa-clock opacity-50"></i></div>
                 </Card.Body>
               </Card>
             </Col>
             <Col md={3} sm={6} className="mb-4">
-              <Card className="text-center shadow-sm border-0 bg-info text-white h-100">
-                <Card.Body>
-                  <Card.Title>Today Attendance</Card.Title>
-                  <Card.Text className="display-4 font-weight-bold">{todayAttendanceRate}%</Card.Text>
-                  <i className="fas fa-clipboard-check fa-2x opacity-50"></i>
+              <Card className="text-center shadow-sm border-0 bg-info text-white h-100 premium-card">
+                <Card.Body className="d-flex flex-column justify-content-center">
+                  <div className="small opacity-75 mb-1 uppercase font-weight-bold">Today Attendance</div>
+                  <div className="display-4 font-weight-bold mb-2">{todayAttendanceRate}%</div>
+                  <div className="mt-auto"><i className="fas fa-clipboard-check opacity-50"></i></div>
                 </Card.Body>
               </Card>
             </Col>
@@ -128,20 +135,25 @@ const AdminDashboard = () => {
 
           <Row className="mt-4">
             <Col md={8} className="mb-4">
-              <Card className="shadow-sm border-0">
-                <Card.Body>
-                  <Card.Title className="mb-4">Weekly Attendance Analytics</Card.Title>
+              <Card className="shadow-sm border-0 rounded-lg overflow-hidden">
+                <Card.Header className="bg-white border-0 pt-4 px-4">
+                   <h5 className="font-weight-bold mb-0">Weekly Attendance Trends</h5>
+                   <p className="text-muted small">Real-time presence analytics for the last 7 days</p>
+                </Card.Header>
+                <Card.Body className="p-4">
                   <div style={{ width: "100%", height: 350 }}>
                     <ResponsiveContainer>
                       <BarChart data={attendanceData}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" tick={{fontSize: 12}} />
-                        <YAxis label={{ value: 'Number of Students', angle: -90, position: 'insideLeft', style: {textAnchor: 'middle'} }} />
-                        <Tooltip />
-                        <Legend verticalAlign="top" height={36}/>
-                        <Bar name="Present (Hostel)" dataKey="present" fill="#38a169" radius={[4, 4, 0, 0]} />
-                        <Bar name="On Leave (Home)" dataKey="leave" fill="#3182ce" radius={[4, 4, 0, 0]} />
-                        <Bar name="Absent (Outside)" dataKey="absent" fill="#e53e3e" radius={[4, 4, 0, 0]} />
+                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
+                        <XAxis dataKey="name" tick={{fontSize: 12}} axisLine={false} tickLine={false} />
+                        <YAxis axisLine={false} tickLine={false} />
+                        <Tooltip 
+                          contentStyle={{ borderRadius: '10px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
+                        />
+                        <Legend verticalAlign="top" height={36} iconType="circle" />
+                        <Bar name="Present (Hostel)" dataKey="present" fill="#38a169" radius={[6, 6, 0, 0]} barSize={25} />
+                        <Bar name="On Leave (Home)" dataKey="leave" fill="#3182ce" radius={[6, 6, 0, 0]} barSize={25} />
+                        <Bar name="Absent (Outside)" dataKey="absent" fill="#e53e3e" radius={[6, 6, 0, 0]} barSize={25} />
                       </BarChart>
                     </ResponsiveContainer>
                   </div>
@@ -149,9 +161,12 @@ const AdminDashboard = () => {
               </Card>
             </Col>
             <Col md={4} className="mb-4">
-              <Card className="shadow-sm border-0">
-                <Card.Body>
-                  <Card.Title className="mb-4">User Roles Distribution</Card.Title>
+              <Card className="shadow-sm border-0 rounded-lg overflow-hidden">
+                <Card.Header className="bg-white border-0 pt-4 px-4">
+                   <h5 className="font-weight-bold mb-0">User Distribution</h5>
+                   <p className="text-muted small">By Role</p>
+                </Card.Header>
+                <Card.Body className="p-4">
                   <div style={{ width: "100%", height: 350 }}>
                     <ResponsiveContainer>
                       <PieChart>
@@ -159,18 +174,20 @@ const AdminDashboard = () => {
                           data={roleData}
                           cx="50%"
                           cy="50%"
-                          innerRadius={60}
-                          outerRadius={80}
+                          innerRadius={70}
+                          outerRadius={90}
                           fill="#8884d8"
-                          paddingAngle={5}
+                          paddingAngle={8}
                           dataKey="value"
                         >
                           {roleData.map((entry, index) => (
                             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                           ))}
                         </Pie>
-                        <Tooltip />
-                        <Legend />
+                        <Tooltip 
+                          contentStyle={{ borderRadius: '10px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
+                        />
+                        <Legend iconType="circle" />
                       </PieChart>
                     </ResponsiveContainer>
                   </div>

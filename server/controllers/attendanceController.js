@@ -116,10 +116,72 @@ const bulkMarkAttendance = asyncHandler(async (req, res) => {
   res.json(results);
 });
 
+// @desc    Get attendance analysis for last 7 days
+// @route   GET /api/attendance/analysis
+// @access  Private/Admin
+const getAttendanceAnalysis = asyncHandler(async (req, res) => {
+  const days = [];
+  const results = [];
+  
+  // Get last 7 days dates
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    days.push(d.toISOString().split('T')[0]);
+  }
+
+  for (const date of days) {
+    const present = await Attendance.countDocuments({ date, status: "Present" });
+    const leave = await Attendance.countDocuments({ date, status: "Leave" });
+    const absent = await Attendance.countDocuments({ date, status: "Absent" });
+    
+    const d = new Date(date);
+    const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const label = `${dayNames[d.getDay()]} (${d.getDate()}/${d.getMonth() + 1})`;
+
+    results.push({
+      name: label,
+      present,
+      leave,
+      absent,
+      date
+    });
+  }
+
+  res.json(results);
+});
+
+// @desc    Get detailed attendance analysis for a specific date
+// @route   POST /api/attendance/getAnalysis
+// @access  Private/Admin
+const getAnalysisByDate = asyncHandler(async (req, res) => {
+  const { date } = req.body;
+  const attendanceList = await Attendance.find({ date }).populate("student", "name contact roomNo blockNo");
+  
+  const dataMap = {};
+  const detailsMap = {};
+  
+  attendanceList.forEach(a => {
+    if (a.student) {
+      // Map backend statuses to frontend expected statuses
+      const status = a.status === "Present" ? "Hostel" : a.status === "Absent" ? "Outside" : "Home";
+      dataMap[a.student._id] = status;
+      detailsMap[a.student._id] = a.student;
+    }
+  });
+
+  res.json({
+    data: dataMap,
+    details: detailsMap
+  });
+});
+
 export {
   markAttendance,
   getStudentAttendance,
   getAttendanceByDate,
   getStudentStats,
   bulkMarkAttendance,
+  getAttendanceAnalysis,
+  getAnalysisByDate,
 };
