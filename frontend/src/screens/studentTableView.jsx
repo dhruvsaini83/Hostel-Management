@@ -1,5 +1,5 @@
 import React from "react";
-import { Table } from "react-bootstrap";
+import { Table, Button } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import Message from "../components/message";
 import Loader from "../components/loader";
@@ -28,9 +28,9 @@ const StudentsTableView = ({ keyword, pageNumber }) => {
                   <th>Course</th>
                   <th>NAME</th>
                   <th>STATUS</th>
-                  <th>CONTACT</th>
-                  <th>ROOM NO</th>
+                  <th>ROOM / BLOCK</th>
                   <th>CITY</th>
+                  <th className='text-center'>ACTIONS</th>
                 </tr>
               </thead>
               <tbody>
@@ -73,16 +73,24 @@ const StudentsTableView = ({ keyword, pageNumber }) => {
                       </span>
                     </td>
                     <td>
-                      <a
-                        href={`tel:${student.contact}`}
-                        className='table-link'
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        {student.contact}
-                      </a>
+                       <span className='font-weight-bold'>{student.roomNo}</span>
+                       <span className='text-muted mx-1'>/</span>
+                       <span className='small'>{student.blockNo}</span>
                     </td>
-                    <td className='font-weight-bold'>{student.roomNo}</td>
                     <td>{student.city}</td>
+                    <td className='text-center' onClick={(e) => e.stopPropagation()}>
+                       <Button 
+                         variant='outline-info' 
+                         size='sm' 
+                         className='rounded-pill px-3'
+                         onClick={() => history.push({
+                           pathname: `/student/edit/${student._id}`,
+                           state: { studentProps: student }
+                         })}
+                       >
+                         <i className='fas fa-edit'></i> Edit
+                       </Button>
+                    </td>
                   </tr>
                 ))}
               </tbody>

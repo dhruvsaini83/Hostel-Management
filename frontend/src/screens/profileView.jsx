@@ -71,8 +71,11 @@ const ProfileView = ({ history }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (password !== confirmPassword) {
       setMessage("Passwords do not match");
+    } else if (email && !emailRegex.test(email)) {
+      setMessage("Please enter a valid email address");
     } else {
       dispatch(updateUserProfile({ id: user._id, name, email, password, image }));
     }

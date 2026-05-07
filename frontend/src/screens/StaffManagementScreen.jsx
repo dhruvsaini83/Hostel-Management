@@ -62,6 +62,20 @@ const StaffManagementScreen = () => {
     setLoadingAction(true);
     setActionError(null);
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (email && !emailRegex.test(email)) {
+      setActionError("Please enter a valid email address.");
+      setLoadingAction(false);
+      return;
+    }
+
+    // Mobile Validation
+    if (mobile && mobile.length !== 10) {
+      setActionError("Mobile number must be exactly 10 digits.");
+      setLoadingAction(false);
+      return;
+    }
+
     try {
       const config = {
         headers: {

@@ -17,6 +17,7 @@ const studentSchema = mongoose.Schema(
       required: false,
       unique: true,
       sparse: true,
+      match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
     },
     name: {
       type: String,
@@ -37,10 +38,14 @@ const studentSchema = mongoose.Schema(
     contact: {
       type: String,
       required: true,
+      minlength: [10, "Contact must be 10 digits"],
+      maxlength: [10, "Contact must be 10 digits"],
     },
     fatherContact: {
       type: String,
       required: true,
+      minlength: [10, "Contact must be 10 digits"],
+      maxlength: [10, "Contact must be 10 digits"],
     },
     image: {
       type: String,

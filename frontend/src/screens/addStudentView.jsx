@@ -64,6 +64,12 @@ const AddStudentView = () => {
     e.preventDefault();
     setValidationError("");
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (email && !emailRegex.test(email)) {
+      setValidationError("Please enter a valid email address");
+      return;
+    }
+
     if (contact && contact.length !== 10) {
       setValidationError("Student contact number must be exactly 10 digits");
       return;
