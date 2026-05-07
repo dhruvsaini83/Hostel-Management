@@ -44,7 +44,9 @@ const Header = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" className="border-0 shadow-none" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto align-items-center">
-              <Route render={({ history }) => <SearchBox history={history} />} />
+              {userInfo && userInfo.role !== 'student' && (
+                <Route render={({ history }) => <SearchBox history={history} />} />
+              )}
             </Nav>
             
             <Nav className="mx-auto align-items-center text-center">

@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col, Card, Container, Table } from "react-bootstrap";
+import { Row, Col, Card, Container, Table, Button, Modal, Form, Badge } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { CSVLink } from "react-csv";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import Loader from "../components/loader";
 import Message from "../components/message";
 import {
@@ -18,12 +21,23 @@ const StudentDashboard = () => {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [studentProfile, setStudentProfile] = useState(null);
+
+  // Download Report State
+  const [showDownloadModal, setShowDownloadModal] = useState(false);
+  const [fromDate, setFromDate] = useState(new Date(new Date().setDate(new Date().getDate() - 30)));
+  const [toDate, setToDate] = useState(new Date());
+  const [csvData, setCsvData] = useState([]);
+  const [isPreparingCsv, setIsPreparingCsv] = useState(false);
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
-  // Since Student model and User model are separate, we might need the student record ID.
-  // For now, let's assume we can fetch stats by some means, or we need to find the student ID first.
+  const formatDate = (dateStr) => {
+    if (!dateStr) return "N/A";
+    const [year, month, day] = dateStr.split("-");
+    return `${day}/${month}/${year}`;
+  };
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -35,12 +49,11 @@ const StudentDashboard = () => {
           },
         };
         
-        // First get student profile to get student ID
-        // Note: In a real app, you'd probably link these better or have a 'me' endpoint
         const { data: profiles } = await axios.get("/student/all", config);
-        const myProfile = profiles.students.find(s => s.name === userInfo.name); // Simple match for now
+        const myProfile = profiles.students.find(s => s.name === userInfo.name);
 
         if (myProfile) {
+          setStudentProfile(myProfile);
           const { data: attendanceStats } = await axios.get(`/attendance/stats/${myProfile._id}`, config);
           setStats(attendanceStats);
         } else {
@@ -56,17 +69,67 @@ const StudentDashboard = () => {
     fetchStats();
   }, [userInfo]);
 
+  const handlePrepareDownload = async () => {
+    setIsPreparingCsv(true);
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      const { data } = await axios.get(`/attendance/student/${studentProfile._id}`, config);
+      
+      const start = fromDate.toISOString().split('T')[0];
+      const end = toDate.toISOString().split('T')[0];
+      
+      const filteredRecords = data.filter(record => {
+        return record.date >= start && record.date <= end;
+      });
+
+      const reportRows = [
+        ["MY ATTENDANCE REPORT", ""],
+        ["Name", studentProfile.name],
+        ["Student ID", studentProfile.studentId || "N/A"],
+        ["Room/Block", `${studentProfile.roomNo} / ${studentProfile.blockNo}`],
+        ["Report Range", `${formatDate(start)} to ${formatDate(end)}`],
+        ["", ""],
+        ["DATE", "STATUS", "MARKED BY", "REMARKS"]
+      ];
+
+      filteredRecords.forEach(record => {
+        reportRows.push([
+          formatDate(record.date),
+          record.status === "Present" ? "In Hostel" : record.status === "Leave" ? "At Home" : "Outside",
+          record.markedBy ? record.markedBy.name : "System",
+          record.remarks || ""
+        ]);
+      });
+
+      setCsvData(reportRows);
+    } catch (err) {
+      alert("Error preparing report: " + err.message);
+    }
+    setIsPreparingCsv(false);
+  };
+
   return (
     <Container className="py-4">
       <Row className="mb-4 align-items-center">
-        <Col md={8}>
-          <h1>Welcome, {userInfo.name}</h1>
-          <p className="text-muted">Here is your attendance and leave summary.</p>
+        <Col md={7}>
+          <h1 className="font-weight-bold text-primary">Welcome, {userInfo.name}</h1>
+          <p className="text-muted">Review your attendance performance and download reports.</p>
         </Col>
-        <Col md={4} className="text-right">
-           <div className="p-3 bg-light rounded shadow-sm">
-              <h5 className="mb-0 text-primary">Attendance Score</h5>
-              <h2 className="mb-0 font-weight-bold">{stats ? stats.percentage : 0}%</h2>
+        <Col md={5} className="d-flex justify-content-end align-items-center">
+           <Button 
+             variant="light" 
+             className="mr-3 rounded-pill px-4 shadow-sm border"
+             onClick={() => setShowDownloadModal(true)}
+           >
+             <i className="fas fa-file-download mr-2 text-primary"></i> <span className="text-primary font-weight-bold">Download Report</span>
+           </Button>
+           <div className="p-2 bg-white text-primary rounded-lg shadow-sm text-center border" style={{ minWidth: '120px' }}>
+              <div className="small text-muted font-weight-bold uppercase">Score</div>
+              <div className="h3 mb-0 font-weight-bold">{stats ? stats.percentage : 0}%</div>
            </div>
         </Col>
       </Row>
@@ -76,52 +139,55 @@ const StudentDashboard = () => {
       ) : error ? (
         <Message variant="danger">{error}</Message>
       ) : (
-        <>
+        <div className="fade-in">
           <Row>
             <Col md={3} className="mb-4">
-              <Card className="text-center shadow-sm border-0 border-left-success h-100">
+              <Card className="text-center shadow-sm border-0 border-left-success h-100 bg-white">
                 <Card.Body>
-                  <Card.Title className="text-success font-weight-bold">Total Present</Card.Title>
-                  <Card.Text className="display-4">{stats.present}</Card.Text>
-                  <i className="fas fa-check-circle fa-2x text-success opacity-50"></i>
+                  <Card.Title className="text-secondary small uppercase font-weight-bold mb-1">In Hostel</Card.Title>
+                  <Card.Text className="h1 font-weight-bold text-success mb-0">{stats.present}</Card.Text>
+                  <div className="small text-muted">Days</div>
                 </Card.Body>
               </Card>
             </Col>
             <Col md={3} className="mb-4">
-              <Card className="text-center shadow-sm border-0 border-left-danger h-100">
+              <Card className="text-center shadow-sm border-0 border-left-warning h-100 bg-white">
                 <Card.Body>
-                  <Card.Title className="text-danger font-weight-bold">Total Absent</Card.Title>
-                  <Card.Text className="display-4">{stats.absent}</Card.Text>
-                  <i className="fas fa-times-circle fa-2x text-danger opacity-50"></i>
+                  <Card.Title className="text-secondary small uppercase font-weight-bold mb-1">At Home</Card.Title>
+                  <Card.Text className="h1 font-weight-bold text-warning mb-0">{stats.leave}</Card.Text>
+                  <div className="small text-muted">Days</div>
                 </Card.Body>
               </Card>
             </Col>
             <Col md={3} className="mb-4">
-              <Card className="text-center shadow-sm border-0 border-left-warning h-100">
+              <Card className="text-center shadow-sm border-0 border-left-danger h-100 bg-white">
                 <Card.Body>
-                  <Card.Title className="text-warning font-weight-bold">On Leave</Card.Title>
-                  <Card.Text className="display-4">{stats.leave}</Card.Text>
-                  <i className="fas fa-calendar-minus fa-2x text-warning opacity-50"></i>
+                  <Card.Title className="text-secondary small uppercase font-weight-bold mb-1">Outside</Card.Title>
+                  <Card.Text className="h1 font-weight-bold text-danger mb-0">{stats.absent}</Card.Text>
+                  <div className="small text-muted">Days</div>
                 </Card.Body>
               </Card>
             </Col>
             <Col md={3} className="mb-4">
-              <Card className="text-center shadow-sm border-0 border-left-primary h-100">
+              <Card className="text-center shadow-sm border-0 border-left-primary h-100 bg-white">
                 <Card.Body>
-                  <Card.Title className="text-primary font-weight-bold">Total Days</Card.Title>
-                  <Card.Text className="display-4">{stats.total}</Card.Text>
-                  <i className="fas fa-calendar-alt fa-2x text-primary opacity-50"></i>
+                  <Card.Title className="text-secondary small uppercase font-weight-bold mb-1">Total Days</Card.Title>
+                  <Card.Text className="h1 font-weight-bold text-primary mb-0">{stats.total}</Card.Text>
+                  <div className="small text-muted">Tracked</div>
                 </Card.Body>
               </Card>
             </Col>
           </Row>
 
-          <Row className="mt-4">
+          <Row className="mt-2">
             <Col md={8} className="mb-4">
-              <Card className="shadow-sm border-0">
+              <Card className="shadow-sm border-0 rounded-lg">
                 <Card.Body>
-                  <Card.Title className="mb-4">Attendance Trends (Last 15 Records)</Card.Title>
-                  <div style={{ width: "100%", height: 300 }}>
+                  <Card.Title className="mb-4 d-flex justify-content-between align-items-center">
+                    <span className="font-weight-bold"><i className="fas fa-chart-line mr-2 text-primary"></i> Attendance Trends</span>
+                    <Badge variant="light" pill className="text-muted">Last 15 Records</Badge>
+                  </Card.Title>
+                  <div style={{ width: "100%", height: 320 }}>
                     <ResponsiveContainer>
                       <LineChart 
                         data={[...stats.history.slice(0, 15)].reverse().map(item => ({
@@ -142,12 +208,12 @@ const StudentDashboard = () => {
                            type="monotone" 
                            dataKey="statusValue" 
                            stroke="#dee2e6" 
-                           strokeWidth={2}
+                           strokeWidth={3}
                            dot={(props) => {
                              const { cx, cy, payload } = props;
                              const color = payload.status === "Present" ? "#38a169" : payload.status === "Leave" ? "#b7791f" : "#e53e3e";
                              return (
-                               <circle cx={cx} cy={cy} r={6} fill={color} stroke="#white" strokeWidth={2} />
+                               <circle cx={cx} cy={cy} r={6} fill={color} stroke="white" strokeWidth={2} />
                              );
                            }}
                            activeDot={{ r: 8 }}
@@ -159,12 +225,14 @@ const StudentDashboard = () => {
               </Card>
             </Col>
             <Col md={4} className="mb-4">
-              <Card className="shadow-sm border-0 h-100">
-                <Card.Body>
-                  <Card.Title className="mb-4">Recent Records</Card.Title>
-                  <div style={{ maxHeight: "300px", overflowY: "auto" }}>
-                    <Table hover size="sm">
-                      <thead>
+              <Card className="shadow-sm border-0 h-100 rounded-lg">
+                <Card.Body className="p-0">
+                  <div className="p-3 border-bottom font-weight-bold">
+                    <i className="fas fa-history mr-2 text-primary"></i> Recent Records (15 Days)
+                  </div>
+                  <div style={{ maxHeight: "350px", overflowY: "auto" }}>
+                    <Table hover className="mb-0">
+                      <thead className="bg-light small">
                         <tr>
                           <th>Date</th>
                           <th>Status</th>
@@ -173,11 +241,18 @@ const StudentDashboard = () => {
                       <tbody>
                         {stats.history.slice(0, 15).map((record, index) => (
                           <tr key={index}>
-                            <td>{record.date}</td>
+                            <td className="small font-weight-bold text-muted">{record.date}</td>
                             <td>
-                              <span className={`badge badge-${record.status === 'Present' ? 'success' : record.status === 'Absent' ? 'danger' : 'warning'}`}>
+                              <Badge 
+                                pill
+                                style={{
+                                  backgroundColor: record.status === 'Present' ? '#f0fff4' : record.status === 'Leave' ? '#fffaf0' : '#fff5f5',
+                                  color: record.status === 'Present' ? '#38a169' : record.status === 'Leave' ? '#b7791f' : '#e53e3e',
+                                  fontSize: '0.75rem'
+                                }}
+                              >
                                 {record.status === 'Present' ? 'In Hostel' : record.status === 'Leave' ? 'At Home' : 'Outside'}
-                              </span>
+                              </Badge>
                             </td>
                           </tr>
                         ))}
@@ -188,8 +263,81 @@ const StudentDashboard = () => {
               </Card>
             </Col>
           </Row>
-        </>
+        </div>
       )}
+
+      {/* Download Attendance Modal */}
+      <Modal 
+        show={showDownloadModal} 
+        onHide={() => {
+          setShowDownloadModal(false);
+          setCsvData([]);
+        }} 
+        centered
+      >
+        <Modal.Header closeButton className="bg-white border-bottom-0">
+          <Modal.Title className="text-primary font-weight-bold">
+            <i className="fas fa-file-download mr-2"></i> Download My Report
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="p-4">
+          <p className="text-muted mb-4">Select the date range for your attendance report.</p>
+          <Form>
+            <Row>
+              <Col md={6} className="mb-3">
+                <Form.Label className="font-weight-bold small uppercase text-muted">From Date</Form.Label>
+                <DatePicker
+                  selected={fromDate}
+                  onChange={(date) => {
+                    setFromDate(date);
+                    setCsvData([]);
+                  }}
+                  className="form-control premium-input"
+                  dateFormat="dd/MM/yyyy"
+                />
+              </Col>
+              <Col md={6} className="mb-3">
+                <Form.Label className="font-weight-bold small uppercase text-muted">To Date</Form.Label>
+                <DatePicker
+                  selected={toDate}
+                  onChange={(date) => {
+                    setToDate(date);
+                    setCsvData([]);
+                  }}
+                  className="form-control premium-input"
+                  dateFormat="dd/MM/yyyy"
+                />
+              </Col>
+            </Row>
+            
+            <div className="mt-4 text-center">
+              {csvData.length === 0 ? (
+                <Button 
+                  variant="info" 
+                  className="rounded-pill px-5 shadow-sm"
+                  onClick={handlePrepareDownload}
+                  disabled={isPreparingCsv}
+                >
+                  {isPreparingCsv ? (
+                    <><i className="fas fa-spinner fa-spin mr-2"></i> Preparing...</>
+                  ) : (
+                    <><i className="fas fa-cog mr-2"></i> Generate Report Data</>
+                  )}
+                </Button>
+              ) : (
+                <CSVLink
+                  data={csvData}
+                  filename={`my_attendance_${fromDate.toISOString().split('T')[0]}_to_${toDate.toISOString().split('T')[0]}.csv`}
+                  className="btn btn-success rounded-pill px-5 shadow-sm"
+                  onClick={() => setShowDownloadModal(false)}
+                >
+                  <i className="fas fa-download mr-2"></i> Download CSV File
+                </CSVLink>
+              )}
+            </div>
+          </Form>
+        </Modal.Body>
+      </Modal>
     </Container>
   );
 };

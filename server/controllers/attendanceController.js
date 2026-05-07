@@ -36,7 +36,9 @@ const markAttendance = asyncHandler(async (req, res) => {
 // @route   GET /api/attendance/student/:studentId
 // @access  Private
 const getStudentAttendance = asyncHandler(async (req, res) => {
-  const attendance = await Attendance.find({ student: req.params.studentId }).sort({ date: -1 });
+  const attendance = await Attendance.find({ student: req.params.studentId })
+    .populate("markedBy", "name")
+    .sort({ date: -1 });
   res.json(attendance);
 });
 

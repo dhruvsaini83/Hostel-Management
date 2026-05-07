@@ -254,7 +254,7 @@ const StudentDetailsView = ({ match, history }) => {
                               <i className="fas fa-hotel"></i>
                             </div>
                             <div>
-                              <div className="text-muted small font-weight-bold">In Hostel</div>
+                              <div className="text-secondary small font-weight-bold uppercase mb-1">In Hostel</div>
                               <div className="h4 font-weight-bold mb-0 text-dark">{stats.present || 0} <span className="small font-weight-normal text-muted">Days</span></div>
                             </div>
                           </div>
@@ -265,7 +265,7 @@ const StudentDetailsView = ({ match, history }) => {
                               <i className="fas fa-chart-line"></i>
                             </div>
                             <div>
-                              <div className="text-muted small font-weight-bold">Rate</div>
+                              <div className="text-secondary small font-weight-bold uppercase mb-1">Rate</div>
                               <div className="h4 font-weight-bold mb-0 text-dark">{stats.percentage || 0}%</div>
                             </div>
                           </div>
@@ -276,7 +276,7 @@ const StudentDetailsView = ({ match, history }) => {
                               <i className="fas fa-home"></i>
                             </div>
                             <div>
-                              <div className="text-muted small font-weight-bold">At Home</div>
+                              <div className="text-secondary small font-weight-bold uppercase mb-1">At Home</div>
                               <div className="h4 font-weight-bold mb-0 text-dark">{stats.leave || 0} <span className="small font-weight-normal text-muted">Days</span></div>
                             </div>
                           </div>
@@ -287,7 +287,7 @@ const StudentDetailsView = ({ match, history }) => {
                               <i className="fas fa-external-link-alt"></i>
                             </div>
                             <div>
-                              <div className="text-muted small font-weight-bold">Outside</div>
+                              <div className="text-secondary small font-weight-bold uppercase mb-1">Outside</div>
                               <div className="h4 font-weight-bold mb-0 text-dark">{stats.absent || 0} <span className="small font-weight-normal text-muted">Days</span></div>
                             </div>
                           </div>
@@ -435,8 +435,10 @@ const StudentDetailsView = ({ match, history }) => {
         }} 
         centered
       >
-        <Modal.Header closeButton className="bg-primary text-white">
-          <Modal.Title><i className="fas fa-file-download mr-2"></i> Attendance Report</Modal.Title>
+        <Modal.Header closeButton className="bg-white border-bottom-0">
+          <Modal.Title className="text-primary font-weight-bold">
+            <i className="fas fa-file-download mr-2"></i> Attendance Report
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body className="p-4">
           <p className="text-muted mb-4">Select the date range for <strong>{student?.name}'s</strong> attendance report.</p>
