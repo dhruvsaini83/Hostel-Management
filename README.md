@@ -117,7 +117,7 @@ npm run dev
 
 **Dhruv Saini**  
 *MCA Student | Full Stack Developer*  
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Profile-blue?logo=linkedin)](https://linkedin.com/in/dhruv-saini)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Profile-blue?logo=linkedin)](https://www.linkedin.com/in/dhruv-saini-30731b1b6/)
 [![GitHub](https://img.shields.io/badge/GitHub-Profile-black?logo=github)](https://github.com/dhruvsaini83)
 
 ---
