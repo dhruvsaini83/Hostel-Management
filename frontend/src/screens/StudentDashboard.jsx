@@ -123,17 +123,33 @@ const StudentDashboard = () => {
                   <Card.Title className="mb-4">Attendance Trends (Last 15 Records)</Card.Title>
                   <div style={{ width: "100%", height: 300 }}>
                     <ResponsiveContainer>
-                      <LineChart data={[...stats.history.slice(0, 15)].reverse()}>
-                        <CartesianGrid strokeDasharray="3 3" />
+                      <LineChart 
+                        data={[...stats.history.slice(0, 15)].reverse().map(item => ({
+                          ...item,
+                          statusValue: item.status === "Present" ? 2 : item.status === "Leave" ? 1 : 0
+                        }))}
+                      >
+                        <CartesianGrid strokeDasharray="3 3" vertical={false} />
                         <XAxis dataKey="date" tick={{fontSize: 10}} />
-                        <YAxis hide />
-                        <Tooltip />
+                        <YAxis domain={[0, 2]} ticks={[0, 1, 2]} hide />
+                        <Tooltip 
+                          formatter={(value, name, props) => {
+                            const status = props.payload.status;
+                            return [status === "Present" ? "In Hostel" : status === "Leave" ? "At Home" : "Outside", "Status"];
+                          }}
+                        />
                         <Line 
                            type="monotone" 
-                           dataKey="status" 
-                           stroke="#007bff" 
-                           strokeWidth={3}
-                           dot={{ r: 5, fill: '#007bff' }}
+                           dataKey="statusValue" 
+                           stroke="#dee2e6" 
+                           strokeWidth={2}
+                           dot={(props) => {
+                             const { cx, cy, payload } = props;
+                             const color = payload.status === "Present" ? "#38a169" : payload.status === "Leave" ? "#b7791f" : "#e53e3e";
+                             return (
+                               <circle cx={cx} cy={cy} r={6} fill={color} stroke="#white" strokeWidth={2} />
+                             );
+                           }}
                            activeDot={{ r: 8 }}
                         />
                       </LineChart>
