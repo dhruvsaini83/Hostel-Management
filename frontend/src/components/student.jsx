@@ -56,7 +56,7 @@ const Student = ({ studentDetails: student }) => {
           </h5>
           <div className="text-muted small d-flex align-items-center mt-1">
             <i className="fas fa-graduation-cap mr-2 text-info"></i>
-            {student.category}
+            {student.course || student.category}
           </div>
         </div>
 

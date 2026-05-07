@@ -16,6 +16,11 @@ const protect = asyncHandler(async (req, res, next) => {
 
       req.user = await User.findById(decoded.id).select("-password");
 
+      if (req.user && req.user.status !== "approved" && req.user.role !== "admin") {
+        res.status(403);
+        throw new Error("Your account is not approved yet.");
+      }
+
       next();
     } catch (error) {
       console.error(error);
@@ -31,7 +36,7 @@ const protect = asyncHandler(async (req, res, next) => {
 });
 
 const admin = (req, res, next) => {
-  if (req.user && req.user.isAdmin) {
+  if (req.user && req.user.role === "admin") {
     next();
   } else {
     res.status(401);
@@ -39,4 +44,26 @@ const admin = (req, res, next) => {
   }
 };
 
-export { protect, admin };
+const authorize = (...roles) => {
+  return (req, res, next) => {
+    if (req.user && roles.includes(req.user.role)) {
+      next();
+    } else {
+      res.status(403);
+      throw new Error(`Role ${req.user.role} is not authorized to access this route`);
+    }
+  };
+};
+
+const checkPermission = (permission) => {
+  return (req, res, next) => {
+    if (req.user && (req.user.role === "admin" || req.user.permissions.includes(permission))) {
+      next();
+    } else {
+      res.status(403);
+      throw new Error("You do not have permission to perform this action");
+    }
+  };
+};
+
+export { protect, admin, authorize, checkPermission };

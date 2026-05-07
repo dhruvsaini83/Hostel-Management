@@ -8,8 +8,39 @@ import {
   ATTENDANCE_DELETE_REQUEST,
   ATTENDANCE_DELETE_SUCCESS,
   ATTENDANCE_DELETE_FAIL,
+  ATTENDANCE_STUDENT_STATS_REQUEST,
+  ATTENDANCE_STUDENT_STATS_SUCCESS,
+  ATTENDANCE_STUDENT_STATS_FAIL,
 } from "../constants/attendanceConstant";
 import axios from "axios";
+
+export const getStudentAttendanceStats = (studentId) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: ATTENDANCE_STUDENT_STATS_REQUEST });
+    const {
+      userLogin: { userInfo },
+    } = getState();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const { data } = await axios.get(`/attendance/stats/${studentId}`, config);
+
+    dispatch({
+      type: ATTENDANCE_STUDENT_STATS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ATTENDANCE_STUDENT_STATS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
 
 export const postAttendance = (attendance) => async (dispatch, getState) => {
   try {
@@ -23,7 +54,7 @@ export const postAttendance = (attendance) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.post(`/attendance/`, attendance, config);
+    const { data } = await axios.post(`/attendance/bulk`, attendance, config);
     dispatch({
       type: ATTENDANCE_DATA_ENTER_SUCCESS,
       payload: data,

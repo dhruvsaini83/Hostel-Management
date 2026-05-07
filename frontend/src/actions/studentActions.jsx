@@ -1,24 +1,24 @@
+import axios from "axios";
 import {
   STUDENT_LIST_REQUEST,
   STUDENT_LIST_SUCCESS,
   STUDENT_LIST_ERROR,
-  STUDENT_ADD_ERROR,
   STUDENT_ADD_REQUEST,
   STUDENT_ADD_SUCCESS,
-  STUDENT_DELETE_ERROR,
-  STUDENT_DELETE_REQUEST,
-  STUDENT_DELETE_SUCCESS,
-  STUDENT_UPDATE_ERROR,
-  STUDENT_UPDATE_REQUEST,
-  STUDENT_UPDATE_SUCCESS,
+  STUDENT_ADD_ERROR,
   STUDENT_DETAILS_REQUEST,
   STUDENT_DETAILS_SUCCESS,
   STUDENT_DETAILS_ERROR,
+  STUDENT_UPDATE_REQUEST,
+  STUDENT_UPDATE_SUCCESS,
+  STUDENT_UPDATE_ERROR,
+  STUDENT_DELETE_REQUEST,
+  STUDENT_DELETE_SUCCESS,
+  STUDENT_DELETE_ERROR,
   STUDENT_ROOM_NO_REQUEST,
   STUDENT_ROOM_NO_SUCCESS,
   STUDENT_ROOM_NO_ERROR,
 } from "../constants/studentConstant";
-import axios from "axios";
 
 export const listStudents = (keyword = "", pageNumber = "") => async (
   dispatch,
@@ -173,7 +173,7 @@ export const deleteStudent = (id) => async (dispatch, getState) => {
   }
 };
 
-export const getStudentsByRoomNo = (roomNo) => async (dispatch, getState) => {
+export const getStudentsByRoomNo = (keyword = "") => async (dispatch, getState) => {
   try {
     dispatch({ type: STUDENT_ROOM_NO_REQUEST });
     const {
@@ -185,7 +185,7 @@ export const getStudentsByRoomNo = (roomNo) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(`/student/room/${roomNo}`, config);
+    const { data } = await axios.get(`/student/attendance/list?keyword=${keyword}`, config);
     dispatch({
       type: STUDENT_ROOM_NO_SUCCESS,
       payload: data,

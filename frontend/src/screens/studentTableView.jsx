@@ -25,7 +25,7 @@ const StudentsTableView = ({ keyword, pageNumber }) => {
             <Table hover responsive className="premium-table">
               <thead>
                 <tr>
-                  <th>Stream</th>
+                  <th>Course</th>
                   <th>NAME</th>
                   <th>STATUS</th>
                   <th>CONTACT</th>
@@ -39,7 +39,7 @@ const StudentsTableView = ({ keyword, pageNumber }) => {
                     key={student._id}
                     onClick={() => history.push(`/student/${student._id}`)}
                   >
-                    <td className='font-weight-bold'>{student.category}</td>
+                    <td className='font-weight-bold'>{student.course}</td>
                     <td>
                       <Link to={`/student/${student._id}`} className='table-link'>
                         {student.name}

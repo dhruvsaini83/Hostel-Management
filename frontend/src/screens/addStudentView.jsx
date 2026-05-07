@@ -13,8 +13,9 @@ const AddStudentView = () => {
   const history = useHistory();
   const [isEdit, setIsEdit] = useState(false);
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
-  const [category, setCategory] = useState("");
+  const [course, setCourse] = useState("");
   const [city, setCity] = useState("");
   const [contact, setContact] = useState("");
   const [fatherContact, setFatherContact] = useState("");
@@ -22,6 +23,7 @@ const AddStudentView = () => {
   const [roomNo, setRoomNo] = useState("");
   const [blockNo, setBlockNo] = useState("");
   const [status, setStatus] = useState("Hostel");
+  const [validationError, setValidationError] = useState("");
 
   const dispatch = useDispatch();
   const studentAdd = useSelector((state) => state.studentAdd);
@@ -42,8 +44,9 @@ const AddStudentView = () => {
       setIsEdit(true);
       const student = history.location.state.studentProps;
       setName(student.name);
+      setEmail(student.email || "");
       setAddress(student.address);
-      setCategory(student.category);
+      setCourse(student.course || student.category || "");
       setCity(student.city);
       setContact(student.contact);
       setFatherContact(student.fatherContact);
@@ -57,15 +60,28 @@ const AddStudentView = () => {
     }
   }, [dispatch, history, success, successUpdate]);
 
-  const submitHandler = () => {
+  const submitHandler = (e) => {
+    e.preventDefault();
+    setValidationError("");
+
+    if (contact && contact.length !== 10) {
+      setValidationError("Student contact number must be exactly 10 digits");
+      return;
+    }
+    if (fatherContact && fatherContact.length !== 10) {
+      setValidationError("Father contact number must be exactly 10 digits");
+      return;
+    }
+
     if (isEdit === true) {
       const _id = history.location.state.studentProps._id;
       dispatch(
         updateStudent({
           _id,
           name,
+          email,
           address,
-          category,
+          course,
           city,
           contact,
           fatherContact,
@@ -79,8 +95,9 @@ const AddStudentView = () => {
       dispatch(
         addStudent({
           name,
+          email,
           address,
-          category,
+          course,
           city,
           contact,
           fatherContact,
@@ -104,6 +121,7 @@ const AddStudentView = () => {
       ) : (
         <div className="fade-in">
           {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
+          {validationError && <Message variant="danger">{validationError}</Message>}
           <FormContainer>
             <h1>{isEdit ? "Edit Student" : "Add Student"}</h1>
             {loading && <Loading />}
@@ -119,7 +137,18 @@ const AddStudentView = () => {
                   onChange={(e) => setName(e.target.value)}
                 ></Form.Control>
               </Form.Group>
-              
+
+              <Form.Group controlId="email" className="mb-3">
+                <Form.Label className="premium-label">Email<span style={{ color: "red" }}>*</span></Form.Label>
+                <Form.Control
+                  type="email"
+                  placeholder="Enter email"
+                  value={email} required
+                  className="premium-input"
+                  onChange={(e) => setEmail(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
+
               <Form.Group controlId="status" className="mb-3">
                 <Form.Label className="premium-label">Status</Form.Label>
                 <Form.Control
@@ -161,18 +190,21 @@ const AddStudentView = () => {
                   </Form.Group>
                 </Col>
                 <Col md={6}>
-                  <Form.Group controlId="category" className="mb-3">
-                    <Form.Label className="premium-label">Category<span style={{ color: "red" }}>*</span></Form.Label>
+                  <Form.Group controlId="course" className="mb-3">
+                    <Form.Label className="premium-label">Course<span style={{ color: "red" }}>*</span></Form.Label>
                     <Form.Control
                       as="select"
-                      value={category}
+                      value={course}
                       className="premium-input"
-                      onChange={(e) => setCategory(e.target.value)}
+                      onChange={(e) => setCourse(e.target.value)}
                       required
                     >
-                      <option value="">-- Select --</option>
+                      <option value="">-- Select Course --</option>
                       <option value="MCA">MCA</option>
                       <option value="BCA">BCA</option>
+                      <option value="BSc">BSc</option>
+                      <option value="BA">BA</option>
+                      <option value="MBA">MBA</option>
                       <option value="B.Com">B.Com</option>
                       <option value="M.Com">M.Com</option>
                     </Form.Control>
@@ -185,7 +217,7 @@ const AddStudentView = () => {
                   <Form.Group controlId="contact" className="mb-3">
                     <Form.Label className="premium-label">Contact<span style={{ color: "red" }}>*</span></Form.Label>
                     <Form.Control
-                      type="number"
+                      type="text"
                       placeholder="Enter phone number"
                       value={contact}
                       className="premium-input"
@@ -197,7 +229,7 @@ const AddStudentView = () => {
                   <Form.Group controlId="fatherContact" className="mb-3">
                     <Form.Label className="premium-label">Father Contact<span style={{ color: "red" }}>*</span></Form.Label>
                     <Form.Control
-                      type="number"
+                      type="text"
                       placeholder="Enter Father Phone"
                       value={fatherContact}
                       className="premium-input"
@@ -221,7 +253,7 @@ const AddStudentView = () => {
                   </Form.Group>
                 </Col>
                 <Col md={6}>
-                  <Form.Group controlId="b" className="mb-3">
+                  <Form.Group controlId="blockNo" className="mb-3">
                     <Form.Label className="premium-label">Block Number<span style={{ color: "red" }}>*</span></Form.Label>
                     <Form.Control
                       type="text"
@@ -246,9 +278,9 @@ const AddStudentView = () => {
               </Form.Group>
 
               <div className="d-grid gap-2">
-                <Button 
-                  type="submit" 
-                  variant="primary" 
+                <Button
+                  type="submit"
+                  variant="primary"
                   className="premium-btn w-100"
                 >
                   {isEdit ? "Update Student" : "Register Student"}

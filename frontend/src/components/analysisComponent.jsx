@@ -77,9 +77,9 @@ const AnalysisComponent = () => {
                 <Col md={4} className="mb-3">
                   <div className="metric-card shadow-sm bg-white border-left-success">
                     <div className="icon-box bg-success text-white">
-                      <i className="fas fa-hotel"></i>
+                      <i className="fas fa-check-circle"></i>
                     </div>
-                    <h6>Hostel</h6>
+                    <h6>Present (Hostel)</h6>
                     <div className="value">{categoryCount.Hostel}</div>
                     <div className="analysis-progress">
                       <div 
@@ -93,9 +93,9 @@ const AnalysisComponent = () => {
                 <Col md={4} className="mb-3">
                   <div className="metric-card shadow-sm bg-white border-left-info">
                     <div className="icon-box bg-info text-white">
-                      <i className="fas fa-home"></i>
+                      <i className="fas fa-calendar-minus"></i>
                     </div>
-                    <h6>Home</h6>
+                    <h6>On Leave (Home)</h6>
                     <div className="value">{categoryCount.Home}</div>
                     <div className="analysis-progress">
                       <div 
@@ -109,9 +109,9 @@ const AnalysisComponent = () => {
                 <Col md={4} className="mb-3">
                   <div className="metric-card shadow-sm bg-white border-left-danger">
                     <div className="icon-box bg-danger text-white">
-                      <i className="fas fa-walking"></i>
+                      <i className="fas fa-user-times"></i>
                     </div>
-                    <h6>Outside</h6>
+                    <h6>Absent (Outside)</h6>
                     <div className="value">{categoryCount.Outside}</div>
                     <div className="analysis-progress">
                       <div 

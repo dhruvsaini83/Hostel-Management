@@ -2,23 +2,28 @@ import mongoose from "mongoose";
 
 const attendanceSchema = mongoose.Schema(
   {
-    roomNo: {
-      type: Array,
+    student: {
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
+      ref: "Student",
+    },
+    markedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
     },
     date: {
       type: String,
-      default: Date().toString().substring(0, 15),
-    },
-    data: {
-      type: Map,
       required: true,
-      default: {},
     },
-    details: {
-      type: Map,
+    status: {
+      type: String,
       required: true,
-      default: {},
+      enum: ["Present", "Absent", "Leave"],
+      default: "Absent",
+    },
+    remarks: {
+      type: String,
     },
   },
   {

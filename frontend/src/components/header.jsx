@@ -17,6 +17,13 @@ const Header = () => {
     dispatch(logout());
     history.push("/login");
   };
+
+  const hasPermission = (permission) => {
+    if (!userInfo) return false;
+    if (userInfo.role === 'admin') return true;
+    return userInfo.permissions && userInfo.permissions.includes(permission);
+  };
+
   return (
     <header>
       <Navbar 
@@ -41,22 +48,38 @@ const Header = () => {
             </Nav>
             
             <Nav className="mx-auto align-items-center text-center">
-              {/* Links visible on BOTH mobile (centered) and desktop (centered) */}
-              <LinkContainer to="/attendance" onClick={() => setExpanded(false)}>
-                <Nav.Link className="align-items-center text-nowrap px-3 py-2 py-lg-0 mx-1">
-                  <i className="fas fa-clipboard-list mr-2 text-info"></i> Attendance
-                </Nav.Link>
-              </LinkContainer>
-              <LinkContainer to="/addStudent" onClick={() => setExpanded(false)}>
-                <Nav.Link className="align-items-center text-nowrap px-3 py-2 py-lg-0 mx-1">
-                  <i className="fas fa-user-plus mr-2 text-info"></i> Add Student
-                </Nav.Link>
-              </LinkContainer>
-              <LinkContainer to="/analysis" onClick={() => setExpanded(false)}>
-                <Nav.Link className="align-items-center text-nowrap px-3 py-2 py-lg-0 mx-1">
-                  <i className="fas fa-chart-line mr-2 text-info"></i> Analysis
-                </Nav.Link>
-              </LinkContainer>
+              {userInfo && (
+                <>
+                  {(hasPermission("Manage Attendance") || userInfo.role === 'student') && (
+                    <LinkContainer to="/attendance" onClick={() => setExpanded(false)}>
+                      <Nav.Link className="align-items-center text-nowrap px-3 py-2 py-lg-0 mx-1">
+                        <i className="fas fa-clipboard-list mr-2 text-info"></i> Attendance
+                      </Nav.Link>
+                    </LinkContainer>
+                  )}
+                  {hasPermission("Add Students") && (
+                    <LinkContainer to="/addStudent" onClick={() => setExpanded(false)}>
+                      <Nav.Link className="align-items-center text-nowrap px-3 py-2 py-lg-0 mx-1">
+                        <i className="fas fa-user-plus mr-2 text-info"></i> Add Student
+                      </Nav.Link>
+                    </LinkContainer>
+                  )}
+                  {hasPermission("Reports Access") && (
+                    <LinkContainer to="/analysis" onClick={() => setExpanded(false)}>
+                      <Nav.Link className="align-items-center text-nowrap px-3 py-2 py-lg-0 mx-1">
+                        <i className="fas fa-chart-line mr-2 text-info"></i> Analysis
+                      </Nav.Link>
+                    </LinkContainer>
+                  )}
+                  {hasPermission("Student Registration Approval") && (
+                    <LinkContainer to="/approvals" onClick={() => setExpanded(false)}>
+                      <Nav.Link className="align-items-center text-nowrap px-3 py-2 py-lg-0 mx-1">
+                        <i className="fas fa-check-circle mr-2 text-info"></i> Approvals
+                      </Nav.Link>
+                    </LinkContainer>
+                  )}
+                </>
+              )}
             </Nav>
 
             <Nav className="ml-auto align-items-center">
@@ -76,11 +99,24 @@ const Header = () => {
                   <LinkContainer to="/profile" onClick={() => setExpanded(false)}>
                     <NavDropdown.Item><i className="fas fa-user-circle mr-2"></i> Profile</NavDropdown.Item>
                   </LinkContainer>
-                  {userInfo.isAdmin && (
-                    <LinkContainer to="/userList" onClick={() => setExpanded(false)}>
-                      <NavDropdown.Item><i className="fas fa-users mr-2"></i> Manage Users</NavDropdown.Item>
+                  
+                  {userInfo.role === 'admin' && (
+                    <>
+                      <LinkContainer to="/userList" onClick={() => setExpanded(false)}>
+                        <NavDropdown.Item><i className="fas fa-users mr-2"></i> Manage Users</NavDropdown.Item>
+                      </LinkContainer>
+                      <LinkContainer to="/staff" onClick={() => setExpanded(false)}>
+                        <NavDropdown.Item><i className="fas fa-user-shield mr-2"></i> Staff Management</NavDropdown.Item>
+                      </LinkContainer>
+                    </>
+                  )}
+
+                  {userInfo.role === 'student' && (
+                    <LinkContainer to="/my-leaves" onClick={() => setExpanded(false)}>
+                      <NavDropdown.Item><i className="fas fa-calendar-times mr-2"></i> My Leaves</NavDropdown.Item>
                     </LinkContainer>
                   )}
+
                   <NavDropdown.Divider />
                   <NavDropdown.Item onClick={() => { logoutHandler(); setExpanded(false); }} className="text-danger">
                     <i className="fas fa-sign-out-alt mr-2"></i> Logout

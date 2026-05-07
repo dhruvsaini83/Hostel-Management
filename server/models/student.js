@@ -2,6 +2,22 @@ import mongoose from "mongoose";
 
 const studentSchema = mongoose.Schema(
   {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+    studentId: {
+      type: String,
+      required: false,
+      unique: true,
+      sparse: true,
+    },
+    email: {
+      type: String,
+      required: false,
+      unique: true,
+      sparse: true,
+    },
     name: {
       type: String,
       required: true,
@@ -10,7 +26,7 @@ const studentSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    category: {
+    course: {
       type: String,
       required: true,
     },
@@ -19,11 +35,11 @@ const studentSchema = mongoose.Schema(
       required: true,
     },
     contact: {
-      type: Number,
+      type: String,
       required: true,
     },
     fatherContact: {
-      type: Number,
+      type: String,
       required: true,
     },
     image: {

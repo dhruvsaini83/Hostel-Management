@@ -132,21 +132,28 @@ const AnalysisView = () => {
               </Col>
 
               <Col md={12} lg={6} className="d-flex justify-content-lg-end align-items-center">
-                <div className="mr-2 mr-md-3">
-                  <DatePicker
-                    selected={startDate}
-                    onChange={handleDateChange}
-                    className="form-control premium-input shadow-sm"
-                  />
-                </div>
-                <Button 
-                  variant="primary" 
-                  className="rounded-pill px-4 shadow-sm premium-btn"
-                  onClick={() => dispatch(getAnalysisByDate(formattedDate))}
-                >
-                  <i className="fas fa-sync-alt mr-2"></i> Refresh
-                </Button>
-              </Col>
+                  <div className="mr-2 mr-md-3">
+                    <DatePicker
+                      selected={startDate}
+                      onChange={handleDateChange}
+                      className="form-control premium-input shadow-sm"
+                    />
+                  </div>
+                  <Button 
+                    variant="outline-primary" 
+                    className="rounded-pill px-3 mr-2 shadow-sm"
+                    onClick={() => setStartDate(new Date())}
+                  >
+                    Today
+                  </Button>
+                  <Button 
+                    variant="primary" 
+                    className="rounded-pill px-4 shadow-sm premium-btn"
+                    onClick={() => dispatch(getAnalysisByDate(formattedDate))}
+                  >
+                    <i className="fas fa-sync-alt mr-2"></i> Refresh
+                  </Button>
+                </Col>
             </Row>
           </div>
 

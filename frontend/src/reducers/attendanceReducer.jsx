@@ -10,6 +10,10 @@ import {
   ATTENDANCE_DELETE_REQUEST,
   ATTENDANCE_DELETE_SUCCESS,
   ATTENDANCE_DELETE_FAIL,
+  ATTENDANCE_STUDENT_STATS_REQUEST,
+  ATTENDANCE_STUDENT_STATS_SUCCESS,
+  ATTENDANCE_STUDENT_STATS_FAIL,
+  ATTENDANCE_STUDENT_STATS_RESET,
 } from "../constants/attendanceConstant";
 
 export const attendanceDataEnterReducer = (state = {}, action) => {
@@ -64,6 +68,25 @@ export const deleteAttendanceReducer = (state = {}, action) => {
       return { loading: false, error: action.payload };
     case ATTENDANCE_ANALYSIS_RESET:
       return {};
+
+    default:
+      return state;
+  }
+};
+
+export const attendanceStudentStatsReducer = (state = { stats: { history: [] } }, action) => {
+  switch (action.type) {
+    case ATTENDANCE_STUDENT_STATS_REQUEST:
+      return { loading: true, stats: { history: [] } };
+    case ATTENDANCE_STUDENT_STATS_SUCCESS:
+      return {
+        loading: false,
+        stats: action.payload,
+      };
+    case ATTENDANCE_STUDENT_STATS_FAIL:
+      return { loading: false, error: action.payload };
+    case ATTENDANCE_STUDENT_STATS_RESET:
+      return { stats: { history: [] } };
 
     default:
       return state;

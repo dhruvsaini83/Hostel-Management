@@ -23,6 +23,7 @@ import {
   attendanceDataEnterReducer,
   attendanceAnalysisReducer,
   deleteAttendanceReducer,
+  attendanceStudentStatsReducer,
 } from "./reducers/attendanceReducer";
 
 const reducer = combineReducers({
@@ -42,6 +43,7 @@ const reducer = combineReducers({
   attendanceDataEnter: attendanceDataEnterReducer,
   attendanceAnalysis: attendanceAnalysisReducer,
   attendanceDelete: deleteAttendanceReducer,
+  attendanceStudentStats: attendanceStudentStatsReducer,
 });
 const userInfoFromStorage = localStorage.getItem("userInfo")
   ? JSON.parse(localStorage.getItem("userInfo"))

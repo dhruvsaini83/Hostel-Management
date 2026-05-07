@@ -1,15 +1,28 @@
 import express from "express";
 import {
-  deleteAttendanceByDays,
-  enterAttendanceByRoomNo,
-  getAttendance,
-  getAttendanceByRoomNo,
+  markAttendance,
+  getStudentAttendance,
+  getAttendanceByDate,
+  getStudentStats,
+  bulkMarkAttendance,
 } from "../controllers/attendanceController.js";
-import { protect, admin } from "../middleware/authMiddleware.js";
+import { protect, checkPermission } from "../middleware/authMiddleware.js";
+
 const router = express.Router();
-router.route("/:roomId").get(protect, getAttendanceByRoomNo);
-router.route("/").post(protect, admin, enterAttendanceByRoomNo);
-router.route("/:days").delete(protect, admin, deleteAttendanceByDays);
-router.route("/getAnalysis").post(protect, getAttendance);
+
+router.route("/")
+  .post(protect, checkPermission("Manage Attendance"), markAttendance);
+
+router.route("/bulk")
+  .post(protect, checkPermission("Manage Attendance"), bulkMarkAttendance);
+
+router.route("/student/:studentId")
+  .get(protect, getStudentAttendance);
+
+router.route("/stats/:studentId")
+  .get(protect, getStudentStats);
+
+router.route("/date/:date")
+  .get(protect, checkPermission("View Students"), getAttendanceByDate);
 
 export default router;

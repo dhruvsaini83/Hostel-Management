@@ -16,10 +16,38 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    role: {
+      type: String,
+      required: true,
+      enum: ["admin", "staff", "student"],
+      default: "student",
+    },
+    permissions: [
+      {
+        type: String,
+      },
+    ],
+    status: {
+      type: String,
+      required: true,
+      enum: ["pending", "approved", "rejected"],
+      default: "pending",
+    },
+    mobile: {
+      type: String,
+    },
     isAdmin: {
       type: Boolean,
       required: true,
       default: false,
+    },
+    registrationDetails: {
+      address: String,
+      course: String,
+      city: String,
+      fatherContact: String,
+      roomNo: String,
+      blockNo: String,
     },
   },
   {

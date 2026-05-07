@@ -525,3 +525,43 @@ h2 {
     padding: 1rem 0.75rem !important;
   }
 }
+
+/* New Utility Classes for RBAC System */
+.icon-circle {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.btn-premium {
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 0.6rem 1.5rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-premium:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(30, 60, 114, 0.3);
+  color: white;
+}
+
+.border-top-premium {
+  border-top: 5px solid !important;
+}
+
+.border-left-success { border-left: 5px solid #28a745 !important; }
+.border-left-danger { border-left: 5px solid #dc3545 !important; }
+.border-left-warning { border-left: 5px solid #ffc107 !important; }
+.border-left-primary { border-left: 5px solid #007bff !important; }
+
+.opacity-50 {
+  opacity: 0.5;
+}
