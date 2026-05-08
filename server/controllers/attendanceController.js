@@ -5,6 +5,7 @@ import Student from "../models/student.js";
 // @desc    Mark attendance for a student
 // @route   POST /api/attendance
 // @access  Private/Admin or Staff with permission
+// Mark daily attendance
 const markAttendance = asyncHandler(async (req, res) => {
   const { studentId, date, status, remarks } = req.body;
 
@@ -35,6 +36,7 @@ const markAttendance = asyncHandler(async (req, res) => {
 // @desc    Get attendance for a student
 // @route   GET /api/attendance/student/:studentId
 // @access  Private
+// Fetch student history
 const getStudentAttendance = asyncHandler(async (req, res) => {
   const attendance = await Attendance.find({ student: req.params.studentId })
     .populate("markedBy", "name")
@@ -53,6 +55,7 @@ const getAttendanceByDate = asyncHandler(async (req, res) => {
 // @desc    Get attendance statistics for a student
 // @route   GET /api/attendance/stats/:studentId
 // @access  Private
+// Calculate attendance percentage
 const getStudentStats = asyncHandler(async (req, res) => {
   const allAttendance = await Attendance.find({ student: req.params.studentId })
     .populate("markedBy", "name")
@@ -88,6 +91,7 @@ const getStudentStats = asyncHandler(async (req, res) => {
 // @desc    Bulk mark attendance
 // @route   POST /api/attendance/bulk
 // @access  Private/Admin or Staff
+// Mark multiple records
 const bulkMarkAttendance = asyncHandler(async (req, res) => {
   const { date, attendanceData } = req.body; // attendanceData: [{studentId, status, remarks}]
 
@@ -119,6 +123,7 @@ const bulkMarkAttendance = asyncHandler(async (req, res) => {
 // @desc    Get attendance analysis for last 7 days
 // @route   GET /api/attendance/analysis
 // @access  Private/Admin
+// Get 7-day analytics
 const getAttendanceAnalysis = asyncHandler(async (req, res) => {
   const days = [];
   const results = [];

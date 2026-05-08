@@ -9,6 +9,7 @@ import { register } from "../../actions/userActions";
 import { USER_REGISTER_RESET } from "../../constants/userConstants";
 
 const RegisterView = ({ location, history }) => {
+  // Basic profile state
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [mobile, setMobile] = useState("");
@@ -16,6 +17,7 @@ const RegisterView = ({ location, history }) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   
   // Extra fields for registration
+  // Hostel details state
   const [address, setAddress] = useState("");
   const [course, setCourse] = useState("");
   const [city, setCity] = useState("");
@@ -28,6 +30,7 @@ const RegisterView = ({ location, history }) => {
 
   const dispatch = useDispatch();
 
+  // Register state selector
   const userRegister = useSelector((state) => state.userRegister);
   const { loading, error, userInfo, success } = userRegister;
 
@@ -45,6 +48,7 @@ const RegisterView = ({ location, history }) => {
     };
   }, [history, userInfo, redirect, success, dispatch]);
 
+  // Form validation & submit
   const submitHandler = (e) => {
     e.preventDefault();
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

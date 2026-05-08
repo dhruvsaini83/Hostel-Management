@@ -1,7 +1,9 @@
 import mongoose from "mongoose";
 
+// Define student schema
 const studentSchema = mongoose.Schema(
   {
+    // Linked user account
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
@@ -19,6 +21,7 @@ const studentSchema = mongoose.Schema(
       sparse: true,
       match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
     },
+    // Basic student info
     name: {
       type: String,
       required: true,
@@ -35,6 +38,7 @@ const studentSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    // Contact information
     contact: {
       type: String,
       required: true,
@@ -51,6 +55,7 @@ const studentSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    // Hostel room details
     roomNo: {
       type: String,
       required: true,
@@ -59,6 +64,7 @@ const studentSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    // Current residency status
     status: {
       type: String,
       required: true,
@@ -69,6 +75,7 @@ const studentSchema = mongoose.Schema(
   }
 );
 
+// Create student model
 const Student = mongoose.model("Student", studentSchema);
 
 export default Student;

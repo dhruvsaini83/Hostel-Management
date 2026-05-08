@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import asyncHandler from "express-async-handler";
 import User from "../models/user.js";
 
+// Verify user token
 const protect = asyncHandler(async (req, res, next) => {
   let token;
 
@@ -12,10 +13,12 @@ const protect = asyncHandler(async (req, res, next) => {
     try {
       token = req.headers.authorization.split(" ")[1];
 
+      // Decode JWT token
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
       req.user = await User.findById(decoded.id).select("-password");
 
+      // Check account approval
       if (req.user && req.user.status !== "approved" && req.user.role !== "admin") {
         res.status(403);
         throw new Error("Your account is not approved yet.");
@@ -35,6 +38,7 @@ const protect = asyncHandler(async (req, res, next) => {
   }
 });
 
+// Check admin role
 const admin = (req, res, next) => {
   if (req.user && req.user.role === "admin") {
     next();
@@ -44,6 +48,7 @@ const admin = (req, res, next) => {
   }
 };
 
+// Check specific roles
 const authorize = (...roles) => {
   return (req, res, next) => {
     if (req.user && roles.includes(req.user.role)) {
@@ -55,6 +60,7 @@ const authorize = (...roles) => {
   };
 };
 
+// Check staff permissions
 const checkPermission = (permission) => {
   return (req, res, next) => {
     if (req.user && (req.user.role === "admin" || req.user.permissions.includes(permission))) {

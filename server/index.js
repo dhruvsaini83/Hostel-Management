@@ -13,14 +13,18 @@ import dotenv from "dotenv";
 import connectDB from "./config/mongoDBConfig.js";
 import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 dotenv.config();
+// Connect to database
 connectDB();
+// Initialize express app
 const app = express();
 
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
+// Parse JSON bodies
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+// Define API routes
 app.use("/users", userRoutes);
 app.use("/student", studentRoutes);
 app.use("/attendance", attendanceRoutes);
@@ -41,11 +45,13 @@ if (process.env.NODE_ENV === "production") {
     res.send("API is running....");
   });
 }
+// Custom error handling
 app.use(errorHandler);
 app.use(notFound);
 
 const PORT = process.env.PORT || 5000;
 
+// Start backend server
 app.listen(
   PORT,
   console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`)

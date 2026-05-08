@@ -14,6 +14,7 @@ import {
 } from "../constants/attendanceConstant";
 import axios from "axios";
 
+// Fetch student statistics
 export const getStudentAttendanceStats = (studentId) => async (dispatch, getState) => {
   try {
     dispatch({ type: ATTENDANCE_STUDENT_STATS_REQUEST });
@@ -42,6 +43,7 @@ export const getStudentAttendanceStats = (studentId) => async (dispatch, getStat
   }
 };
 
+// Submit attendance data
 export const postAttendance = (attendance) => async (dispatch, getState) => {
   try {
     dispatch({ type: ATTENDANCE_DATA_ENTER_REQUEST });
@@ -70,6 +72,7 @@ export const postAttendance = (attendance) => async (dispatch, getState) => {
   }
 };
 
+// Get date-based analysis
 export const getAnalysisByDate = (date) => async (dispatch, getState) => {
   try {
     dispatch({ type: ATTENDANCE_ANALYSIS_REQUEST });

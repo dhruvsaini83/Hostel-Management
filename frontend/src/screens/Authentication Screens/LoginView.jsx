@@ -8,22 +8,26 @@ import FormContainer from '../../components/formContainer'
 import { login } from '../../actions/userActions'
 
 const LoginView = ({ location, history }) => {
+  // Component state variables
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
   const dispatch = useDispatch()
 
+  // Get login status
   const userLogin = useSelector((state) => state.userLogin)
   const { loading, error, userInfo } = userLogin
 
   const redirect = location.search ? location.search.split('=')[1] : '/'
 
+  // Check login success
   useEffect(() => {
     if (userInfo) {
       history.push(redirect)
     }
   }, [history, userInfo, redirect])
 
+  // Handle form submission
   const submitHandler = (e) => {
     e.preventDefault()
     dispatch(login(email, password))

@@ -43,6 +43,7 @@ import {
   complaintUpdateReducer,
 } from "./reducers/complaintReducers.jsx";
 
+// Combine all reducers
 const reducer = combineReducers({
   studentsList: studentListReducer,
   studentDetails: studentDetailsReducer,
@@ -73,15 +74,18 @@ const reducer = combineReducers({
   complaintAllList: complaintAllListReducer,
   complaintUpdate: complaintUpdateReducer,
 });
+// Load user from storage
 const userInfoFromStorage = localStorage.getItem("userInfo")
   ? JSON.parse(localStorage.getItem("userInfo"))
   : null;
 
+// Initial app state
 const initialState = {
   userLogin: { userInfo: userInfoFromStorage },
 };
 
 const middleware = [thunk];
+// Create global store
 const store = createStore(
   reducer,
   initialState,
