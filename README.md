@@ -95,6 +95,13 @@ npm install
 npm install --prefix frontend
 ```
 
+
+## 🔑 Demo Credentials
+
+### Admin
+- Email: admin@gmail.com
+- Password: admin123
+
 ### 3️⃣ Environment Configuration
 Create a `.env` file in the **root** directory and add the following:
 ```env
