@@ -22,6 +22,16 @@ import { listStudents } from "../actions/studentActions";
 import BroadcastForm from "../components/broadcastForm";
 
 const AdminDashboard = () => {
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const isMobile = windowWidth < 768;
+
   const dispatch = useDispatch();
   const [attendanceData, setAttendanceData] = useState([]);
   const [loadingAnalysis, setLoadingAnalysis] = useState(true);
@@ -139,20 +149,20 @@ const AdminDashboard = () => {
                    <h5 className="font-weight-bold mb-0">Weekly Attendance Trends</h5>
                    <p className="text-muted small">Real-time presence analytics for the last 7 days</p>
                 </Card.Header>
-                <Card.Body className="p-4">
-                  <div style={{ width: "100%", height: 350 }}>
+                <Card.Body className="p-2 p-md-4">
+                  <div style={{ width: "100%", height: isMobile ? 250 : 350 }}>
                     <ResponsiveContainer>
-                      <BarChart data={attendanceData}>
+                      <BarChart data={attendanceData} margin={isMobile ? { top: 10, right: 10, left: -20, bottom: 0 } : {}}>
                         <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
-                        <XAxis dataKey="name" tick={{fontSize: 12}} axisLine={false} tickLine={false} />
-                        <YAxis axisLine={false} tickLine={false} />
+                        <XAxis dataKey="name" tick={{fontSize: isMobile ? 10 : 12}} axisLine={false} tickLine={false} />
+                        <YAxis axisLine={false} tickLine={false} tick={{fontSize: isMobile ? 10 : 12}} />
                         <Tooltip 
                           contentStyle={{ borderRadius: '10px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
                         />
-                        <Legend verticalAlign="top" height={36} iconType="circle" />
-                        <Bar name="Present (Hostel)" dataKey="present" fill="#38a169" radius={[6, 6, 0, 0]} barSize={25} />
-                        <Bar name="On Leave (Home)" dataKey="leave" fill="#3182ce" radius={[6, 6, 0, 0]} barSize={25} />
-                        <Bar name="Absent (Outside)" dataKey="absent" fill="#e53e3e" radius={[6, 6, 0, 0]} barSize={25} />
+                        <Legend verticalAlign="top" height={36} iconType="circle" wrapperStyle={{ fontSize: isMobile ? '10px' : '14px' }} />
+                        <Bar name="Present" dataKey="present" fill="#38a169" radius={[4, 4, 0, 0]} barSize={isMobile ? 15 : 25} />
+                        <Bar name="Leave" dataKey="leave" fill="#3182ce" radius={[4, 4, 0, 0]} barSize={isMobile ? 15 : 25} />
+                        <Bar name="Absent" dataKey="absent" fill="#e53e3e" radius={[4, 4, 0, 0]} barSize={isMobile ? 15 : 25} />
                       </BarChart>
                     </ResponsiveContainer>
                   </div>
@@ -165,16 +175,16 @@ const AdminDashboard = () => {
                    <h5 className="font-weight-bold mb-0">User Distribution</h5>
                    <p className="text-muted small">By Role</p>
                 </Card.Header>
-                <Card.Body className="p-4">
-                  <div style={{ width: "100%", height: 350 }}>
+                <Card.Body className="p-2 p-md-4">
+                  <div style={{ width: "100%", height: isMobile ? 250 : 350 }}>
                     <ResponsiveContainer>
                       <PieChart>
                         <Pie
                           data={roleData}
                           cx="50%"
                           cy="50%"
-                          innerRadius={70}
-                          outerRadius={90}
+                          innerRadius={isMobile ? 50 : 70}
+                          outerRadius={isMobile ? 70 : 90}
                           fill="#8884d8"
                           paddingAngle={8}
                           dataKey="value"
@@ -186,7 +196,7 @@ const AdminDashboard = () => {
                         <Tooltip 
                           contentStyle={{ borderRadius: '10px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
                         />
-                        <Legend iconType="circle" />
+                        <Legend iconType="circle" wrapperStyle={{ fontSize: isMobile ? '10px' : '14px' }} />
                       </PieChart>
                     </ResponsiveContainer>
                   </div>

@@ -11,7 +11,7 @@ ResiTrack is a comprehensive, enterprise-grade **Hostel Management System** desi
 ## ✨ Visual Preview
 
 <div align="center">
-  <img src="./dashboard.png" alt="ResiTrack Dashboard Mockup" width="1200">
+  <img src="./screenAdminDashboard.png" alt="ResiTrack Dashboard Mockup" width="1200">
   <br>
   <em>Premium Dashboard with real-time analytics and Glassmorphism design.</em>
 </div>
@@ -19,7 +19,7 @@ ResiTrack is a comprehensive, enterprise-grade **Hostel Management System** desi
 <br>
 
 <div align="center">
-  <img src="./phoneView.png" alt="ResiTrack Dashboard Mobile" width="300">
+  <img src="./phoneAdminDashboard.jpg" alt="ResiTrack Dashboard Mobile" width="300">
   <br>
   <em>Mobile-optimized interface for on-the-go management.</em>
 </div>
