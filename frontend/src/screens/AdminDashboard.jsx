@@ -36,6 +36,7 @@ const AdminDashboard = () => {
   const [attendanceData, setAttendanceData] = useState([]);
   const [loadingAnalysis, setLoadingAnalysis] = useState(true);
   const [pendingGrievancesCount, setPendingGrievancesCount] = useState(0);
+  const [pendingComplaintsCount, setPendingComplaintsCount] = useState(0);
 
   const userList = useSelector((state) => state.userList);
   const { loading: loadingUsers, error: errorUsers, users } = userList;
@@ -63,8 +64,13 @@ const AdminDashboard = () => {
         
         // Fetch Grievances count
         const { data: grievances } = await axios.get("/grievances", config);
-        const pending = grievances.filter(g => g.status === 'Pending').length;
-        setPendingGrievancesCount(pending);
+        const pendingG = grievances.filter(g => g.status === 'Pending').length;
+        setPendingGrievancesCount(pendingG);
+
+        // Fetch Complaints count
+        const { data: complaints } = await axios.get("/complaints", config);
+        const pendingC = complaints.filter(c => c.status === 'Pending').length;
+        setPendingComplaintsCount(pendingC);
 
         setLoadingAnalysis(false);
       } catch (err) {
@@ -185,7 +191,14 @@ const AdminDashboard = () => {
                       <p className="small text-muted mb-0">Manage student tickets.</p>
                     </div>
                   </div>
-                  <i className="fas fa-chevron-right text-muted"></i>
+                  <div className="d-flex align-items-center">
+                    {pendingComplaintsCount > 0 && (
+                      <Badge variant="danger" pill className="mr-2 px-3 py-2 animate-pulse">
+                        {pendingComplaintsCount} New
+                      </Badge>
+                    )}
+                    <i className="fas fa-chevron-right text-muted"></i>
+                  </div>
                 </Card.Body>
               </Card>
             </Col>
