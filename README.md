@@ -28,35 +28,35 @@ ResiTrack is a comprehensive, enterprise-grade **Hostel Management System** desi
 
 ## 🚀 Key Features
 
-### 👑 Role-Based Control (RBAC)
-- **Admin Dashboard:** Full control over users, staff, and student records. Approve Registrations and manage system settings.
-- **Staff Dashboard:** Specialized tools for daily attendance, room management, and student check-ins.
-- **Student Portal:** Students can view their profile, attendance history, and status in real-time.
+### 👑 Advanced Management Modules
+- **Attendance Grievance System:** Students can report incorrect attendance markings directly from their history view. Admins can review and approve corrections with automatic data synchronization.
+- **Complaints & Maintenance (Ticketing):** A full-featured ticket system where students can raise maintenance requests (Electrical, Plumbing, etc.) with optional photo proof. Staff can track and resolve tickets in real-time.
+- **Broadcast System:** Permission-based broadcast tool for Staff and Admins to send important announcements to all residents.
+- **Student Registration & Approval:** streamlined workflow for new student applications with a 30-minute cooling period and administrative verification.
 
-### 🛡️ Advanced Security & Validation
-- **Secure Authentication:** JWT-based login system with Bcrypt password hashing.
-- **Protected Routes:** Middleware-enforced access control ensuring only authorized users reach sensitive data.
-- **Data Integrity:** Strict validation for inputs, including 10-digit mobile number checks and email verification.
+### 🔐 Granular Role-Based Access Control (RBAC)
+- **Admin Dashboard:** Full control over users, staff permissions, and student records. Monitor pending tasks via **dynamic notification badges**.
+- **Staff Dashboard:** Specialized modules based on assigned permissions (Attendance, Approvals, Leaves, Reports).
+- **Student Portal:** Personal dashboard to track attendance trends, current status (Hostel/Home/Outside), and manage tickets.
 
 ### 📊 Intelligence & Reporting
-- **Dynamic Analytics:** Visual representation of student distribution (Hostel vs. Home vs. Outside).
-- **Attendance Tracking:** Daily logs with instant synchronization across all user dashboards.
-- **Report Export:** Generate and download comprehensive CSV reports for offline auditing.
+- **Dynamic Analytics:** Visual representation of weekly attendance trends and user distribution using Recharts.
+- **Real-Time Sync:** Changes made via grievances or attendance marking propagate instantly to all related dashboards and percentages.
+- **Report Export:** Generate and download customized CSV reports based on specific date ranges.
 
 ### 📱 Premium UI/UX
-- **Modern Design:** Glassmorphism elements, sleek transitions, and a curated color palette.
-- **Fully Responsive:** Seamless experience across Desktop, Tablet, and Mobile devices.
-- **Smart Search:** Lightning-fast, case-insensitive search for students and rooms.
+- **Modern Design:** Glassmorphism elements, sleek transitions, pulsing notification badges, and a curated professional color palette.
+- **Fully Responsive:** Optimized for everything from widescreen monitors to small smartphones.
 
 ---
 
 ## 🛠 Tech Stack
 
-- **Frontend:** React.js, Redux (State Management), React-Bootstrap, Vanilla CSS.
+- **Frontend:** React.js, Redux (State Management), React-Bootstrap, Recharts.
 - **Backend:** Node.js, Express.js.
 - **Database:** MongoDB (Mongoose ODM).
-- **Authentication:** JSON Web Tokens (JWT).
-- **File Uploads:** Multer for profile image management.
+- **Authentication:** JSON Web Tokens (JWT) with Bcrypt hashing.
+- **Validation:** Strict server-side schema validation and student-to-user linking logic.
 
 ---
 
@@ -65,13 +65,14 @@ ResiTrack is a comprehensive, enterprise-grade **Hostel Management System** desi
 ```bash
 Hostel-Management/
 ├── frontend/          # React Single Page Application
-│   ├── src/actions    # Redux Actions
+│   ├── src/actions    # Redux Actions (Attendance, Grievance, Complaints, etc.)
 │   ├── src/components # Reusable UI Components
-│   └── src/screens    # Page-level Views
+│   └── src/screens    # Page-level Views (Dashboards, Management Screens)
 ├── server/            # Node.js & Express REST API
-│   ├── controllers    # Request Handlers
-│   ├── middleware     # Auth & Error Middleware
-│   └── models         # MongoDB Schemas
+│   ├── controllers    # Request Handlers (Business Logic)
+│   ├── middleware     # Auth & RBAC Middleware
+│   ├── models         # MongoDB Schemas (Complaint, Grievance, Attendance)
+│   └── routes         # API Endpoints
 └── .env               # Environment Configuration
 ```
 
