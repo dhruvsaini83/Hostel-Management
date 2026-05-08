@@ -96,6 +96,15 @@ npm install --prefix frontend
 ```
 
 
+## 🚀 Future Enhancements
+
+- Biometric attendance integration
+- QR-based hostel entry system
+- AI-powered attendance analytics
+- Mobile application version
+- Email & SMS notifications
+
+
 ## 🔑 Demo Credentials
 
 ### Admin
