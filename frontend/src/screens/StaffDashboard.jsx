@@ -1,15 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Row, Col, Card, Container } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
 import BroadcastForm from "../components/broadcastForm";
+import { getUserDetails } from "../actions/userActions";
 
 const StaffDashboard = () => {
+  const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
+  const userDetails = useSelector((state) => state.userDetails);
+  const { user } = userDetails;
+
+  useEffect(() => {
+    dispatch(getUserDetails("profile"));
+  }, [dispatch]);
+
   const hasPermission = (permission) => {
-    return userInfo.permissions && userInfo.permissions.includes(permission);
+    // Check both userInfo (from login) and user (latest from server)
+    const permissions = user?.permissions || userInfo?.permissions || [];
+    return permissions.includes(permission);
   };
 
   const modules = [
@@ -53,6 +64,14 @@ const StaffDashboard = () => {
       link: "/analysis",
       description: "Access detailed attendance and performance reports.",
     },
+    {
+      title: "Complaints",
+      permission: "Manage Attendance", // Reusing a common permission or just keeping it visible
+      icon: "fas fa-tools",
+      color: "danger",
+      link: "/admin/complaints",
+      description: "Manage student room maintenance and repair tickets.",
+    },
   ];
 
   const filteredModules = modules.filter(m => hasPermission(m.permission));
@@ -95,7 +114,11 @@ const StaffDashboard = () => {
         )}
       </Row>
 
-      {hasPermission("Send Broadcast") && <BroadcastForm />}
+      {userInfo && userInfo.role === 'staff' && hasPermission("Send Broadcast") === true && (
+        <div className="mt-5 pt-3 border-top">
+          <BroadcastForm />
+        </div>
+      )}
     </Container>
   );
 };

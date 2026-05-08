@@ -20,6 +20,10 @@ import MyAttendanceView from "./screens/MyAttendanceView";
 import StaffManagementScreen from "./screens/StaffManagementScreen";
 import ApprovalScreen from "./screens/ApprovalScreen";
 import NotificationScreen from "./screens/NotificationScreen.jsx";
+import GrievanceScreen from "./screens/GrievanceScreen.jsx";
+import GrievanceAdminScreen from "./screens/GrievanceAdminScreen.jsx";
+import ComplaintScreen from "./screens/ComplaintScreen.jsx";
+import ComplaintAdminScreen from "./screens/ComplaintAdminScreen.jsx";
 import ProtectedRoute from "./components/protectedRoute";
 import ScrollToTop from "./components/scrollToTop";
 import { useSelector } from "react-redux";
@@ -55,6 +59,10 @@ const App = () => {
             <ProtectedRoute path="/approvals" component={ApprovalScreen} permissions={["Student Registration Approval"]} />
             
             <ProtectedRoute path="/notifications" component={NotificationScreen} />
+            <ProtectedRoute path="/grievances" component={GrievanceScreen} />
+            <ProtectedRoute path="/admin/grievances" component={GrievanceAdminScreen} isAdmin={true} />
+            <ProtectedRoute path="/complaints" component={ComplaintScreen} />
+            <ProtectedRoute path="/admin/complaints" component={ComplaintAdminScreen} roles={["admin", "staff"]} />
             <ProtectedRoute path="/profile" component={ProfileView} />
             <ProtectedRoute path="/attendance" component={AttendanceView} permissions={["Manage Attendance"]} />
             <ProtectedRoute path="/analysis" component={AnalysisView} permissions={["Reports Access"]} />

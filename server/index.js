@@ -4,6 +4,8 @@ import studentRoutes from "./routes/studentRoutes.js";
 import attendanceRoutes from "./routes/attendanceRoutes.js";
 import leaveRoutes from "./routes/leaveRoutes.js";
 import notificationRoutes from "./routes/notificationRoutes.js";
+import grievanceRoutes from "./routes/grievanceRoutes.js";
+import complaintRoutes from "./routes/complaintRoutes.js";
 import path from "path";
 import morgan from "morgan";
 
@@ -24,6 +26,8 @@ app.use("/student", studentRoutes);
 app.use("/attendance", attendanceRoutes);
 app.use("/leave", leaveRoutes);
 app.use("/notifications", notificationRoutes);
+app.use("/grievances", grievanceRoutes);
+app.use("/complaints", complaintRoutes);
 
 const __dirname = path.resolve();
 if (process.env.NODE_ENV === "production") {

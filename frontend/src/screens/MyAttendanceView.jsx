@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Table, Card, Button, Badge, Container } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { Table, Card, Button, Badge, Container, Modal, Form } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import Loader from "../components/loader";
 import Message from "../components/message";
+import { createGrievance } from "../actions/grievanceActions.jsx";
+import { GRIEVANCE_CREATE_RESET } from "../constants/grievanceConstants.jsx";
 
 const MyAttendanceView = () => {
   const [attendance, setAttendance] = useState([]);
@@ -12,6 +14,18 @@ const MyAttendanceView = () => {
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const recordsPerPage = 15;
+
+  // Grievance State
+  const [showGrievanceModal, setShowGrievanceModal] = useState(false);
+  const [selectedDate, setSelectedDate] = useState("");
+  const [correctStatus, setCorrectStatus] = useState("Present");
+  const [reason, setReason] = useState("");
+  const [proof, setProof] = useState("");
+
+  const dispatch = useDispatch();
+
+  const grievanceCreate = useSelector((state) => state.grievanceCreate);
+  const { loading: loadingGrievance, error: errorGrievance, success: successGrievance } = grievanceCreate;
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -54,6 +68,31 @@ const MyAttendanceView = () => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+  useEffect(() => {
+    if (successGrievance) {
+      setShowGrievanceModal(false);
+      setReason("");
+      setProof("");
+      dispatch({ type: GRIEVANCE_CREATE_RESET });
+      alert("Grievance request submitted successfully!");
+    }
+  }, [dispatch, successGrievance]);
+
+  const openGrievanceModal = (date) => {
+    setSelectedDate(date);
+    setShowGrievanceModal(true);
+  };
+
+  const grievanceSubmitHandler = (e) => {
+    e.preventDefault();
+    dispatch(createGrievance({ 
+      date: selectedDate, 
+      correctStatus, 
+      reason, 
+      proof 
+    }));
+  };
+
   const formatDate = (dateStr) => {
     if (!dateStr) return "N/A";
     const [year, month, day] = dateStr.split("-");
@@ -89,6 +128,7 @@ const MyAttendanceView = () => {
                     <th>STATUS</th>
                     <th>MARKED BY</th>
                     <th>REMARKS</th>
+                    <th className="text-center">ACTIONS</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -121,6 +161,16 @@ const MyAttendanceView = () => {
                         {record.markedBy ? record.markedBy.name : "System"}
                       </td>
                       <td className="small text-muted">{record.remarks || "-"}</td>
+                      <td className="text-center">
+                        <Button 
+                          variant="outline-danger" 
+                          size="sm" 
+                          className="rounded-pill px-3"
+                          onClick={() => openGrievanceModal(record.date)}
+                        >
+                          <i className="fas fa-exclamation-circle mr-1"></i> Report
+                        </Button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -156,6 +206,63 @@ const MyAttendanceView = () => {
           )}
         </>
       )}
+      {/* Grievance Modal */}
+      <Modal show={showGrievanceModal} onHide={() => setShowGrievanceModal(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title className="font-weight-bold">Report Attendance Issue</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="p-4">
+          <div className="mb-4 text-center">
+            <Badge variant="light" className="text-muted p-2 border">
+              Date: {formatDate(selectedDate)}
+            </Badge>
+          </div>
+          {errorGrievance && <Message variant="danger">{errorGrievance}</Message>}
+          <Form onSubmit={grievanceSubmitHandler}>
+            <Form.Group controlId="correctStatus" className="mb-3">
+              <Form.Label className="small font-weight-bold">Correct Status Should Be</Form.Label>
+              <Form.Control
+                as="select"
+                value={correctStatus}
+                onChange={(e) => setCorrectStatus(e.target.value)}
+                className="premium-input"
+              >
+                <option value="Present">Present (Hostel)</option>
+                <option value="Absent">Absent (Outside)</option>
+                <option value="Leave">Leave (Home)</option>
+              </Form.Control>
+            </Form.Group>
+
+            <Form.Group controlId="reason" className="mb-3">
+              <Form.Label className="small font-weight-bold">Reason for Correction</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={3}
+                placeholder="Explain why this marking is incorrect..."
+                value={reason}
+                onChange={(e) => setReason(e.target.value)}
+                required
+                className="premium-input"
+              />
+            </Form.Group>
+
+            <Form.Group controlId="proof" className="mb-4">
+              <Form.Label className="small font-weight-bold">Proof Link (Optional)</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Google Drive link or Image URL"
+                value={proof}
+                onChange={(e) => setProof(e.target.value)}
+                className="premium-input"
+              />
+            </Form.Group>
+
+            <Button type="submit" variant="danger" className="w-100 rounded-pill py-2 font-weight-bold shadow-sm" disabled={loadingGrievance}>
+              {loadingGrievance ? "Submitting..." : "Submit Report Request"}
+            </Button>
+          </Form>
+        </Modal.Body>
+      </Modal>
     </Container>
   );
 };

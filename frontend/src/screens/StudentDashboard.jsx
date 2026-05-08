@@ -122,11 +122,27 @@ const StudentDashboard = () => {
         <Col md={5} className="d-flex justify-content-end align-items-center">
            <Button 
              variant="light" 
-             className="mr-3 rounded-pill px-4 shadow-sm border"
+             className="mr-2 rounded-pill px-4 shadow-sm border"
              onClick={() => setShowDownloadModal(true)}
            >
              <i className="fas fa-file-download mr-2 text-primary"></i> <span className="text-primary font-weight-bold">Download Report</span>
            </Button>
+           <div className="d-flex flex-wrap align-items-center">
+             <Button 
+               variant="outline-danger" 
+               className="mr-2 rounded-pill px-4 shadow-sm mb-2"
+               onClick={() => window.location.href = "/grievances"}
+             >
+               <i className="fas fa-exclamation-circle mr-1"></i> <span className="font-weight-bold">Report Issue</span>
+             </Button>
+             <Button 
+               variant="outline-primary" 
+               className="mr-3 rounded-pill px-4 shadow-sm mb-2"
+               onClick={() => window.location.href = "/complaints"}
+             >
+               <i className="fas fa-tools mr-1"></i> <span className="font-weight-bold">Complaints</span>
+             </Button>
+           </div>
            <div className="p-2 bg-white text-primary rounded-lg shadow-sm text-center border" style={{ minWidth: '120px' }}>
               <div className="small text-muted font-weight-bold uppercase">Score</div>
               <div className="h3 mb-0 font-weight-bold">{stats ? stats.percentage : 0}%</div>

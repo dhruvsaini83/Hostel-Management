@@ -30,6 +30,18 @@ import {
   notificationCreateReducer,
   notificationMarkReadReducer,
 } from "./reducers/notificationReducers.jsx";
+import {
+  grievanceCreateReducer,
+  grievanceMyListReducer,
+  grievanceAllListReducer,
+  grievanceUpdateReducer,
+} from "./reducers/grievanceReducers.jsx";
+import {
+  complaintCreateReducer,
+  complaintMyListReducer,
+  complaintAllListReducer,
+  complaintUpdateReducer,
+} from "./reducers/complaintReducers.jsx";
 
 const reducer = combineReducers({
   studentsList: studentListReducer,
@@ -52,6 +64,14 @@ const reducer = combineReducers({
   notificationList: notificationListReducer,
   notificationCreate: notificationCreateReducer,
   notificationMarkRead: notificationMarkReadReducer,
+  grievanceCreate: grievanceCreateReducer,
+  grievanceMyList: grievanceMyListReducer,
+  grievanceAllList: grievanceAllListReducer,
+  grievanceUpdate: grievanceUpdateReducer,
+  complaintCreate: complaintCreateReducer,
+  complaintMyList: complaintMyListReducer,
+  complaintAllList: complaintAllListReducer,
+  complaintUpdate: complaintUpdateReducer,
 });
 const userInfoFromStorage = localStorage.getItem("userInfo")
   ? JSON.parse(localStorage.getItem("userInfo"))

@@ -35,6 +35,7 @@ const AdminDashboard = () => {
   const dispatch = useDispatch();
   const [attendanceData, setAttendanceData] = useState([]);
   const [loadingAnalysis, setLoadingAnalysis] = useState(true);
+  const [pendingGrievancesCount, setPendingGrievancesCount] = useState(0);
 
   const userList = useSelector((state) => state.userList);
   const { loading: loadingUsers, error: errorUsers, users } = userList;
@@ -59,6 +60,12 @@ const AdminDashboard = () => {
         };
         const { data } = await axios.get("/attendance/analysis", config);
         setAttendanceData(data);
+        
+        // Fetch Grievances count
+        const { data: grievances } = await axios.get("/grievances", config);
+        const pending = grievances.filter(g => g.status === 'Pending').length;
+        setPendingGrievancesCount(pending);
+
         setLoadingAnalysis(false);
       } catch (err) {
         console.error("Error fetching analysis", err);
@@ -137,6 +144,48 @@ const AdminDashboard = () => {
                   <div className="small opacity-75 mb-1 uppercase font-weight-bold">Today Attendance</div>
                   <div className="display-4 font-weight-bold mb-2">{todayAttendanceRate}%</div>
                   <div className="mt-auto"><i className="fas fa-clipboard-check opacity-50"></i></div>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+
+          <Row className="mt-2 mb-4">
+            <Col md={6}>
+              <Card className="shadow-sm border-0 bg-light premium-card h-100" style={{ cursor: 'pointer' }} onClick={() => window.location.href = "/admin/grievances"}>
+                <Card.Body className="d-flex justify-content-between align-items-center py-3">
+                  <div className="d-flex align-items-center">
+                    <div className="bg-danger text-white rounded-circle d-flex align-items-center justify-content-center mr-3" style={{ width: '40px', height: '40px' }}>
+                      <i className="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div>
+                      <h6 className="font-weight-bold mb-0">Attendance Grievances</h6>
+                      <p className="small text-muted mb-0">Review correction requests.</p>
+                    </div>
+                  </div>
+                  <div className="d-flex align-items-center">
+                    {pendingGrievancesCount > 0 && (
+                      <Badge variant="danger" pill className="mr-2 px-3 py-2 animate-pulse">
+                        {pendingGrievancesCount} New
+                      </Badge>
+                    )}
+                    <i className="fas fa-chevron-right text-muted"></i>
+                  </div>
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col md={6}>
+              <Card className="shadow-sm border-0 bg-light premium-card h-100" style={{ cursor: 'pointer' }} onClick={() => window.location.href = "/admin/complaints"}>
+                <Card.Body className="d-flex justify-content-between align-items-center py-3">
+                  <div className="d-flex align-items-center">
+                    <div className="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center mr-3" style={{ width: '40px', height: '40px' }}>
+                      <i className="fas fa-tools"></i>
+                    </div>
+                    <div>
+                      <h6 className="font-weight-bold mb-0">Complaints & Maintenance</h6>
+                      <p className="small text-muted mb-0">Manage student tickets.</p>
+                    </div>
+                  </div>
+                  <i className="fas fa-chevron-right text-muted"></i>
                 </Card.Body>
               </Card>
             </Col>
