@@ -5,6 +5,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import SearchBox from "./searchBox";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../actions/userActions";
+import { listNotifications } from "../actions/notificationActions.jsx";
 
 const Header = () => {
   const [expanded, setExpanded] = React.useState(false);
@@ -12,6 +13,19 @@ const Header = () => {
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+
+  const notificationList = useSelector((state) => state.notificationList);
+  const { notifications } = notificationList;
+
+  const unreadCount = notifications
+    ? notifications.filter((n) => !n.readBy.includes(userInfo?._id)).length
+    : 0;
+
+  React.useEffect(() => {
+    if (userInfo) {
+      dispatch(listNotifications());
+    }
+  }, [dispatch, userInfo]);
 
   const logoutHandler = () => {
     dispatch(logout());
@@ -134,6 +148,18 @@ const Header = () => {
                 <LinkContainer to="/login">
                   <Nav.Link className="btn btn-outline-info rounded-pill px-4 ml-lg-3 my-2 my-lg-0">
                     <i className="fas fa-user mr-2"></i> Sign In
+                  </Nav.Link>
+                </LinkContainer>
+              )}
+              {userInfo && (
+                <LinkContainer to="/notifications" onClick={() => setExpanded(false)}>
+                  <Nav.Link className="position-relative ml-lg-3">
+                    <i className="fas fa-bell fa-lg text-info"></i>
+                    {unreadCount > 0 && (
+                      <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style={{ fontSize: '0.6rem', padding: '0.2rem 0.4rem', marginTop: '-10px', marginLeft: '-5px' }}>
+                        {unreadCount}
+                      </span>
+                    )}
                   </Nav.Link>
                 </LinkContainer>
               )}

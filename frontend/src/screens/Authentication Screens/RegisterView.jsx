@@ -6,6 +6,7 @@ import Message from "../../components/message";
 import Loader from "../../components/loader";
 import FormContainer from "../../components/formContainer";
 import { register } from "../../actions/userActions";
+import { USER_REGISTER_RESET } from "../../constants/userConstants";
 
 const RegisterView = ({ location, history }) => {
   const [name, setName] = useState("");
@@ -39,7 +40,10 @@ const RegisterView = ({ location, history }) => {
     if (success) {
       setShowPopup(true);
     }
-  }, [history, userInfo, redirect, success]);
+    return () => {
+      dispatch({ type: USER_REGISTER_RESET });
+    };
+  }, [history, userInfo, redirect, success, dispatch]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -66,6 +70,7 @@ const RegisterView = ({ location, history }) => {
 
   const handleClosePopup = () => {
     setShowPopup(false);
+    dispatch({ type: USER_REGISTER_RESET });
     history.push("/login");
   };
 
@@ -275,18 +280,26 @@ const RegisterView = ({ location, history }) => {
       </FormContainer>
 
       {/* Success Popup Modal */}
-      <Modal show={showPopup} onHide={handleClosePopup} centered>
+      <Modal show={showPopup} onHide={handleClosePopup} centered backdrop="static" keyboard={false}>
         <Modal.Body className="text-center p-5">
-          <div className="icon-circle bg-success text-white mb-4 mx-auto" style={{ width: '80px', height: '80px', fontSize: '2rem' }}>
-            <i className="fas fa-check"></i>
+          <div className="icon-circle bg-success text-white mb-4 mx-auto shadow-sm" style={{ width: '80px', height: '80px', fontSize: '2rem', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%' }}>
+            <i className="fas fa-clock"></i>
           </div>
-          <h2 className="font-weight-bold mb-3">Request Submitted</h2>
-          <p className="text-muted mb-4">
-            Please wait few seconds, your request is submitted successfully. 
-            Administrator will review and approve your account shortly.
-          </p>
-          <Button variant="primary" className="rounded-pill px-5 py-2" onClick={handleClosePopup}>
-            Done
+          <h2 className="font-weight-bold mb-3 text-dark">Request Submitted!</h2>
+          <div className="p-3 bg-light rounded-lg mb-4">
+            <p className="text-dark font-weight-bold mb-2" style={{ fontSize: '1.1rem' }}>
+              Your request has been sent for admin approval.
+            </p>
+            <p className="text-secondary mb-0">
+              You will be able to log in once your account is activated.
+            </p>
+            <hr />
+            <p className="text-info font-weight-bold small mb-0">
+              <i className="fas fa-info-circle mr-1"></i> Minimum waiting time is 30 mins.
+            </p>
+          </div>
+          <Button variant="primary" className="rounded-pill px-5 py-2 font-weight-bold shadow-sm" onClick={handleClosePopup}>
+            Go to Login
           </Button>
         </Modal.Body>
       </Modal>

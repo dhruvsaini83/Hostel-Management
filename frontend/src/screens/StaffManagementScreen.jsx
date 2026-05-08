@@ -29,6 +29,7 @@ const StaffManagementScreen = () => {
     "Read Only Access",
     "Reports Access",
     "Leave Management",
+    "Send Broadcast",
   ];
 
   const dispatch = useDispatch();

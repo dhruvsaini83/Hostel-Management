@@ -112,8 +112,8 @@ const StudentDetailsView = ({ match, history }) => {
       };
       const { data } = await axios.get(`/attendance/student/${student._id}`, config);
       
-      const start = fromDate.toISOString().split('T')[0];
-      const end = toDate.toISOString().split('T')[0];
+      const start = `${fromDate.getFullYear()}-${String(fromDate.getMonth() + 1).padStart(2, '0')}-${String(fromDate.getDate()).padStart(2, '0')}`;
+      const end = `${toDate.getFullYear()}-${String(toDate.getMonth() + 1).padStart(2, '0')}-${String(toDate.getDate()).padStart(2, '0')}`;
       
       // Filter data by date range
       const filteredRecords = data.filter(record => {
@@ -487,7 +487,7 @@ const StudentDetailsView = ({ match, history }) => {
               ) : (
                 <CSVLink
                   data={csvData}
-                  filename={`attendance_${student?.name}_${fromDate.toISOString().split('T')[0]}_to_${toDate.toISOString().split('T')[0]}.csv`}
+                  filename={`attendance_${student?.name}_${fromDate.getFullYear()}-${String(fromDate.getMonth() + 1).padStart(2, '0')}-${String(fromDate.getDate()).padStart(2, '0')}_to_${toDate.getFullYear()}-${String(toDate.getMonth() + 1).padStart(2, '0')}-${String(toDate.getDate()).padStart(2, '0')}.csv`}
                   className="btn btn-success rounded-pill px-5 shadow-sm"
                   onClick={() => setShowDownloadModal(false)}
                 >

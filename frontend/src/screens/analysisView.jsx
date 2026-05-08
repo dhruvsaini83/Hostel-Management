@@ -32,7 +32,11 @@ const AnalysisView = () => {
 
   // 👇 IMPORTANT: keep backend-compatible format
   const formattedDate = useMemo(() => {
-    return startDate ? startDate.toISOString().split('T')[0] : "";
+    if (!startDate) return "";
+    const year = startDate.getFullYear();
+    const month = String(startDate.getMonth() + 1).padStart(2, '0');
+    const day = String(startDate.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
   }, [startDate]);
 
   useEffect(() => {

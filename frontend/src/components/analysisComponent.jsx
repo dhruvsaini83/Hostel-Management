@@ -190,7 +190,7 @@ const AnalysisComponent = () => {
                   <CSVLink
                     data={data}
                     headers={headers}
-                    filename={`attendance_${new Date().toISOString().split('T')[0]}.csv`}
+                    filename={`attendance_${new Date().getFullYear()}-${String(new Date().getMonth() + 1).padStart(2, '0')}-${String(new Date().getDate()).padStart(2, '0')}.csv`}
                     className="btn btn-primary rounded-pill px-4 shadow-sm"
                   >
                     <i className="fas fa-download mr-2"></i> Download CSV

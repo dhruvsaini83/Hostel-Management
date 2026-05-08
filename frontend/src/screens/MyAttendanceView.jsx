@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Row, Col, Table, Card, Button, Badge, Container } from "react-bootstrap";
+import { Table, Card, Button, Badge, Container } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import Loader from "../components/loader";

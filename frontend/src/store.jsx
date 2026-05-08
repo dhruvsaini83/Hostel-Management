@@ -25,6 +25,11 @@ import {
   deleteAttendanceReducer,
   attendanceStudentStatsReducer,
 } from "./reducers/attendanceReducer";
+import {
+  notificationListReducer,
+  notificationCreateReducer,
+  notificationMarkReadReducer,
+} from "./reducers/notificationReducers.jsx";
 
 const reducer = combineReducers({
   studentsList: studentListReducer,
@@ -44,6 +49,9 @@ const reducer = combineReducers({
   attendanceAnalysis: attendanceAnalysisReducer,
   attendanceDelete: deleteAttendanceReducer,
   attendanceStudentStats: attendanceStudentStatsReducer,
+  notificationList: notificationListReducer,
+  notificationCreate: notificationCreateReducer,
+  notificationMarkRead: notificationMarkReadReducer,
 });
 const userInfoFromStorage = localStorage.getItem("userInfo")
   ? JSON.parse(localStorage.getItem("userInfo"))

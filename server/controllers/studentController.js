@@ -20,7 +20,8 @@ const getAttendanceList = asyncHandler(async (req, res) => {
   const students = await Student.find({ ...keyword });
 
   // Fetch today's attendance data to show current state
-  const today = new Date().toISOString().split('T')[0];
+  const now = new Date();
+  const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
   const todayAttendance = await Attendance.find({ date: today });
   
   const attendanceMap = {};
@@ -155,7 +156,8 @@ const updateStudentProfile = asyncHandler(async (req, res) => {
 
     // If status was changed, also mark/update today's attendance
     if (req.body.status && req.body.status !== oldStatus) {
-      const today = new Date().toISOString().split('T')[0];
+      const now = new Date();
+      const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
       let attendance = await Attendance.findOne({ student: student._id, date: today });
       
       const attendanceStatus = req.body.status === "Hostel" ? "Present" : 
@@ -232,7 +234,8 @@ const getStudentByRoomNo = asyncHandler(async (req, res) => {
     roomNo: { $regex: `^${req.params.roomId}$`, $options: "i" } 
   });
   
-  const today = new Date().toISOString().split('T')[0];
+  const now = new Date();
+  const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
   const attendance = await Attendance.find({ date: today });
   const attendanceMap = {};
   attendance.forEach(a => {

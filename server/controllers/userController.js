@@ -14,7 +14,7 @@ const authUser = asyncHandler(async (req, res) => {
   if (user && (await user.matchPassword(password))) {
     if (user.status !== "approved" && user.role !== "admin") {
       res.status(403);
-      throw new Error("Your account is pending approval. Please wait for an admin to approve it.");
+      throw new Error("Your account is pending approval. You will be able to log in once an admin activates it (Min: 30 mins).");
     }
 
     res.json({

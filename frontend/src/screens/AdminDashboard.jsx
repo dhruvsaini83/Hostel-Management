@@ -1,5 +1,3 @@
-// Import at top was already handled or needs to be fixed.
-// I will just rewrite the whole top section to be clean.
 import React, { useEffect, useState } from "react";
 import { Row, Col, Card, Container, Badge } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,6 +19,7 @@ import Loader from "../components/loader";
 import Message from "../components/message";
 import { listUsers } from "../actions/userActions";
 import { listStudents } from "../actions/studentActions";
+import BroadcastForm from "../components/broadcastForm";
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
@@ -195,6 +194,8 @@ const AdminDashboard = () => {
               </Card>
             </Col>
           </Row>
+
+          <BroadcastForm />
         </>
       )}
     </Container>

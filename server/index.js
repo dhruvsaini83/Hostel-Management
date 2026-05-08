@@ -3,6 +3,7 @@ import userRoutes from "./routes/userRoutes.js";
 import studentRoutes from "./routes/studentRoutes.js";
 import attendanceRoutes from "./routes/attendanceRoutes.js";
 import leaveRoutes from "./routes/leaveRoutes.js";
+import notificationRoutes from "./routes/notificationRoutes.js";
 import path from "path";
 import morgan from "morgan";
 
@@ -22,6 +23,7 @@ app.use("/users", userRoutes);
 app.use("/student", studentRoutes);
 app.use("/attendance", attendanceRoutes);
 app.use("/leave", leaveRoutes);
+app.use("/notifications", notificationRoutes);
 
 const __dirname = path.resolve();
 if (process.env.NODE_ENV === "production") {

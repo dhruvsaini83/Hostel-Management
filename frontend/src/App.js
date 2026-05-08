@@ -19,6 +19,7 @@ import StudentDashboard from "./screens/StudentDashboard";
 import MyAttendanceView from "./screens/MyAttendanceView";
 import StaffManagementScreen from "./screens/StaffManagementScreen";
 import ApprovalScreen from "./screens/ApprovalScreen";
+import NotificationScreen from "./screens/NotificationScreen.jsx";
 import ProtectedRoute from "./components/protectedRoute";
 import ScrollToTop from "./components/scrollToTop";
 import { useSelector } from "react-redux";
@@ -53,6 +54,7 @@ const App = () => {
             <ProtectedRoute path="/staff" component={StaffManagementScreen} roles={["admin"]} />
             <ProtectedRoute path="/approvals" component={ApprovalScreen} permissions={["Student Registration Approval"]} />
             
+            <ProtectedRoute path="/notifications" component={NotificationScreen} />
             <ProtectedRoute path="/profile" component={ProfileView} />
             <ProtectedRoute path="/attendance" component={AttendanceView} permissions={["Manage Attendance"]} />
             <ProtectedRoute path="/analysis" component={AnalysisView} permissions={["Reports Access"]} />

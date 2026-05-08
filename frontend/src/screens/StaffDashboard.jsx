@@ -2,6 +2,7 @@ import React from "react";
 import { Row, Col, Card, Container } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
+import BroadcastForm from "../components/broadcastForm";
 
 const StaffDashboard = () => {
   const userLogin = useSelector((state) => state.userLogin);
@@ -93,6 +94,8 @@ const StaffDashboard = () => {
           </Col>
         )}
       </Row>
+
+      {hasPermission("Send Broadcast") && <BroadcastForm />}
     </Container>
   );
 };

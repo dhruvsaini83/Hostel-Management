@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Form, Button, Row, Col, Card, Badge } from "react-bootstrap";
+import { Form, Button, Row, Col, Badge } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import Message from "../components/message";
